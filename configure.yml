@@ -1,0 +1,21 @@
+---
+development:
+  grove:
+    session: 'god'
+    host: 'grove.dev'
+  elasticsearch:
+    host: 'localhost:9200'
+
+staging:
+  grove:
+    session: 'abc'
+    host: 'grove.staging.o5.dev'
+  elasticsearch:
+    host: 'localhost:9200'
+
+production:
+  grove:
+    session: 'abc'
+    host: 'grove.o5.no'
+  elasticsearch:
+    host: 'localhost:9200'
