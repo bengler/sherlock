@@ -5,7 +5,7 @@ Sherlock is the glue between various pebbles and elastic search.
 
 
 Sherlock does three things
-=====
+--------------------------
 
 1. Listen to the river message queue from grove (and other pebbles later on).
 2. Update elastic search index with changes mentioned in said river.
