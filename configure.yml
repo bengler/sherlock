@@ -6,6 +6,13 @@ development:
   elasticsearch:
     host: 'localhost:9200'
 
+test:
+  grove:
+    session: 'god'
+    host: 'grove.dev'
+  elasticsearch:
+    host: 'localhost:9200'
+
 staging:
   grove:
     session: 'abc'

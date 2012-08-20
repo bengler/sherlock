@@ -4,26 +4,22 @@ describe Sherlock do
 
   subject { Sherlock.new }
 
+  before(:each) do
+    Sherlock.environment = 'test'
+  end
+
   it "configures" do
-    Sherlock.stub(:environment => 'production')
-    Sherlock.config['grove'].should eq('session' => 'abc', 'host' => 'grove.o5.no')
+    Sherlock.config['grove'].should eq('session' => 'god', 'host' => 'grove.dev')
+    subject.indexer.should_not eq nil
   end
 
-  it "adds stream groups" do
-    subject.stream_groups << 'hello'
-    subject.stream_groups.should eq(['hello'])
+  it "gets an indexer" do
+    subject.indexer.should_not eq nil
   end
 
-  it "sets up each group and triggers processing" do
-    one = stub
-    two = stub
-    subject.stream_groups << one << two
-    one.should_receive(:setup)
-    one.should_receive(:start)
-
-    two.should_receive(:setup)
-    two.should_receive(:start)
-
+  it "triggers the indexer" do
+    subject.indexer.should_receive(:setup)
+    subject.indexer.should_receive(:start)
     subject.run
   end
 

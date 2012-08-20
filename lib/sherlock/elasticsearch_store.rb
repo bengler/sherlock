@@ -1,3 +1,5 @@
+require_relative './pebble_store'
+
 class Sherlock
   class ElasticsearchStore < PebbleStore
 
