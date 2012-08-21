@@ -1,7 +1,6 @@
-
-require 'pebblebed'
 require 'sherlock'
 require 'search'
+require 'pebblebed'
 ENV['RACK_ENV'] ||= 'test'
 
 
@@ -26,7 +25,7 @@ describe Sherlock do
   let(:post) {
     { :event => 'create',
       :uid => uid,
-      :attributes => {"document" => {:app => "ok"}}
+      :attributes => {"document" => {:app => "hot"}}
     }
   }
 
@@ -48,7 +47,7 @@ describe Sherlock do
       river.publish(post)
       subject.run(indexer_options)
       sleep 1.2
-      result = Search.perform_query("hell", "ok")
+      result = Search.perform_query("hell", "hot")
       result['hits']['total'].should eq 1
       result['hits']['hits'].first['_id'].should eq uid
     end
@@ -71,7 +70,7 @@ describe Sherlock do
       sleep 1.2
       river.publish(post.merge(:event => 'delete'))
       sleep 1.2
-      result = Search.perform_query("hell", "ok")
+      result = Search.perform_query("hell", "hot")
       result['hits']['total'].should eq 0
     end
 

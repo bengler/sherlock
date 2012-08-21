@@ -1,3 +1,5 @@
+require 'pebblebed'
+
 module Search
 
   NotIndexed = Class.new
