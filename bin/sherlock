@@ -4,10 +4,7 @@ Thread.abort_on_exception = true
 
 require './lib/sherlock'
 
-Dir.glob('./lib/groups/*.rb').each { |stream_group| require stream_group }
-
 sherlock = Sherlock.new
-sherlock.stream_groups << APDMBageraStreamGroup.new
 sherlock.run
 
 sleep

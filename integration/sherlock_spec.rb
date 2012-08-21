@@ -4,40 +4,86 @@ require 'sherlock'
 require 'search'
 ENV['RACK_ENV'] ||= 'test'
 
-# post directly to river
-  # something that matches
-  # something that does not match
-    # is not in es
-# listen to river
-# get all create, update, delete posts
-# process these
-  # create: exists in elasticsearch
-  # delete: not in es
-  # update: was changed in es
 
 Thread.abort_on_exception = true
 
 describe Sherlock do
 
-  indexer_options = {:name => 'a_purdy_name', :path => 'hell.pitchfork|realm.stuff', :klass => 'post.card'}
+  indexer_options = {:name => 'highway_to_hell', :path => 'hell.pitchfork|realm.stuff', :klass => 'post.card'}
 
   subject {
     Sherlock.new
   }
 
+  let(:river) {
+    Pebblebed::River.new
+  }
+
+  let(:uid) {
+    'post.card:hell.pitchfork$1'
+  }
+
+  let(:post) {
+    { :event => 'create',
+      :uid => uid,
+      :attributes => {"document" => {:app => "ok"}}
+    }
+  }
+
   before(:each) do
     Sherlock.environment = 'test'
     Sherlock.config
+    river.queue(:name => 'highway_to_hell').purge
   end
 
-  it "creates!" do
-    river = Pebblebed::River.new
-    river.publish(:event => 'create', :uid => 'post.card:hell.pitchfork$1', :attributes => {"document" => {:app => "ok"}})
-    subject.run(indexer_options)
-    sleep 1.2
-    result = Search.perform_query("hell", "ok")
-    result['hits']['total'].should eq 1
-    result['hits']['hits'].first['_id'].should eq "post.card:hell.pitchfork$1"
+  after(:each) do
+    Search.delete_entire_index('hell')
+    river.queue(:name => 'highway_to_hell').purge
   end
+
+
+  context "posts to river" do
+
+    it "finds a created post with query" do
+      river.publish(post)
+      subject.run(indexer_options)
+      sleep 1.2
+      result = Search.perform_query("hell", "ok")
+      result['hits']['total'].should eq 1
+      result['hits']['hits'].first['_id'].should eq uid
+    end
+
+    it "udpates an existing post" do
+      river.publish(post)
+      subject.run(indexer_options)
+      sleep 1.2
+      update_post = {:event => 'update', :uid => uid, :attributes => {"document" => {:app => "lukewarm"}}}
+      river.publish(update_post)
+      sleep 1.2
+      result = Search.perform_query("hell", "lukewarm")
+      result['hits']['total'].should eq 1
+      result['hits']['hits'].first['_id'].should eq uid
+    end
+
+    it "removes index for deleted post" do
+      river.publish(post)
+      subject.run(indexer_options)
+      sleep 1.2
+      river.publish(post.merge(:event => 'delete'))
+      sleep 1.2
+      result = Search.perform_query("hell", "ok")
+      result['hits']['total'].should eq 0
+    end
+
+    it "does not find the post using non-matching query" do
+      river.publish(post)
+      subject.run(indexer_options)
+      sleep 1.2
+      result = Search.perform_query("hell", "lukewarm")
+      result['hits']['total'].should eq 0
+    end
+
+  end
+
 
 end
