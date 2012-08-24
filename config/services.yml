@@ -16,13 +16,13 @@ test:
 staging:
   grove:
     session: 'abc'
-    host: 'grove.staging.o5.dev'
+    host: 'pebbles.staging.o5.dev'
   elasticsearch:
     host: 'localhost:9200'
 
 production:
   grove:
     session: 'abc'
-    host: 'grove.o5.no'
+    host: 'pebbles.o5.no'
   elasticsearch:
     host: 'localhost:9200'

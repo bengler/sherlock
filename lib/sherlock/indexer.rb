@@ -1,19 +1,30 @@
 require 'pebblebed'
 
-class Sherlock
+module Sherlock
 
   class Indexer
 
     attr_reader :interval, :subscription
 
-    def initialize
-      # nothing here yet
-    end
+    def initialize(options = nil)
+      #TODO: fix these defaults, maybe read from config/river_subscription.yml or somesuch
+      defaults = {:name => 'highway_to_hell',
+                  :path => 'hell.*|realm.stuff',
+                  :klass => 'post.card',
+                  :interval => 1}
 
-    def setup(options = {})
-      @interval = options[:interval] || 1
+      options ||= defaults
+      @interval = options[:interval]
       @subscription = {:name => options[:name], :path => options[:path], :klass => options[:klass]}
     end
+
+    def build_index_record(payload)
+      result = payload['attributes']
+      result['realm'] = Pebblebed::Uid.new(payload['uid']).realm
+      result['uid'] = payload['uid']
+      result
+    end
+
 
     def start
       @thread = Thread.new do
@@ -37,11 +48,19 @@ class Sherlock
     end
 
     def consider(message)
-      object = JSON.parse(message[:payload])
-      klass, path, oid = Pebblebed::Uid.parse(object['uid'])
-      realm = path.split(".").first
-      Search.index_this(object.merge('realm' => realm))
+      payload = JSON.parse message[:payload]
+      record = build_index_record payload
+
+      event = payload['event']
+      if event == 'create' || event == 'update'
+        Search.index record
+      elsif event == 'delete'
+        Search.unindex record
+      else
+        LOGGER.warn "Sherlock indexer says: Unknown event type #{event}"
+      end
     end
 
   end
+
 end

@@ -1,37 +1,17 @@
 Dir.glob('./lib/sherlock/**/*.rb').each { |lib| require lib }
 require 'yaml'
 
-class Sherlock
+module Sherlock
 
   class << self
-    def config
-      unless @config
-        path = File.expand_path(File.join(File.dirname(__FILE__), '../'))
-        @config = YAML.load(File.read("#{path}/configure.yml"))[environment]
-      end
-      @config
-    end
-
-    def environment
-      @environment ||= (ENV['RACK_ENV'] || 'development')
-    end
-
-    def environment=(value)
-      @config = nil
-      @environment = value
-    end
+    attr_reader :config, :indexer
   end
 
+  @config = Sherlock::Config.new
+  @indexer = Sherlock::Indexer.new
 
-  attr_reader :indexer
-
-  def initialize
-    @indexer = Indexer.new
-  end
-
-  def run(indexer_options = {})
-    indexer.setup(indexer_options)
-    indexer.start
+  def self.start_indexer
+    @indexer.start
   end
 
 end
