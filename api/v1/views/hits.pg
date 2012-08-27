@@ -1,14 +1,13 @@
-return [] if hits.nil?
 collection :hits => hits do |hit|
   partial :hit, :hit => hit
 end
 
-begin
-  if pagination
-    node :pagination => pagination do
-      attributes :limit, :offset, :last_page
-    end
-  end
-rescue NameError
-  # Ok. No pagination provided
-end
+# begin
+#   if pagination
+#     node :pagination => pagination do
+#       attributes :limit, :offset, :last_page
+#     end
+#   end
+# rescue NameError
+#   # Ok. No pagination provided
+# end

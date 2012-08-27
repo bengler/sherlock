@@ -1,22 +1,3 @@
-return {:hit => nil} unless hit
-
 node :hit => hit do
-  attributes :id,
-             :external_uid,
-             :path,
-             :total_count,
-             :positive_count,
-             :negative_count,
-             :neutral_count,
-             :positive,
-             :negative,
-             :average,
-             :controversiality, 
-             :histogram, 
-             :created_at
-
-  # deprecated
-  node :positive_score => hit.positive
-  node :negative_score => hit.negative
-  node :average_score => hit.average
+  attributes :uid, :document, :created_by, :created_at, :updated_at, :tags, :external_id, :paths, :restricted, :conflicted
 end

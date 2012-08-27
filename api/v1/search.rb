@@ -7,9 +7,13 @@ class SherlockV1 < Sinatra::Base
   end
 
   get '/search/:realm/:query' do |realm, query|
-    LOGGER.error "BAM!! Search realm #{realm} for #{query}"
-    result = Search.perform_query(realm, query)
-    pg :hits, :locals => {:hits => result['hits']}
+    result = nil
+    begin
+      result = Sherlock::Search.perform_query(realm, query)
+    rescue Pebblebed::HttpError => e
+      LOGGER.warn "Search for #{query} in #{realm} failed. #{e.message}"
+    end
+    pg :hits, :locals => {:hits => Sherlock::HitsPresenter.new(result).hits}
   end
 
 end

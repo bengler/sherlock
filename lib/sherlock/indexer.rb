@@ -6,16 +6,17 @@ module Sherlock
 
     attr_reader :interval, :subscription
 
-    def initialize(options = nil)
-      #TODO: fix these defaults, maybe read from config/river_subscription.yml or somesuch
-      defaults = {:name => 'highway_to_hell',
-                  :path => 'hell.*|realm.stuff',
-                  :klass => 'post.card',
-                  :interval => 1}
-
-      options ||= defaults
+    def initialize(options = {})
+      options.merge! default_options
       @interval = options[:interval]
       @subscription = {:name => options[:name], :path => options[:path], :klass => options[:klass]}
+    end
+
+    def default_options
+      {:name => 'highway_to_hell',
+       :path => 'hell.*|realm.stuff',
+       :klass => 'post.card',
+       :interval => 1}
     end
 
     def build_index_record(payload)

@@ -1,6 +1,15 @@
 sherlock
 ========
 
+
+
+## TODO
+
+- http query
+- rebuild es index
+- checkpoint integration and auth..
+
+
 Sherlock is the glue between various pebbles and elastic search.
 
 
