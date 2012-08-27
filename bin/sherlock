@@ -1,10 +1,40 @@
 #!/usr/bin/env ruby
 
-Thread.abort_on_exception = true
+require 'main'
 
-require './lib/sherlock'
+ARGV.replace ['--help'] if ARGV.empty?
 
-sherlock = Sherlock.new
-sherlock.run
+Main do
 
-sleep
+  mode('reindex') do
+
+    option('from=FROM') {
+      argument :optional
+      default 0
+      description 'Index grove starting at post.id {n}'
+    }
+
+    def run
+      puts "Indexing from post id #{params['from'].value}"
+      require './lib/sherlock'
+
+      # GroveIndexer.new.run ... or something
+    end
+  end
+
+  mode('run') do
+    def run
+
+      Thread.abort_on_exception = true
+
+      require './lib/sherlock'
+
+      sherlock = Sherlock.new
+      sherlock.run
+
+      sleep
+
+    end
+  end
+
+end

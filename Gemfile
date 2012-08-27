@@ -7,6 +7,8 @@ gem 'rack-contrib', :git => 'git://github.com/rack/rack-contrib.git'
 gem 'pebblebed'
 gem 'petroglyph'
 
+gem 'main', :require => false
+
 group :development do
   gem 'sinatra-contrib'
 end
