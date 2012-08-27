@@ -25,10 +25,9 @@ module Sherlock
       attr_reader :limit, :offset, :last_page
 
       def initialize(limit, offset, total)
-        @limit = limit
-        @offset = offset
-        @last_page = offset >= total - limit
-
+        @limit = limit.to_i
+        @offset = offset.to_i
+        @last_page = @offset >= total - @limit
       end
 
     end

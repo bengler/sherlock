@@ -52,7 +52,7 @@ describe 'API v1 search' do
       result['hits'].should eq []
     end
 
-    xit "honors limit and offset" do
+    it "honors limit and offset" do
       Sherlock::Search.index record
       Sherlock::Search.index another_record
       sleep 1.4

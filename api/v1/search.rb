@@ -7,8 +7,8 @@ class SherlockV1 < Sinatra::Base
   end
 
   get '/search/:realm/:query' do |realm, query|
-    limit = params.fetch(:limit) { 10 }
-    offset = params.fetch(:offset) { 0 }
+    limit = params.fetch('limit') { 10 }
+    offset = params.fetch('offset') { 0 }
     result = nil
     begin
       result = Sherlock::Search.perform_query(realm, query, {:size => limit, :from => offset})
