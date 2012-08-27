@@ -52,6 +52,17 @@ describe 'API v1 search' do
       result['hits'].should eq []
     end
 
+    xit "honors limit and offset" do
+      Sherlock::Search.index record
+      Sherlock::Search.index another_record
+      sleep 1.4
+      get "/search/#{realm}/hot", :limit => 1, :offset => 1
+      result = JSON.parse(last_response.body)
+      result['hits'].map do |hit|
+        hit['hit']['document']
+      end.should eq [{'app' => 'hot stuff'}]
+    end
+
   end
 
 end

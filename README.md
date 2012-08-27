@@ -5,7 +5,8 @@ sherlock
 
 ## TODO
 
-- http query
+o http query
+  - pagination
 - rebuild es index
 - checkpoint integration and auth..
 
