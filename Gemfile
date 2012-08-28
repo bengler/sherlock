@@ -5,6 +5,7 @@ gem 'sinatra'
 gem 'rack-contrib', :git => 'git://github.com/rack/rack-contrib.git'
 gem 'pebblebed', :git => 'git@github.com:bengler/pebblebed.git', :branch => 'labels-expander'
 gem 'petroglyph'
+gem 'main', '~> 5.0.1'
 gem 'feedzirra' #wth?
 gem 'pebble_path'
 
