@@ -3,9 +3,10 @@ source :rubygems
 gem 'unicorn', '~> 4.1.1'
 gem 'sinatra'
 gem 'rack-contrib', :git => 'git://github.com/rack/rack-contrib.git'
-gem 'pebblebed'
+gem 'pebblebed', :git => 'git@github.com:bengler/pebblebed.git', :branch => 'labels-expander'
 gem 'petroglyph'
 gem 'feedzirra' #wth?
+gem 'pebble_path'
 
 group :development, :test do
   gem 'rspec'

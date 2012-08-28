@@ -11,13 +11,30 @@ GIT
     rack-contrib (1.1.0)
       rack (>= 0.9.1)
 
+GIT
+  remote: git@github.com:bengler/pebblebed.git
+  revision: 724ea793a57983f115b83cdc3e7a675332bc321e
+  branch: labels-expander
+  specs:
+    pebblebed (0.0.19)
+      activesupport
+      bunny
+      curb (>= 0.7.14)
+      deepstruct (>= 0.0.2)
+      futurevalue
+      i18n
+      nokogiri
+      pathbuilder
+      queryparams
+      yajl-ruby
+
 GEM
   remote: http://rubygems.org/
   specs:
     activesupport (3.2.8)
       i18n (~> 0.6)
       multi_json (~> 1.0)
-    backports (2.6.3)
+    backports (2.6.4)
     builder (3.0.0)
     bunny (0.8.0)
     curb (0.8.1)
@@ -39,17 +56,8 @@ GEM
     multi_json (1.3.6)
     nokogiri (1.5.5)
     pathbuilder (0.0.2)
-    pebblebed (0.0.19)
-      activesupport
-      bunny
-      curb (>= 0.7.14)
-      deepstruct (>= 0.0.2)
-      futurevalue
-      i18n
-      nokogiri
-      pathbuilder
-      queryparams
-      yajl-ruby
+    pebble_path (0.0.2)
+      pebblebed (>= 0.0.15)
     petroglyph (0.0.3)
       tilt
     queryparams (0.0.3)
@@ -93,7 +101,8 @@ PLATFORMS
 DEPENDENCIES
   bengler_test_helper!
   feedzirra
-  pebblebed
+  pebble_path
+  pebblebed!
   petroglyph
   rack-contrib!
   rspec
