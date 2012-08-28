@@ -4,6 +4,8 @@ require 'main'
 
 ARGV.replace ['--help'] if ARGV.empty?
 
+ENV['RACK_ENV'] ||= 'development'
+
 Main do
 
   mode('reindex') do
