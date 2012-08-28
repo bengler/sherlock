@@ -53,7 +53,7 @@ module Sherlock
       record = build_index_record payload
 
       event = payload['event']
-      if event == 'create' || event == 'update'
+      if event == 'create' || event == 'update' || event == 'exists'
         Search.index record
       elsif event == 'delete'
         Search.unindex record
