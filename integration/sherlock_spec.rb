@@ -6,7 +6,9 @@ Thread.abort_on_exception = true
 
 describe Sherlock do
 
-  indexer_options = {:name => 'highway_to_hell', :path => 'hell.pitchfork|realm.stuff', :klass => 'post.card'}
+  subject {
+    Sherlock::Indexer.new({:name => 'highway_to_hell', :path => 'hell.pitchfork', :klass => 'post.card'})
+  }
 
   let(:river) {
     Pebblebed::River.new
@@ -33,7 +35,7 @@ describe Sherlock do
 
     it "finds a created post with query" do
       river.publish(post)
-      Sherlock.start_indexer
+      subject.start
       sleep 1.4
       result = Sherlock::Search.perform_query("hell", "hot")
       result['hits']['total'].should eq 1
@@ -42,7 +44,7 @@ describe Sherlock do
 
     it "udpates an existing post" do
       river.publish(post)
-      Sherlock.start_indexer
+      subject.start
       sleep 1.4
       update_post = {:event => 'update', :uid => uid, :attributes => {"document" => {:app => "lukewarm"}}}
       river.publish(update_post)
@@ -56,7 +58,7 @@ describe Sherlock do
 
     it "removes index for deleted post" do
       river.publish(post)
-      Sherlock.start_indexer
+      subject.start
       sleep 1.4
       river.publish(post.merge(:event => 'delete'))
       sleep 1.4
@@ -66,7 +68,7 @@ describe Sherlock do
 
     it "does not find the post using non-matching query" do
       river.publish(post)
-      Sherlock.start_indexer
+      subject.start
       sleep 1.4
       result = Sherlock::Search.perform_query("hell", "lukewarm")
       result['hits']['total'].should eq 0
