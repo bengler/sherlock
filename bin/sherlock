@@ -29,8 +29,8 @@ Main do
 
       require './lib/sherlock'
 
-      sherlock = Sherlock.new
-      sherlock.run
+      sherlock = Sherlock::Indexer.new
+      sherlock.start
 
       sleep
 

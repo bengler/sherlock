@@ -14,8 +14,9 @@ module Sherlock
 
     def default_options
       {:name => 'sherlock.index',
-       :path => '*',
-       :klass => '*',
+       :path => '**',
+       :klass => '**',
+       :event => '**',
        :interval => 1}
     end
 
