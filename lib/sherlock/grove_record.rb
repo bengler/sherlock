@@ -4,7 +4,7 @@ module Sherlock
   class GroveRecord
 
     attr_reader :klass, :path, :oid
-    
+
     def initialize(payload)
       @payload = payload
       @klass, @path, @oid = Pebblebed::Uid.parse(payload['uid'])
@@ -12,23 +12,20 @@ module Sherlock
     end
 
     def to_hash
-      parse
-      flatten
-      expand
-      {}
-    end
-
-    def parse
+      flatten.merge(expand)
     end
 
     def flatten
-      return flatten_hash(@payload)
+      @flattened ||= flatten_hash(@payload)
     end
 
     def expand
-      klasses = Pebblebed::Labels.new(klass, :prefix => 'klass', :suffix => '')
-      labels = Pebblebed::Labels.new(path, :suffix => '', :stop => '<END>')
-      klasses.expanded.merge(labels.expanded).merge('oid_' => oid)
+      unless @expanded
+        klasses = Pebblebed::Labels.new(klass, :prefix => 'klass', :suffix => '')
+        labels = Pebblebed::Labels.new(path, :suffix => '', :stop => '<END>')
+        @expanded = klasses.expanded.merge(labels.expanded).merge('oid_' => oid)
+      end
+      @expanded
     end
 
 
