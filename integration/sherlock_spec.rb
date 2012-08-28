@@ -23,10 +23,6 @@ describe Sherlock do
     }
   }
 
-  before(:each) do
-    river.queue(:name => 'highway_to_hell').purge
-  end
-
   after(:each) do
     Sherlock::Search.delete_index('hell')
     river.queue(:name => 'highway_to_hell').purge
