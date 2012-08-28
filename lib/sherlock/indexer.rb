@@ -21,6 +21,7 @@ module Sherlock
     end
 
     def build_index_record(payload)
+      # Sherlock::GroveRecord.new(payload).to_hash
       result = payload['attributes']
       result['realm'] = Pebblebed::Uid.new(payload['uid']).realm
       result['uid'] = payload['uid']
