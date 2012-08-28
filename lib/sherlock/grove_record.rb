@@ -3,12 +3,26 @@ require 'pebblebed'
 module Sherlock
   class GroveRecord
 
-    attr_reader :klass, :path, :oid
-
+    attr_reader :uid
     def initialize(payload)
       @payload = payload
-      @klass, @path, @oid = Pebblebed::Uid.parse(payload['uid'])
-      @oid = @oid.to_i
+      @uid = Pebblebed::Uid.new(payload['uid'])
+    end
+
+    def realm
+      uid.realm
+    end
+
+    def klass
+      uid.klass
+    end
+
+    def path
+      uid.path
+    end
+
+    def oid
+      @oid ||= uid.oid.to_i
     end
 
     def to_hash
