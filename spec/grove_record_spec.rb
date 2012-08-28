@@ -29,12 +29,14 @@ describe Sherlock::GroveRecord do
 
     let(:payload) {
       { 'uid' => 'post.card:hell.flames$1234',
+        'attributes' => {
         'document' => {
-          'a' => 1,
-          'b' => 2,
-          'c' => {
-            'd' => 3,
-            'e' => 4
+            'a' => 1,
+            'b' => 2,
+            'c' => {
+              'd' => 3,
+              'e' => 4
+            }
           }
         }
       }
@@ -46,7 +48,6 @@ describe Sherlock::GroveRecord do
 
     it "flattens a document hash" do
       expected = {
-        'uid' => 'post.card:hell.flames$1234',
         'document.a' => 1,
         'document.b' => 2,
         'document.c.d' => 3,

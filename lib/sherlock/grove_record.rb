@@ -26,11 +26,11 @@ module Sherlock
     end
 
     def to_hash
-      flatten.merge(expand)
+      flatten.merge(expand).merge('realm' => realm, 'uid' => uid.to_s)
     end
 
     def flatten
-      @flattened ||= flatten_hash(@payload)
+      @flattened ||= flatten_hash(@payload['attributes'])
     end
 
     def expand
@@ -41,7 +41,6 @@ module Sherlock
       end
       @expanded
     end
-
 
     def flatten_hash(hash_to_flatten, parent_key = "")
       result = {}
