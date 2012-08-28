@@ -13,9 +13,9 @@ module Sherlock
     end
 
     def default_options
-      {:name => 'highway_to_hell',
-       :path => 'hell.*|realm.stuff',
-       :klass => 'post.card',
+      {:name => 'sherlock.index',
+       :path => '*',
+       :klass => '*',
        :interval => 1}
     end
 
