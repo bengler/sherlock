@@ -12,13 +12,15 @@ describe 'API v1 search' do
     TestSherlockV1
   end
 
+  let(:realm) {
+    'hell'
+  }
 
-  describe "GET /search/:realm/:uid?" do
+  after(:each) do
+    Sherlock::Search.delete_index(realm)
+  end
 
-    let(:realm) {
-      'hell'
-    }
-
+  describe "GET /search/:realm/?:uid?" do
     let(:uid) {
       'post.card:hell.pitchfork$1'
     }
@@ -31,13 +33,14 @@ describe 'API v1 search' do
       {'document' => {'app' => 'hot stuff'}, 'realm' => realm, 'uid' => 'post.card:hell.pitchfork$2'}
     }
 
-    after(:each) do
-      Sherlock::Search.delete_index(realm)
-    end
+    let(:excluded_record) {
+      {'document' => {'excluded' => 'burning'}, 'realm' => realm, 'uid' => 'post.card:hell.flames$3'}
+    }
 
     it 'finds existing record' do
       Sherlock::Search.index record
       Sherlock::Search.index another_record
+      Sherlock::Search.index excluded_record
       sleep 1.4
       get "/search/#{realm}/", :q => "hot"
       result = JSON.parse(last_response.body)
@@ -85,6 +88,61 @@ describe 'API v1 search' do
         end.should eq [{'app' => 'hot'}]
       end
 
+    end
+
+  end
+
+  describe '/search/post.card:hell.*' do
+
+    let(:record) {
+      uid = 'post.card:hell.flames.devil$1'
+      Sherlock::GroveRecord.new(uid, {'document' => {'app' => 'hot'}, 'realm' => realm, 'uid' => uid}).to_hash
+    }
+
+    let(:another_record) {
+      uid = 'post.card:hell.flames.pitchfork$2'
+      Sherlock::GroveRecord.new(uid, {'document' => {'other' => 'hot stuff'}, 'realm' => realm, 'uid' => uid}).to_hash
+    }
+
+    let(:excluded_record) {
+      uid = 'post.card:hell.heck.weird$3'
+      Sherlock::GroveRecord.new(uid, {'document' => {'excluded' => 'hot'}, 'realm' => realm, 'uid' => uid}).to_hash
+    }
+
+    it "works" do
+      Sherlock::Search.index record
+      Sherlock::Search.index another_record
+      Sherlock::Search.index excluded_record
+      sleep 1
+
+      get '/search/post.card:hell.flames.*'
+      query = {
+        "query" => {
+          "filtered" => {
+            "query" => {
+              "query_string" => {
+                "query" => "hot"
+              }
+            },
+            "filter" => {
+              "bool" => {
+                "must" => [
+                  {"term" => { "label_0_" => "hell"}},
+                  {"term" => { "label_1_" => 'flames'}}
+                ]
+              }
+            }
+          }
+        }
+      }
+
+      root_url = "http://localhost:9200"
+      url = "#{root_url}/test_hell/_search"
+      response = Pebblebed::Http.get(url, {:source => query.to_json})
+      result = JSON.parse(response.body)
+      result['hits']['hits'].map do |hit|
+        hit['_source']['uid']
+      end.sort.should eq(["post.card:hell.flames.devil$1", "post.card:hell.flames.pitchfork$2"])
     end
 
   end

@@ -4,9 +4,9 @@ module Sherlock
   class GroveRecord
 
     attr_reader :uid
-    def initialize(payload)
-      @payload = payload
-      @uid = Pebblebed::Uid.new(payload['uid'])
+    def initialize(uid, record)
+      @record = record
+      @uid = Pebblebed::Uid.new(uid)
     end
 
     def realm
@@ -30,7 +30,7 @@ module Sherlock
     end
 
     def flatten
-      @flattened ||= flatten_hash(@payload['attributes'])
+      @flattened ||= flatten_hash(@record)
     end
 
     def expand

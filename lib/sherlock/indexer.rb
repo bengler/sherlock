@@ -21,7 +21,7 @@ module Sherlock
     end
 
     def build_index_record(payload)
-      Sherlock::GroveRecord.new(payload).to_hash
+      Sherlock::GroveRecord.new(payload['uid'], payload['attributes']).to_hash
     end
 
 

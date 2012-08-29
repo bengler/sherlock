@@ -4,7 +4,7 @@ describe Sherlock::GroveRecord do
 
   describe "#expand" do
 
-    subject { Sherlock::GroveRecord.new({'uid' => 'post.card:hell.flames$1234'}) }
+    subject { Sherlock::GroveRecord.new('post.card:hell.flames$1234', {}) }
 
     its(:klass) { should eq('post.card') }
     its(:path) { should eq('hell.flames') }
@@ -24,25 +24,23 @@ describe Sherlock::GroveRecord do
 
   end
 
-  describe "#flatten" do 
+  describe "#flatten" do
 
-    let(:payload) {
-      { 'uid' => 'post.card:hell.flames$1234',
-        'attributes' => {
+    let(:record) {
+      {
         'document' => {
-            'a' => 1,
-            'b' => 2,
-            'c' => {
-              'd' => 3,
-              'e' => 4
-            }
+          'a' => 1,
+          'b' => 2,
+          'c' => {
+            'd' => 3,
+            'e' => 4
           }
         }
       }
     }
 
     subject {
-      Sherlock::GroveRecord.new(payload)
+      Sherlock::GroveRecord.new('post.card:hell.flames$1234', record)
     }
 
     it "flattens a document hash" do

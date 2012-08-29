@@ -6,7 +6,7 @@ class SherlockV1 < Sinatra::Base
     also_reload 'lib/search.rb'
   end
 
-  get '/search/:realm/:uid?' do |realm, uid|
+  get '/search/:realm/?:uid?' do |realm, uid|
     limit = params.fetch('limit') { 10 }
     offset = params.fetch('offset') { 0 }
     options = {
@@ -14,8 +14,9 @@ class SherlockV1 < Sinatra::Base
       :from => offset,
       :q => params[:q]
     }
-    options[:uid] = uid if uid && uid != "*:*" # ignore wildcard uids
+    options[:uid] = uid if uid && uid != "*:*" # ignore complete wildcard uids
     result = nil
+    query = params['q']
     begin
       result = Sherlock::Search.query(realm, options)
     rescue Pebblebed::HttpError => e
