@@ -22,7 +22,7 @@ describe Sherlock::Search do
   it "indexes a record" do
     Sherlock::Search.index record
     sleep 1.4
-    result = Sherlock::Search.query(realm, "hot")
+    result = Sherlock::Search.query(realm, :q => "hot")
     result['hits']['total'].should eq 1
     result['hits']['hits'].first['_id'].should eq uid
   end
@@ -30,7 +30,7 @@ describe Sherlock::Search do
   it "does not find something thats not there" do
     Sherlock::Search.index record
     sleep 1.4
-    result = Sherlock::Search.query(realm, "lukewarm")
+    result = Sherlock::Search.query(realm, :q => "lukewarm")
     result['hits']['total'].should eq 0
   end    
 
@@ -39,9 +39,9 @@ describe Sherlock::Search do
     update_record = {'document' => {'app' => 'lukewarm'}, 'realm' => realm, 'uid' => uid}
     Sherlock::Search.index update_record
     sleep 1.4
-    result = Sherlock::Search.query(realm, "hot")
+    result = Sherlock::Search.query(realm, :q => "hot")
     result['hits']['total'].should eq 0
-    result = Sherlock::Search.query(realm, "lukewarm")
+    result = Sherlock::Search.query(realm, :q => "lukewarm")
     result['hits']['total'].should eq 1
     result['hits']['hits'].first['_id'].should eq uid
   end
@@ -51,7 +51,7 @@ describe Sherlock::Search do
     sleep 1.4
     Sherlock::Search.unindex record
     sleep 1.4
-    result = Sherlock::Search.query(realm, "hot")
+    result = Sherlock::Search.query(realm, :q => "hot")
     result['hits']['total'].should eq 0
   end
 
@@ -60,7 +60,7 @@ describe Sherlock::Search do
     sleep 1.4
     Sherlock::Search.delete_index(realm)
     sleep 1.4
-    lambda { Sherlock::Search.query(realm, "hot") }.should raise_error(Pebblebed::HttpError)
+    lambda { Sherlock::Search.query(realm, :q => "hot") }.should raise_error(Pebblebed::HttpError)
   end
 
 end

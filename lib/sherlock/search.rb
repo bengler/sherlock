@@ -37,11 +37,9 @@ module Sherlock
         Pebblebed::Uid.new(record['uid']).klass
       end
 
-      # Perform a very simple search query across all fields.
-      # Passes through options (such as :size, and :from) to elasticsearch.
-      def query(realm, query_string, options = {})
+      def query(realm, options = {})
         url = "#{root_url}/#{index_for(realm)}/_search"
-        options.merge!({:q => query_string, :default_operator => 'AND'})
+        options.merge!({:default_operator => 'AND'})
         response = Pebblebed::Http.get(url, options)
         JSON.parse(response.body)
       end

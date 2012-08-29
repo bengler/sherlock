@@ -14,7 +14,7 @@ describe Sherlock do
     end
 
     specify "elasticsearch is running" do
-      response = Pebblebed::Http.get("http://localhost:9200/")
+      response = Pebblebed::Http.get(Sherlock::Search.root_url)
       JSON.parse(response.body)['status'].should eq 200
     end
 
@@ -50,7 +50,7 @@ describe Sherlock do
       river.publish(post)
       subject.start
       sleep 1.4
-      result = Sherlock::Search.query("hell", "hot")
+      result = Sherlock::Search.query("hell", :q => "hot")
       result['hits']['total'].should eq 1
       result['hits']['hits'].first['_id'].should eq uid
     end
@@ -62,9 +62,9 @@ describe Sherlock do
       update_post = {:event => 'update', :uid => uid, :attributes => {"document" => {:app => "lukewarm"}}}
       river.publish(update_post)
       sleep 1.4
-      result = Sherlock::Search.query("hell", "hot")
+      result = Sherlock::Search.query("hell", :q => "hot")
       result['hits']['total'].should eq 0
-      result = Sherlock::Search.query("hell", "lukewarm")
+      result = Sherlock::Search.query("hell", :q => "lukewarm")
       result['hits']['total'].should eq 1
       result['hits']['hits'].first['_id'].should eq uid
     end
@@ -75,7 +75,7 @@ describe Sherlock do
       sleep 1.4
       river.publish(post.merge(:event => 'delete'))
       sleep 1.4
-      result = Sherlock::Search.query("hell", "hot")
+      result = Sherlock::Search.query("hell", :q => "hot")
       result['hits']['total'].should eq 0
     end
 
@@ -83,7 +83,7 @@ describe Sherlock do
       river.publish(post)
       subject.start
       sleep 1.4
-      result = Sherlock::Search.query("hell", "lukewarm")
+      result = Sherlock::Search.query("hell", :q => "lukewarm")
       result['hits']['total'].should eq 0
     end
 

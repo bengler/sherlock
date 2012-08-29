@@ -13,7 +13,7 @@ describe 'API v1 search' do
   end
 
 
-  describe "GET /search/:realm/:query" do
+  describe "GET /search/:realm/:uid?" do
 
     let(:realm) {
       'hell'
@@ -39,7 +39,7 @@ describe 'API v1 search' do
       Sherlock::Search.index record
       Sherlock::Search.index another_record
       sleep 1.4
-      get "/search/#{realm}/hot"
+      get "/search/#{realm}/", :q => "hot"
       result = JSON.parse(last_response.body)
       result['hits'].map do |hit|
         hit['hit']['document']
@@ -47,7 +47,7 @@ describe 'API v1 search' do
     end
 
     it 'delivers empty result set for non-existing index' do
-      get "/search/#{realm}/hot"
+      get "/search/#{realm}/", :q => "hot"
       result = JSON.parse(last_response.body)
       result['hits'].should eq []
     end
@@ -56,11 +56,35 @@ describe 'API v1 search' do
       Sherlock::Search.index record
       Sherlock::Search.index another_record
       sleep 1.4
-      get "/search/#{realm}/hot", :limit => 1, :offset => 1
+      get "/search/#{realm}/", :q => "hot", :limit => 1, :offset => 1
       result = JSON.parse(last_response.body)
       result['hits'].map do |hit|
         hit['hit']['document']
       end.should eq [{'app' => 'hot stuff'}]
+    end
+
+    context "evaluate uid" do
+
+      it "ignores complete wildcard uid" do
+        Sherlock::Search.index record
+        sleep 1.4
+        get "/search/#{realm}/*:*", :q => "hot"
+        result = JSON.parse(last_response.body)
+        result['hits'].map do |hit|
+          hit['hit']['document']
+        end.should eq [{'app' => 'hot'}]
+      end
+
+      it "finds a post based on uid" do
+        Sherlock::Search.index record
+        sleep 1.4
+        get "/search/#{realm}/post.card:hell.*"
+        result = JSON.parse(last_response.body)
+        result['hits'].map do |hit|
+          hit['hit']['document']
+        end.should eq [{'app' => 'hot'}]
+      end
+
     end
 
   end
