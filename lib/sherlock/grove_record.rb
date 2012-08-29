@@ -22,11 +22,11 @@ module Sherlock
     end
 
     def oid
-      @oid ||= uid.oid.to_i
+      @oid ||= uid.oid
     end
 
     def to_hash
-      flatten.merge(expand).merge('realm' => realm, 'uid' => uid.to_s)
+      flatten.merge(expand).merge('realm' => realm, 'uid' => uid)
     end
 
     def flatten

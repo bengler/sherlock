@@ -8,7 +8,7 @@ describe Sherlock::GroveRecord do
 
     its(:klass) { should eq('post.card') }
     its(:path) { should eq('hell.flames') }
-    its(:oid) { should eq(1234) }
+    its(:oid) { should eq('1234') }
     its(:realm) { should eq('hell') }
 
     it "expands metadata" do
@@ -18,7 +18,7 @@ describe Sherlock::GroveRecord do
         'label_0_' => 'hell',
         'label_1_' => 'flames',
         'label_2_' => '<END>',
-        'oid_' => 1234
+        'oid_' => '1234'
       }
       subject.expand.should eq(expected)
     end
