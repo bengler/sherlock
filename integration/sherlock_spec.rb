@@ -6,32 +6,45 @@ Thread.abort_on_exception = true
 
 describe Sherlock do
 
-  subject {
-    Sherlock::Indexer.new({:name => 'highway_to_hell', :path => 'hell.pitchfork', :klass => 'post.card'})
-  }
+  describe "vital system services are running" do
 
-  let(:river) {
-    Pebblebed::River.new
-  }
+    specify "rabbitmq is running" do
+      rabbitmq_status = `rabbitmqctl status`
+      rabbitmq_status.to_s.should match /{pid,\d+}/
+    end
 
-  let(:uid) {
-    'post.card:hell.pitchfork$1'
-  }
+    specify "elasticsearch is running" do
+      response = Pebblebed::Http.get("http://localhost:9200/")
+      JSON.parse(response.body)['status'].should eq 200
+    end
 
-  let(:post) {
-    { :event => 'create',
-      :uid => uid,
-      :attributes => {"document" => {:app => "hot"}}
-    }
-  }
-
-  after(:each) do
-    Sherlock::Search.delete_index('hell')
-    river.queue(:name => 'highway_to_hell').purge
   end
 
-
   context "posts to river" do
+
+    subject {
+      Sherlock::Indexer.new({:name => 'highway_to_hell', :path => 'hell.pitchfork', :klass => 'post.card'})
+    }
+
+    let(:river) {
+      Pebblebed::River.new
+    }
+
+    let(:uid) {
+      'post.card:hell.pitchfork$1'
+    }
+
+    let(:post) {
+      { :event => 'create',
+        :uid => uid,
+        :attributes => {"document" => {:app => "hot"}}
+      }
+    }
+
+    after(:each) do
+      Sherlock::Search.delete_index('hell')
+      river.queue(:name => 'highway_to_hell').purge
+    end
 
     it "finds a created post with query" do
       river.publish(post)
