@@ -58,90 +58,27 @@ describe 'API v1 search' do
       Sherlock::Search.index record
       Sherlock::Search.index another_record
       sleep 1.4
-      get "/search/#{realm}/", :q => "hot", :limit => 1, :offset => 1
+      get "/search/#{realm}", :q => "hot", :limit => 1, :offset => 1
       result = JSON.parse(last_response.body)
       result['hits'].map do |hit|
         hit['hit']['document']
       end.should eq ['hot stuff']
     end
-
-    xit "evaluate uid" do
-
-      it "ignores complete wildcard uid" do
-        Sherlock::Search.index record
-        sleep 1.4
-        get "/search/#{realm}/*:*", :q => "hot"
-        result = JSON.parse(last_response.body)
-        result['hits'].map do |hit|
-          hit['hit']['document']
-        end.should eq [{'app' => 'hot'}]
-      end
-
-      it "finds a post based on uid" do
-        Sherlock::Search.index record
-        Sherlock::Search.index another_record
-        sleep 1.4
-        get "/search/#{realm}/post.card:hell.*"
-        result = JSON.parse(last_response.body)
-        result['hits'].map do |hit|
-          hit['hit']['document']
-        end.should eq [{'app' => 'hot'}]
-      end
-
-    end
-
   end
 
   describe '/search/post.card:hell.*' do
-    let(:exact_record) {
-      uid = 'post.card:hell.flames$4'
-      Sherlock::GroveRecord.new(uid, {'document' => 'hot', 'uid' => uid}).to_hash
-    }
-
-
     it "works" do
       Sherlock::Search.index record
       Sherlock::Search.index another_record
       Sherlock::Search.index excluded_record
-      Sherlock::Search.index exact_record
       sleep 1
 
-      get '/search/post.card:hell.flames'
-      query = {
-        "query" => {
-          "filtered" => {
-            "query" => {
-              "query_string" => {
-                "query" => "hot"
-              }
-            },
-            "filter" => [
-              {
-                "bool" => {
-                  "must" => [
-                    {"term" => { "label_0_" => "hell"}},
-                    {"term" => { "label_1_" => 'flames'}}
-                  ],
-                }
-              },
-              {
-                "and" => {
-                  "missing" => {
-                    "field" => "label_2_"
-                  }
-                }
-              }
-            ]
-          }
-        }
-      }
+      get "/search/#{realm}/post.card:hell.flames.*", :q => "hot"
 
-      root_url = "http://localhost:9200"
-      url = "#{root_url}/test_hell/_search"
-      response = Pebblebed::Http.get(url, {:source => query.to_json})
-      result = JSON.parse(response.body)
-      result['hits']['hits'].map do |hit|
-        hit['_source']['uid']
+      result = JSON.parse(last_response.body)
+
+      result['hits'].map do |hit|
+        hit['hit']['uid']
       end.sort.should eq(["post.card:hell.flames.devil$1", "post.card:hell.flames.pitchfork$2"])
     end
 

@@ -1,0 +1,37 @@
+{
+  "query": {
+    "filtered": {
+      "query": {
+        "query_string": {
+          "query": "burning"
+        }
+      },
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "term": {
+                "klass_0_": "post"
+              }
+            },
+            {
+              "term": {
+                "klass_1_": "card"
+              }
+            },
+            {
+              "term": {
+                "label_0_": "hell"
+              }
+            },
+            {
+              "term": {
+                "label_1_": "flames"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

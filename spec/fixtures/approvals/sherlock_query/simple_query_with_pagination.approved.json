@@ -1,0 +1,9 @@
+{
+  "query": {
+    "query_string": {
+      "query": "blazing"
+    }
+  },
+  "size": 5,
+  "from": 10
+}

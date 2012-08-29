@@ -39,7 +39,6 @@ module Sherlock
 
       def query(realm, options = {})
         url = "#{root_url}/#{index_for(realm)}/_search"
-        options.merge!({:default_operator => 'AND'})
         response = Pebblebed::Http.get(url, options)
         JSON.parse(response.body)
       end

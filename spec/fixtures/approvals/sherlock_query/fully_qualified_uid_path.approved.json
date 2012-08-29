@@ -1,0 +1,46 @@
+{
+  "query": {
+    "filtered": {
+      "query": {
+        "query_string": {
+          "query": "scalding"
+        }
+      },
+      "filter": [
+        {
+          "bool": {
+            "must": [
+              {
+                "term": {
+                  "klass_0_": "post"
+                }
+              },
+              {
+                "term": {
+                  "klass_1_": "card"
+                }
+              },
+              {
+                "term": {
+                  "label_0_": "hell"
+                }
+              },
+              {
+                "term": {
+                  "label_1_": "flames"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "and": {
+            "missing": {
+              "field": "label_2_"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

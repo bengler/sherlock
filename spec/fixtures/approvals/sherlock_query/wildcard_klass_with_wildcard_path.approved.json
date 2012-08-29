@@ -1,0 +1,27 @@
+{
+  "query": {
+    "filtered": {
+      "query": {
+        "query_string": {
+          "query": "blistering"
+        }
+      },
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "term": {
+                "label_0_": "hell"
+              }
+            },
+            {
+              "term": {
+                "label_1_": "flames"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -8,10 +8,10 @@ gem 'petroglyph'
 gem 'main', '~> 5.0.1'
 gem 'pebble_path'
 gem 'feedzirra'
-gem 'eson-dsl'
 
 group :development, :test do
   gem 'rspec'
   gem 'bengler_test_helper',  :git => "git://github.com/bengler/bengler_test_helper.git"
   gem 'sinatra-contrib'
+  gem 'approvals'
 end

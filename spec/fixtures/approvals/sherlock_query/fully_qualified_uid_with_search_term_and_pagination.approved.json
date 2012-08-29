@@ -1,0 +1,48 @@
+{
+  "query": {
+    "filtered": {
+      "query": {
+        "query_string": {
+          "query": "fiery"
+        }
+      },
+      "filter": [
+        {
+          "bool": {
+            "must": [
+              {
+                "term": {
+                  "klass_0_": "post"
+                }
+              },
+              {
+                "term": {
+                  "klass_1_": "card"
+                }
+              },
+              {
+                "term": {
+                  "label_0_": "hell"
+                }
+              },
+              {
+                "term": {
+                  "label_1_": "flames"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "and": {
+            "missing": {
+              "field": "label_2_"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "size": 5,
+  "from": 10
+}
