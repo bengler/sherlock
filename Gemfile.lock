@@ -13,7 +13,7 @@ GIT
 
 GIT
   remote: git@github.com:bengler/pebblebed.git
-  revision: 724ea793a57983f115b83cdc3e7a675332bc321e
+  revision: b4bd1c0875e0adb82ca510108b49b988b5f423f7
   branch: labels-expander
   specs:
     pebblebed (0.0.19)
