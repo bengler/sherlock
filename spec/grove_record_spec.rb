@@ -17,7 +17,6 @@ describe Sherlock::GroveRecord do
         'klass_1_' => 'card',
         'label_0_' => 'hell',
         'label_1_' => 'flames',
-        'label_2_' => '<END>',
         'oid_' => '1234'
       }
       subject.expand.should eq(expected)

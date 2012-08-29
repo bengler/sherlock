@@ -36,7 +36,7 @@ module Sherlock
     def expand
       unless @expanded
         klasses = Pebblebed::Labels.new(klass, :prefix => 'klass', :suffix => '')
-        labels = Pebblebed::Labels.new(path, :suffix => '', :stop => '<END>')
+        labels = Pebblebed::Labels.new(path, :suffix => '')
         @expanded = klasses.expanded.merge(labels.expanded).merge('oid_' => oid)
       end
       @expanded

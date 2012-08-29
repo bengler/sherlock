@@ -25,3 +25,9 @@ Sherlock needs this to run:
 - pebblebed
 - rabbitmq (brew install rabbitmq)
 - elasticsearch (brew install elasticsearch)
+
+
+## ElasticSearch Notes
+
+We can filter against fields that explicitly do not exist
+http://www.elasticsearch.org/guide/reference/query-dsl/missing-filter.html
