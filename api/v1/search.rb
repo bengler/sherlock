@@ -11,7 +11,7 @@ class SherlockV1 < Sinatra::Base
     offset = params.fetch('offset') { 0 }
     result = nil
     begin
-      result = Sherlock::Search.perform_query(realm, query, {:size => limit, :from => offset})
+      result = Sherlock::Search.query(realm, query, {:size => limit, :from => offset})
     rescue Pebblebed::HttpError => e
       LOGGER.warn "Search for #{query} in #{realm} failed. #{e.message}"
     end
