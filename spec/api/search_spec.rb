@@ -93,13 +93,20 @@ describe 'API v1 search' do
   end
 
   describe '/search/post.card:hell.*' do
+    let(:exact_record) {
+      uid = 'post.card:hell.flames$4'
+      Sherlock::GroveRecord.new(uid, {'document' => 'hot', 'uid' => uid}).to_hash
+    }
+
+
     it "works" do
       Sherlock::Search.index record
       Sherlock::Search.index another_record
       Sherlock::Search.index excluded_record
+      Sherlock::Search.index exact_record
       sleep 1
 
-      get '/search/post.card:hell.flames.*'
+      get '/search/post.card:hell.flames'
       query = {
         "query" => {
           "filtered" => {
@@ -108,14 +115,23 @@ describe 'API v1 search' do
                 "query" => "hot"
               }
             },
-            "filter" => {
-              "bool" => {
-                "must" => [
-                  {"term" => { "label_0_" => "hell"}},
-                  {"term" => { "label_1_" => 'flames'}}
-                ]
+            "filter" => [
+              {
+                "bool" => {
+                  "must" => [
+                    {"term" => { "label_0_" => "hell"}},
+                    {"term" => { "label_1_" => 'flames'}}
+                  ],
+                }
+              },
+              {
+                "and" => {
+                  "missing" => {
+                    "field" => "label_2_"
+                  }
+                }
               }
-            }
+            ]
           }
         }
       }

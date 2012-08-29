@@ -8,6 +8,7 @@ gem 'petroglyph'
 gem 'main', '~> 5.0.1'
 gem 'pebble_path'
 gem 'feedzirra'
+gem 'eson-dsl'
 
 group :development, :test do
   gem 'rspec'
