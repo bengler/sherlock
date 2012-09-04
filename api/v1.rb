@@ -2,7 +2,6 @@
 require "json"
 require 'pebblebed/sinatra'
 require 'sinatra/petroglyph'
-require 'sinatra/reloader'
 
 Dir.glob("#{File.dirname(__FILE__)}/v1/**/*.rb").each{ |file| require file }
 
