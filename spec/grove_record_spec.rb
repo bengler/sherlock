@@ -1,4 +1,5 @@
 require 'sherlock/grove_record'
+require 'spec_helper'
 
 describe Sherlock::GroveRecord do
 

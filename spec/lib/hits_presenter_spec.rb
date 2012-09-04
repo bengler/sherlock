@@ -1,5 +1,6 @@
 require 'sherlock/hits_presenter'
 require 'deepstruct'
+require 'spec_helper'
 
 describe Sherlock::HitsPresenter do
 

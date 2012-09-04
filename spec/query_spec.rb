@@ -1,6 +1,7 @@
 require 'pebblebed'
 require 'sherlock/query'
 require 'approvals/rspec'
+require 'spec_helper'
 
 describe Sherlock::Query do
   specify "simple query" do

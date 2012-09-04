@@ -1,6 +1,4 @@
 require 'spec_helper'
-#require_relative '../../lib/sherlock/indexer'
-
 
 describe Sherlock::Indexer do
 

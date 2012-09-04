@@ -13,5 +13,6 @@ group :development, :test do
   gem 'rspec'
   gem 'bengler_test_helper',  :git => "git://github.com/bengler/bengler_test_helper.git"
   gem 'approvals'
+  gem 'simplecov'
   gem 'sinatra-contrib'
 end
