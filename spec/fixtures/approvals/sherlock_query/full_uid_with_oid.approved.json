@@ -6,46 +6,42 @@
           "query": "scorching"
         }
       },
-      "filter": [
-        {
-          "bool": {
-            "must": [
-              {
-                "term": {
-                  "klass_0_": "post"
-                }
-              },
-              {
-                "term": {
-                  "klass_1_": "card"
-                }
-              },
-              {
-                "term": {
-                  "label_0_": "hell"
-                }
-              },
-              {
-                "term": {
-                  "label_1_": "flames"
-                }
-              },
-              {
-                "term": {
-                  "oid_": "123"
-                }
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "term": {
+                "klass_0_": "post"
               }
-            ]
-          }
-        },
-        {
-          "and": {
-            "missing": {
-              "field": "label_2_"
+            },
+            {
+              "term": {
+                "klass_1_": "card"
+              }
+            },
+            {
+              "term": {
+                "label_0_": "hell"
+              }
+            },
+            {
+              "term": {
+                "label_1_": "flames"
+              }
+            },
+            {
+              "term": {
+                "oid_": "123"
+              }
+            },
+            {
+              "missing": {
+                "field": "label_2_"
+              }
             }
-          }
+          ]
         }
-      ]
+      }
     }
   }
 }

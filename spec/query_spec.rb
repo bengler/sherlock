@@ -22,7 +22,7 @@ describe Sherlock::Query do
     end
   end
 
-  specify "uid filter" do
+  specify "wildcard uid filter" do
     verify :format => :json do
       Sherlock::Query.new(nil, :uid => 'post.card:hell.flames.*').to_json
     end

@@ -84,4 +84,21 @@ describe 'API v1 search' do
 
   end
 
+  describe '/search/realm/fulluid' do
+    it "works" do
+      Sherlock::Search.index record
+      Sherlock::Search.index another_record
+      sleep 1
+
+      uid = 'post.card:hell.flames.devil$1'
+      get "/search/#{realm}/#{uid}", :q => 'hot'
+
+      result = JSON.parse(last_response.body)
+
+      result['hits'].map do |hit|
+        hit['hit']['uid']
+      end.sort.should eq([uid])
+    end
+
+  end
 end

@@ -45,13 +45,11 @@ module Sherlock
       must = klasses.expanded.merge(labels.expanded).merge(oids).map do |key, value|
         {:term => {key => value}}
       end
-      bool = {:bool => {:must => must}}
-      if Pebblebed::Uid.wildcard_path?(path)
-        {:filter => bool}
-      else
-        missing = {"and" => {:missing => {:field => labels.next}}}
-        {:filter => [bool, missing]}
+      unless Pebblebed::Uid.wildcard_path?(path)
+        must << {:missing => {:field => labels.next}}
       end
+      bool = {:bool => {:must => must}}
+      {:filter => bool}
     end
 
   end
