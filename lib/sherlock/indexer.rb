@@ -46,7 +46,7 @@ module Sherlock
     end
 
     def consider(message)
-      payload = JSON.parse message['payload']
+      payload = JSON.parse message[:payload]
       records = build_index_records payload
       records.each do |record|
         event = payload['event']

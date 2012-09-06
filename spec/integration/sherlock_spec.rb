@@ -1,7 +1,6 @@
 require 'spec_helper'
 require 'pebblebed'
 
-
 Thread.abort_on_exception = true
 
 describe Sherlock do
@@ -31,26 +30,37 @@ describe Sherlock do
     }
 
     let(:uid) {
-      'post.card:hell.pitchfork$1'
+      'post.card:hell.tools.pitchfork$1'
     }
 
     let(:post) {
       { :event => 'create',
         :uid => uid,
-        :attributes => {"document" => {:app => "hot"}}
+        :attributes => {
+          :document => {:app => "hot"},
+          :paths => ["hell.tools.pitchfork"]
+        }
       }
     }
 
     after(:each) do
+      #sleep 2
       Sherlock::Search.delete_index('hell')
       river.queue(:name => 'highway_to_hell').purge
+      river.queue(:name => 'sherlock.index').purge
+      river.queue(:name => 'river.index').purge
+    end
+
+    it "works" do
+      true.should eq true
     end
 
     it "finds a created post with query" do
       river.publish(post)
       subject.start
       sleep 1.4
-      result = Sherlock::Search.query("hell", :q => "hot")
+      query = Sherlock::Query.new("hot").to_json
+      result = Sherlock::Search.query("hell", :source => query)
       result['hits']['total'].should eq 1
       result['hits']['hits'].first['_id'].should eq uid
     end
@@ -59,7 +69,11 @@ describe Sherlock do
       river.publish(post)
       subject.start
       sleep 1.4
-      update_post = {:event => 'update', :uid => uid, :attributes => {"document" => {:app => "lukewarm"}}}
+      update_post = {
+        :event => 'update', 
+        :uid => uid, 
+        :attributes => {"document" => {:app => "lukewarm"}, :paths => ["hell.tools.pitchfork"]}
+      }
       river.publish(update_post)
       sleep 1.4
       result = Sherlock::Search.query("hell", :q => "hot")

@@ -54,7 +54,7 @@ describe Sherlock::Indexer do
     end
 
     it 'indexes every path entry' do
-      message = Hash['payload', multipath_payload.to_json]
+      message = Hash[:payload, multipath_payload.to_json]
       subject.consider message
       sleep 1.4
       query = Sherlock::Query.new("hot")
@@ -65,14 +65,14 @@ describe Sherlock::Indexer do
     end
 
     it 'it deletes the correct index' do
-      message = Hash['payload', multipath_payload.to_json]
+      message = Hash[:payload, multipath_payload.to_json]
       subject.consider message
       sleep 1.4
 
       deletion_payload = multipath_payload
       deletion_payload['attributes']['paths'] = ["hell.trademarks.pitchfork"]
       deletion_payload['event'] = 'delete'
-      message = Hash['payload', multipath_payload.to_json]
+      message = Hash[:payload, multipath_payload.to_json]
       subject.consider message
       sleep 1.4
 
