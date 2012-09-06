@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe Sherlock::Search do
@@ -22,6 +23,7 @@ describe Sherlock::Search do
   after(:each) do
     Sherlock::Search.delete_index(realm)
   end
+
 
   context "using the Query class" do
 
@@ -72,6 +74,5 @@ describe Sherlock::Search do
     end
 
   end
-
 
 end

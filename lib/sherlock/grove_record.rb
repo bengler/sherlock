@@ -26,7 +26,7 @@ module Sherlock
     end
 
     def to_hash
-      flatten.merge(expand).merge('realm' => realm, 'uid' => uid.to_s)
+      flatten.merge(expand).merge('realm' => realm, 'uid' => uid.to_s).reject{|key, value| key == 'paths'}
     end
 
     def flatten
@@ -53,6 +53,16 @@ module Sherlock
         end
       end
       result
+    end
+
+    def self.build_records(uid, attributes)
+      records = []
+      klass, path, oid = Pebblebed::Uid.parse(uid)
+      attributes['paths'].each do |new_path|
+        new_uid = "#{klass}:#{new_path}$#{oid}"
+        records << Sherlock::GroveRecord.new(new_uid, attributes).to_hash
+      end
+      records
     end
 
   end

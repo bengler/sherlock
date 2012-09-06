@@ -20,8 +20,9 @@ module Sherlock
        :interval => 1}
     end
 
-    def build_index_record(payload)
-      Sherlock::GroveRecord.new(payload['uid'], payload['attributes']).to_hash
+    def build_index_records(payload)
+      # create a record for each entry in paths
+      Sherlock::GroveRecord.build_records(payload['uid'], payload['attributes'])
     end
 
 
@@ -36,8 +37,6 @@ module Sherlock
       @thread = nil
     end
 
-    private
-
     def process
       river = Pebblebed::River.new
       queue = river.queue subscription
@@ -47,16 +46,17 @@ module Sherlock
     end
 
     def consider(message)
-      payload = JSON.parse message[:payload]
-      record = build_index_record payload
-
-      event = payload['event']
-      if event == 'create' || event == 'update' || event == 'exists'
-        Search.index record
-      elsif event == 'delete'
-        Search.unindex record
-      else
-        LOGGER.warn "Sherlock indexer says: Unknown event type #{event}"
+      payload = JSON.parse message['payload']
+      records = build_index_records payload
+      records.each do |record|
+        event = payload['event']
+        if event == 'create' || event == 'update' || event == 'exists'
+          Search.index record
+        elsif event == 'delete'
+          Search.unindex record
+        else
+          LOGGER.warn "Sherlock indexer says: Unknown event type #{event}"
+        end
       end
     end
 
