@@ -47,16 +47,27 @@ module Sherlock
 
     def consider(message)
       payload = JSON.parse message[:payload]
-      records = build_index_records payload
-      records.each do |record|
-        event = payload['event']
+      event = payload['event']
+
+      # find all records matching uid
+      uids = Search.matching_uids(payload['uid'])
+
+      # update index for new records
+      records_for_indexing = build_index_records payload
+      records_for_indexing.each do |record|
         if event == 'create' || event == 'update' || event == 'exists'
           Search.index record
         elsif event == 'delete'
-          Search.unindex record
+          Search.unindex record['uid']
         else
           LOGGER.warn "Sherlock indexer says: Unknown event type #{event}"
         end
+        uids.delete record['uid']
+      end
+
+      # unindex matching paths which were not mentioned
+      uids.each do |uid|
+        Search.unindex uid
       end
     end
 

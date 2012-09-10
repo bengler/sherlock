@@ -10,11 +10,11 @@ module Sherlock
       end
 
       def index(record)
-        Pebblebed::Http.put(url(record), record)
+        Pebblebed::Http.put(url(record['uid']), record)
       end
 
-      def unindex(record)
-        Pebblebed::Http.delete(url(record), record) # TODO finn ut hva param 2 skal ha
+      def unindex(uid)
+        Pebblebed::Http.delete(url(uid), nil)
       end
 
       def delete_index(realm)
@@ -25,22 +25,36 @@ module Sherlock
         end
       end
 
-      def url(record)
-        "#{root_url}/#{index_for(record['realm'])}/#{record_type(record)}/#{record['uid']}"
+      def url(uid_string)
+        uid = Pebblebed::Uid.new(uid_string)
+        "#{root_url}/#{index_for(uid.realm)}/#{uid.klass}/#{uid_string}"
       end
 
       def index_for(realm)
         "#{ENV['RACK_ENV']}_#{realm}"
       end
 
-      def record_type(record)
-        Pebblebed::Uid.new(record['uid']).klass
-      end
-
       def query(realm, options = {})
         url = "#{root_url}/#{index_for(realm)}/_search"
-        response = Pebblebed::Http.get(url, options)
-        JSON.parse(response.body)
+        result = nil
+        begin
+          response = Pebblebed::Http.get(url, options)
+          result = JSON.parse(response.body)
+        rescue Pebblebed::HttpError => e
+          raise e unless e.message =~ /IndexMissingException/
+          #TODO: We should return something prettier than nil if we get indexmissing/404, maybe something like an ordinary result?
+        end
+        result
+      end
+
+
+      def matching_uids(uid_string)
+        uid = Pebblebed::Uid.new(uid_string)
+        wildcard_uid = "#{uid.klass}:#{uid.realm}.*$#{uid.oid}"
+        query = Sherlock::Query.new(nil, :uid => wildcard_uid)
+        matching = Sherlock::Search.query(uid.realm, :source => query.to_json)
+        return [] unless matching
+        matching['hits']['hits'].map{|result| result['_id']}.compact
       end
 
     end

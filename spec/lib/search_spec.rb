@@ -15,6 +15,7 @@ describe Sherlock::Search do
     {'document' => {'app' => 'hot'}, 'realm' => realm, 'uid' => uid}
   }
 
+
   before(:each) do
     Sherlock::Search.index record
     sleep 1.4
@@ -61,16 +62,16 @@ describe Sherlock::Search do
     end
 
     it "removes index for a deleted record" do
-      Sherlock::Search.unindex record
+      Sherlock::Search.unindex record['uid']
       sleep 1.4
       result = Sherlock::Search.query(realm, :q => "hot")
       result['hits']['total'].should eq 0
     end
 
-    it "deletes the whole index" do
+    it "deletes the whole index and swallows index missing errors" do
       Sherlock::Search.delete_index(realm)
       sleep 1.4
-      lambda { Sherlock::Search.query(realm, :q => "hot") }.should raise_error(Pebblebed::HttpError)
+      lambda { Sherlock::Search.query(realm, :q => "hot") }.should_not raise_error(Pebblebed::HttpError)
     end
 
   end

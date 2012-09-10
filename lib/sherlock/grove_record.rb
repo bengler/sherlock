@@ -26,7 +26,7 @@ module Sherlock
     end
 
     def to_hash
-      flatten.merge(expand).merge('realm' => realm, 'uid' => uid.to_s).reject{|key, value| key == 'paths'}
+      flatten.merge(expand).merge('realm' => realm, 'uid' => uid.to_s)
     end
 
     def flatten
