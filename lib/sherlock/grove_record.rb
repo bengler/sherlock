@@ -26,7 +26,7 @@ module Sherlock
     end
 
     def to_hash
-      flatten.merge(expand).merge('realm' => realm, 'uid' => uid.to_s)
+      flatten.merge(expand).merge('realm' => realm, 'uid' => uid.to_s, 'pristine' => @record)
     end
 
     def flatten

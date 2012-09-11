@@ -1,7 +1,7 @@
 
 
 module Sherlock
-  
+
   class HitsPresenter
 
     attr_reader :hits, :pagination
@@ -9,7 +9,7 @@ module Sherlock
     def initialize(search_result, pagination_options)
       if search_result
         @hits = search_result['hits']['hits'].map do |hit|
-          DeepStruct.wrap(hit['_source'])
+          DeepStruct.wrap(hit['_source']['pristine'])
         end
         total = search_result['hits']['total']
       else

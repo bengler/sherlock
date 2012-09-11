@@ -34,24 +34,34 @@ describe Sherlock::Indexer do
 
 
   it "builds an index record from payload" do
-    expected_record =  {"document.app"=>"hot", "paths" => ["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$1", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$1"}
+    expected_record =  {"document.app"=>"hot", "paths" => ["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$1", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$1", "pristine"=>payload['attributes']}
     subject.build_index_records(payload).first.should eq expected_record
   end
 
   it "builds one index record for every path entry in payload" do
-    first_expected_record =  {"document.app"=>"hot", "paths"=>["hell.trademarks.pitchfork", "hell.tools.pitchfork"], "id"=>"post.card:hell.tools.pitchfork$1", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"trademarks", "label_2_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "uid"=>"post.card:hell.trademarks.pitchfork$1"}
-    last_expected_record =  {"document.app"=>"hot", "paths"=>["hell.trademarks.pitchfork", "hell.tools.pitchfork"], "id"=>"post.card:hell.tools.pitchfork$1", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"tools", "label_2_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "uid"=>"post.card:hell.tools.pitchfork$1"}
+    first_expected_record =  {"document.app"=>"hot", "paths"=>["hell.trademarks.pitchfork", "hell.tools.pitchfork"], "id"=>"post.card:hell.tools.pitchfork$1", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"trademarks", "label_2_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "uid"=>"post.card:hell.trademarks.pitchfork$1", "pristine"=>multipath_payload['attributes']}
+    last_expected_record =  {"document.app"=>"hot", "paths"=>["hell.trademarks.pitchfork", "hell.tools.pitchfork"], "id"=>"post.card:hell.tools.pitchfork$1", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"tools", "label_2_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "uid"=>"post.card:hell.tools.pitchfork$1", "pristine"=>multipath_payload['attributes']}
     records = subject.build_index_records(multipath_payload)
     records.count.should eq 2
     records.first.should eq first_expected_record
     records.last.should eq last_expected_record
   end
 
-  context 'index a post with multiple paths' do
+  context 'index a post' do
 
-    before(:each) do
-      Sherlock::Search.delete_index(realm)
+    it 'returns the conserved original document' do
+      message = Hash[:payload, payload.to_json]
+      subject.consider message
+      sleep 1.4
+      query = Sherlock::Query.new("hot")
+      result = Sherlock::Search.query(realm, :source => query.to_json)
+      result['hits']['total'].should eq 1
+      result['hits']['hits'].first['_source']['pristine'].should eq payload['attributes']
     end
+
+  end
+
+  context 'index a post with multiple paths' do
 
     after(:each) do
       Sherlock::Search.delete_index(realm)

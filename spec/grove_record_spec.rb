@@ -3,6 +3,28 @@ require 'spec_helper'
 
 describe Sherlock::GroveRecord do
 
+  describe "#build_records" do
+
+    let(:uid) {
+      'post.card:hell.tools.pitchfork$1'
+    }
+
+    let(:attributes) {
+      {
+        'document' => {'app' => 'hot'},
+        'paths' => ["hell.trademarks.pitchfork", "hell.tools.pitchfork"],
+        'id' => uid
+      }
+    }
+
+    it "conserves a non-flattened copy of document" do
+      records = Sherlock::GroveRecord.build_records('post.card:hell.flames$1234', attributes)
+      records.count.should eq 2
+      records.first['pristine'].should eq attributes
+    end
+
+  end
+
   describe "#expand" do
 
     subject { Sherlock::GroveRecord.new('post.card:hell.flames$1234', {}) }

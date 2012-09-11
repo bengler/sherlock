@@ -23,14 +23,14 @@ describe Sherlock::HitsPresenter do
             "_type"=>"post.card",
             "_id"=>"post.card:hell.pitchfork$1",
             "_score"=>0.10848885,
-            "_source"=>{"document"=>{"app"=>"hot"}, "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$1"}
+            "_source"=>{"document.app"=>"hot", "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$1", "pristine"=>{"document"=>{"app"=>"hot"}, "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$1"}}
           },
           {
             "_index"=>"test_hell",
             "_type"=>"post.card",
             "_id"=>"post.card:hell.pitchfork$2",
             "_score"=>0.09492774,
-            "_source"=>{"document"=>{"app"=>"hot stuff"}, "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$2"}
+            "_source"=>{"document.app"=>"hot stuff", "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$2", "pristine"=>{"document"=>{"app"=>"hot stuff"}, "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$1"}}
           }
         ]
       }
@@ -46,7 +46,7 @@ describe Sherlock::HitsPresenter do
   }
 
   it "has correct hits" do
-    expected = [{"document"=>{"app"=>"hot"}, "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$1"}, {"document"=>{"app"=>"hot stuff"}, "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$2"}]
+    expected = [{"document"=>{"app"=>"hot"}, "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$1"}, {"document"=>{"app"=>"hot stuff"}, "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$1"}]
     subject.hits.map(&:to_hash).should eq expected
   end
 

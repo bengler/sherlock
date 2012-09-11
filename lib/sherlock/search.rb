@@ -1,7 +1,7 @@
 require 'pebblebed'
 
 module Sherlock
-  
+
   class Search
 
     class << self
