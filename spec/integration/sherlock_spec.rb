@@ -44,7 +44,6 @@ describe Sherlock do
     }
 
     after(:each) do
-      #sleep 2
       Sherlock::Search.delete_index('hell')
       river.queue(:name => 'highway_to_hell').purge
       river.queue(:name => 'sherlock.index').purge
@@ -70,8 +69,8 @@ describe Sherlock do
       subject.start
       sleep 1.4
       update_post = {
-        :event => 'update', 
-        :uid => uid, 
+        :event => 'update',
+        :uid => uid,
         :attributes => {"document" => {:app => "lukewarm"}, :paths => ["hell.tools.pitchfork"]}
       }
       river.publish(update_post)
