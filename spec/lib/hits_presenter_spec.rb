@@ -45,9 +45,12 @@ describe Sherlock::HitsPresenter do
     Sherlock::HitsPresenter.new(search_result, pagination_options)
   }
 
-  it "has correct hits" do
-    expected = [{"document"=>{"app"=>"hot"}, "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$1"}, {"document"=>{"app"=>"hot stuff"}, "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$1"}]
-    subject.hits.map(&:to_hash).should eq expected
+  it "presents the correct content" do
+    subject.total.should eq 2
+    subject.hits.first.document.app.should eq 'hot'
+    subject.hits.first.realm.should eq 'hell'
+    subject.hits.first.score.should eq 0.10848885
+    subject.hits.first.uid.should_not be 'post.card:hell.pitchfork$1'
   end
 
 

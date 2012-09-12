@@ -24,7 +24,7 @@ class SherlockV1 < Sinatra::Base
       LOGGER.warn "Search for #{uid}?#{params[:q]} in #{realm} failed. #{e.message}"
     end
     presenter = Sherlock::HitsPresenter.new(result, {:limit => limit, :offset => offset})
-    pg :hits, :locals => {:hits => presenter.hits, :pagination => presenter.pagination}
+    pg :hits, :locals => {:hits => presenter.hits, :pagination => presenter.pagination, :total => presenter.total}
   end
 
 end

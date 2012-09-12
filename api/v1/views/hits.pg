@@ -5,3 +5,6 @@ end
 node :pagination => pagination do
   attributes :limit, :offset, :last_page
 end
+
+node :total => total
+

@@ -14,6 +14,7 @@ describe Sherlock::Indexer do
     { 'event' => 'create',
       'uid' => 'post.card:hell.pitchfork$1',
       'attributes' => {
+        'uid' => 'post.card:hell.pitchfork$1',
         'document' => {'app' => 'hot'},
         'paths' => ['hell.pitchfork'],
         'id' => 'post.card:hell.pitchfork$1'
@@ -25,6 +26,7 @@ describe Sherlock::Indexer do
     { 'event' => 'create',
       'uid' => 'post.card:hell.tools.pitchfork$1',
       'attributes' => {
+        'uid' => 'post.card:hell.tools.pitchfork$1',
         'document' => {'app' => 'hot'},
         'paths' => ["hell.trademarks.pitchfork", "hell.tools.pitchfork"],
         'id' => 'post.card:hell.tools.pitchfork$1'

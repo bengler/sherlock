@@ -46,6 +46,7 @@ describe 'API v1 search' do
       result['hits'].map do |hit|
         hit['hit']['document']
       end.should eq ["hot", "hot stuff"]
+      result['hits'].first['hit']['uid'].should eq "post.card:hell.flames.devil$1"
     end
 
     it 'delivers empty result set for non-existing index' do

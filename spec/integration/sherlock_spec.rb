@@ -1,7 +1,11 @@
 require 'spec_helper'
 require 'pebblebed'
+require 'api/v1'
+require 'rack/test'
 
 Thread.abort_on_exception = true
+
+class TestSherlockV1 < SherlockV1; end
 
 describe Sherlock do
 
@@ -21,8 +25,19 @@ describe Sherlock do
 
   context "posts to river" do
 
+    include Rack::Test::Methods
+
+    def app
+      TestSherlockV1
+    end
+
+
     subject {
       Sherlock::Indexer.new({:name => 'highway_to_hell', :path => 'hell.pitchfork', :klass => 'post.card'})
+    }
+
+    let(:realm) {
+      'hell'
     }
 
     let(:river) {
@@ -37,6 +52,7 @@ describe Sherlock do
       { :event => 'create',
         :uid => uid,
         :attributes => {
+          :uid => uid,
           :document => {:app => "hot"},
           :paths => ["hell.tools.pitchfork"]
         }
@@ -44,24 +60,24 @@ describe Sherlock do
     }
 
     after(:each) do
-      Sherlock::Search.delete_index('hell')
+      Sherlock::Search.delete_index(realm)
       river.queue(:name => 'highway_to_hell').purge
       river.queue(:name => 'sherlock.index').purge
       river.queue(:name => 'river.index').purge
     end
 
-    it "works" do
-      true.should eq true
-    end
 
     it "finds a created post with query" do
       river.publish(post)
       subject.start
       sleep 1.4
-      query = Sherlock::Query.new("hot").to_json
-      result = Sherlock::Search.query("hell", :source => query)
-      result['hits']['total'].should eq 1
-      result['hits']['hits'].first['_id'].should eq uid
+
+      get "/search/#{realm}", :q => "hot"
+      result = JSON.parse(last_response.body)
+      result['total'].should eq 1
+      result['pagination'].should_not eq nil
+      result['hits'].first['hit']['uid'].should eq uid
+      result['hits'].first['hit']['paths'].count.should eq 1
     end
 
     it "udpates an existing post" do
