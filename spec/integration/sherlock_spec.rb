@@ -87,15 +87,19 @@ describe Sherlock do
       update_post = {
         :event => 'update',
         :uid => uid,
-        :attributes => {"document" => {:app => "lukewarm"}, :paths => ["hell.tools.pitchfork"]}
+        :attributes => {:uid => uid, "document" => {:app => "lukewarm"}, :paths => ["hell.tools.pitchfork"]}
       }
       river.publish(update_post)
       sleep 1.4
-      result = Sherlock::Search.query("hell", :q => "hot")
-      result['hits']['total'].should eq 0
-      result = Sherlock::Search.query("hell", :q => "lukewarm")
-      result['hits']['total'].should eq 1
-      result['hits']['hits'].first['_id'].should eq uid
+
+      get "/search/#{realm}", :q => "hot"
+      result = JSON.parse(last_response.body)
+      result['total'].should eq 0
+
+      get "/search/#{realm}", :q => "lukewarm"
+      result = JSON.parse(last_response.body)
+      result['total'].should eq 1
+      result['hits'].first['hit']['uid'].should eq uid
     end
 
     it "removes index for deleted post" do
@@ -104,16 +108,20 @@ describe Sherlock do
       sleep 1.4
       river.publish(post.merge(:event => 'delete'))
       sleep 1.4
-      result = Sherlock::Search.query("hell", :q => "hot")
-      result['hits']['total'].should eq 0
+
+      get "/search/#{realm}", :q => "hot"
+      result = JSON.parse(last_response.body)
+      result['total'].should eq 0
     end
 
     it "does not find the post using non-matching query" do
       river.publish(post)
       subject.start
       sleep 1.4
-      result = Sherlock::Search.query("hell", :q => "lukewarm")
-      result['hits']['total'].should eq 0
+
+      get "/search/#{realm}", :q => "lukewarm"
+      result = JSON.parse(last_response.body)
+      result['total'].should eq 0
     end
 
   end
