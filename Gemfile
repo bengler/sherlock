@@ -8,6 +8,7 @@ gem 'petroglyph'
 gem 'main', '~> 5.0.1'
 gem 'pebble_path'
 gem 'feedzirra'
+gem 'airbrake', '~> 3.1.4', :require => false
 
 group :development, :test do
   gem 'rspec'
