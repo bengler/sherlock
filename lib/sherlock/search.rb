@@ -17,6 +17,14 @@ module Sherlock
         Pebblebed::Http.delete(url(uid), nil)
       end
 
+      def create_index(realm)
+        begin
+          Pebblebed::Http.put("#{root_url}/#{index_for(realm)}", {})
+        rescue Pebblebed::HttpError => e
+          raise e unless e.message =~ /IndexAlreadyExistsException/
+        end
+      end
+
       def delete_index(realm)
         begin
           Pebblebed::Http.delete("#{root_url}/#{index_for(realm)}", {})
