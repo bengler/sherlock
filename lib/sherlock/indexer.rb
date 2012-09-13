@@ -49,6 +49,9 @@ module Sherlock
       payload = JSON.parse message[:payload]
       event = payload['event']
 
+      # temporary hack in order to not index email addresses contained in dittforslag posts
+      return if message_is_from_dittforslag(payload['uid'])
+
       # find all records matching uid
       uids = Search.matching_uids(payload['uid'])
 
@@ -70,6 +73,12 @@ module Sherlock
         Search.unindex uid
       end
     end
+
+
+    def message_is_from_dittforslag(uid)
+      Pebblebed::Uid.new(uid).path[0, 19] == 'mittap.dittforslag.'
+    end
+
 
   end
 

@@ -35,6 +35,10 @@ describe Sherlock::Indexer do
   }
 
 
+  after(:each) do
+    Sherlock::Search.delete_index(realm)
+  end
+
   it "builds an index record from payload" do
     expected_record =  {"document.app"=>"hot", "paths" => ["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$1", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$1", "pristine"=>payload['attributes']}
     subject.build_index_records(payload).first.should eq expected_record
@@ -99,6 +103,43 @@ describe Sherlock::Indexer do
       result = Sherlock::Search.query(realm, :source => query.to_json)
       result['hits']['total'].should eq 1
       result['hits']['hits'].first['_id'].should eq 'post.card:hell.tools.pitchfork$1'
+    end
+
+  end
+
+  context "temporary mittap email address exposure hack" do
+
+    it "doesnt index content from mittap.dittforslag" do
+
+      Sherlock::Search.create_index('mittap')
+
+      dittforslag_payload = {
+        'event' => 'create',
+        'uid' => 'post:mittap.dittforslag.dont.index$1',
+        'attributes' => {
+          'uid' => 'post:mittap.dittforslag.dont.index$1',
+          'document' => {'email' => 'secret@dna.no'},
+          'paths' => ['mittap.dittforslag.dont.index'],
+          'id' => 'post:mittap.dittforslag.dont.index$1'
+        }
+      }
+
+      message = Hash[:payload, dittforslag_payload.to_json]
+      subject.consider message
+      sleep 1.4
+
+      query = Sherlock::Query.new('secret@dna.no')
+      result = Sherlock::Search.query('mittap', :source => query.to_json)
+      result['hits']['total'].should eq 0
+
+      query = Sherlock::Query.new(nil, :uid => 'post:mittap.dittforslag.*$1')
+      result = Sherlock::Search.query('mittap', :source => query.to_json)
+      result['hits']['total'].should eq 0
+    end
+
+    it "correctly identifies dittforslag uids" do
+      subject.message_is_from_dittforslag('post:mittap.dittforslag.dont.index$1').should be true
+      subject.message_is_from_dittforslag('post:something.else.dont.index$1').should be false
     end
 
   end
