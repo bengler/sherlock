@@ -5,8 +5,6 @@ Bundler.require
 
 LOGGER ||= Logger.new '/dev/null'
 
-set :root, File.dirname(File.dirname(__FILE__))
-
 $:.unshift('./lib')
 
 Dir.glob('./lib/**/*.rb').each{ |lib| require lib }

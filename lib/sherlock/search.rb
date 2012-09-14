@@ -10,18 +10,32 @@ module Sherlock
       end
 
       def index(record)
-        Pebblebed::Http.put(url(record['uid']), record)
+        begin
+          Pebblebed::Http.put(url(record['uid']), record)
+        rescue Pebblebed::HttpError => e
+          LOGGER.warn "Error while indexing #{record['uid']}"
+          LOGGER.error e
+        end
       end
 
       def unindex(uid)
-        Pebblebed::Http.delete(url(uid), nil)
+        begin
+          Pebblebed::Http.delete(url(uid), nil)
+        rescue Pebblebed::HttpError => e
+          LOGGER.warn "Error while unindexing #{uid}"
+          LOGGER.error e
+        end
       end
 
       def create_index(realm)
         begin
-          Pebblebed::Http.put("#{root_url}/#{index_for(realm)}", {})
+          index = index_for(realm)
+          Pebblebed::Http.put("#{root_url}/#{index}", {})
         rescue Pebblebed::HttpError => e
-          raise e unless e.message =~ /IndexAlreadyExistsException/
+          unless e.message =~ /IndexAlreadyExistsException/
+            LOGGER.warn "Error while creating index #{index}"
+            LOGGER.error e
+          end
         end
       end
 
@@ -29,7 +43,10 @@ module Sherlock
         begin
           Pebblebed::Http.delete("#{root_url}/#{index_for(realm)}", {})
         rescue Pebblebed::HttpError => e
-          raise e unless e.message =~ /IndexMissingException/
+          unless e.message =~ /IndexMissingException/
+            LOGGER.warn "Error while deleting index #{index}"
+            LOGGER.error e
+          end
         end
       end
 
@@ -43,14 +60,19 @@ module Sherlock
       end
 
       def query(realm, options = {})
-        url = "#{root_url}/#{index_for(realm)}/_search"
+        index = index_for(realm)
+        url = "#{root_url}/#{index}/_search"
         result = nil
         begin
           response = Pebblebed::Http.get(url, options)
           result = JSON.parse(response.body)
         rescue Pebblebed::HttpError => e
-          raise e unless e.message =~ /IndexMissingException/
-          #TODO: We should return something prettier than nil if we get indexmissing/404, maybe something like an ordinary result?
+          if e.message =~ /IndexMissingException/
+            LOGGER.warn "Attempt to query non-existing index: #{index} (mostly harmless)"
+          else
+            LOGGER.warn "Unexpected error during query at index: #{index} with options: #{options}"
+            LOGGER.error e
+          end
         end
         result
       end
