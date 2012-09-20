@@ -23,6 +23,25 @@ describe Sherlock::GroveRecord do
       records.first['pristine'].should eq attributes
     end
 
+    context "restricted" do
+
+      it "add restricted attribute if none is present" do
+        records = Sherlock::GroveRecord.build_records('post.card:hell.flames$1234', attributes)
+        records.first['restricted'].should be false
+      end
+
+      it "keep restricted attribute" do
+        attributes[:restricted] = false
+        records = Sherlock::GroveRecord.build_records('post.card:hell.flames$1234', attributes)
+        records.first['restricted'].should be false
+
+        attributes[:restricted] = true
+        records = Sherlock::GroveRecord.build_records('post.card:hell.flames$1234', attributes)
+        records.first['restricted'].should be true
+      end
+
+    end
+
   end
 
   describe "#expand" do

@@ -40,13 +40,13 @@ describe Sherlock::Indexer do
   end
 
   it "builds an index record from payload" do
-    expected_record =  {"document.app"=>"hot", "paths" => ["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$1", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$1", "pristine"=>payload['attributes']}
+    expected_record =  {"document.app"=>"hot", "paths" => ["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$1", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "restricted" => false, "uid"=>"post.card:hell.pitchfork$1", "pristine"=>payload['attributes']}
     subject.build_index_records(payload).first.should eq expected_record
   end
 
   it "builds one index record for every path entry in payload" do
-    first_expected_record =  {"document.app"=>"hot", "paths"=>["hell.trademarks.pitchfork", "hell.tools.pitchfork"], "id"=>"post.card:hell.tools.pitchfork$1", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"trademarks", "label_2_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "uid"=>"post.card:hell.trademarks.pitchfork$1", "pristine"=>multipath_payload['attributes']}
-    last_expected_record =  {"document.app"=>"hot", "paths"=>["hell.trademarks.pitchfork", "hell.tools.pitchfork"], "id"=>"post.card:hell.tools.pitchfork$1", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"tools", "label_2_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "uid"=>"post.card:hell.tools.pitchfork$1", "pristine"=>multipath_payload['attributes']}
+    first_expected_record =  {"document.app"=>"hot", "paths"=>["hell.trademarks.pitchfork", "hell.tools.pitchfork"], "id"=>"post.card:hell.tools.pitchfork$1", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"trademarks", "label_2_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "restricted" => false, "uid"=>"post.card:hell.trademarks.pitchfork$1", "pristine"=>multipath_payload['attributes']}
+    last_expected_record =  {"document.app"=>"hot", "paths"=>["hell.trademarks.pitchfork", "hell.tools.pitchfork"], "id"=>"post.card:hell.tools.pitchfork$1", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"tools", "label_2_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "restricted" => false, "uid"=>"post.card:hell.tools.pitchfork$1", "pristine"=>multipath_payload['attributes']}
     records = subject.build_index_records(multipath_payload)
     records.count.should eq 2
     records.first.should eq first_expected_record

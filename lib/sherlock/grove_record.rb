@@ -3,7 +3,7 @@ require 'pebblebed'
 module Sherlock
   class GroveRecord
 
-    attr_reader :uid
+    attr_reader :uid, :record
     def initialize(uid, record)
       @record = record
       @uid = Pebblebed::Uid.new(uid)
@@ -26,7 +26,8 @@ module Sherlock
     end
 
     def to_hash
-      flatten.merge(expand).merge('realm' => realm, 'uid' => uid.to_s, 'pristine' => @record)
+      restricted = record[:restricted] ? record[:restricted] : false
+      flatten.merge(expand).merge('realm' => realm, 'uid' => uid.to_s, 'pristine' => @record, 'restricted' => restricted)
     end
 
     def flatten
