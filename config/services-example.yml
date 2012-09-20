@@ -1,7 +1,7 @@
 ---
 development:
   grove:
-    session: 'god'
+    session: 'some-god-session'
     host: 'grove.dev'
   elasticsearch:
     host: 'localhost:9200'
