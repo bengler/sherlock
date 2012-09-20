@@ -53,6 +53,9 @@ module Sherlock
       # temporary hack in order to not index email addresses contained in dittforslag posts
       return if message_is_from_dittforslag(payload['uid'])
 
+      # TODO we should configure somewhere which klasses should be indexed
+      return unless payload['uid'] =~ /^post/
+
       # find all records matching uid
       uids = Search.matching_uids(payload['uid'])
 
