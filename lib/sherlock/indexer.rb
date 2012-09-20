@@ -8,7 +8,7 @@ module Sherlock
     attr_reader :interval, :subscription
 
     def initialize(options = {})
-      options.merge! default_options
+      default_options.merge! options
       @interval = options[:interval]
       @subscription = {:name => options[:name], :path => options[:path], :klass => options[:klass]}
     end

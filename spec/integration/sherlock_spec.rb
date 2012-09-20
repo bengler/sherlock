@@ -33,7 +33,7 @@ describe Sherlock do
 
 
     subject {
-      Sherlock::Indexer.new({:name => 'highway_to_hell', :path => 'hell.pitchfork', :klass => 'post.card'})
+      Sherlock::Indexer.new({:name => 'highway_to_hell'})
     }
 
     let(:realm) {
