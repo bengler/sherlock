@@ -6,8 +6,7 @@ module Sherlock
       @search_term = search_term
       @limit = options[:limit]
       @offset = options[:offset]
-      @uid = options[:uid]
-      @uid = nil if @uid == '*:*'
+      @uid = options[:uid] || '*:*'
     end
 
     def pagination
@@ -18,11 +17,7 @@ module Sherlock
     end
 
     def to_hash
-      if uid
-        {:query => {:filtered => term.merge(filters)}}.merge(pagination)
-      else
-        term.merge(pagination)
-      end
+      {:query => {:filtered => term.merge(filters)}}.merge(pagination)
     end
 
     def to_json

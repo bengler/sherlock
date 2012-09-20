@@ -174,7 +174,7 @@ describe Sherlock::Indexer do
       }
     }
 
-    xit "does not return restricted content" do
+    it "does not return restricted content" do
       message = Hash[:payload, restricted_payload.to_json]
       subject.consider message
       sleep 1.4
@@ -183,13 +183,13 @@ describe Sherlock::Indexer do
       result = Sherlock::Search.query(realm, query)
       result['hits']['total'].should eq 0
 
-      query = Sherlock::Query.new("secret")
+      query = Sherlock::Query.new("stuff")
       result = Sherlock::Search.query(realm, query)
       result['hits']['total'].should eq 0
     end
 
-    xit "returns unrestricted content" do
-      message = Hash[:payload, restricted_payload.to_json]
+    it "returns unrestricted content" do
+      message = Hash[:payload, unrestricted_payload.to_json]
       subject.consider message
       sleep 1.4
 
@@ -197,7 +197,7 @@ describe Sherlock::Indexer do
       result = Sherlock::Search.query(realm, query)
       result['hits']['total'].should eq 1
 
-      query = Sherlock::Query.new("unsecret")
+      query = Sherlock::Query.new("stuff")
       result = Sherlock::Search.query(realm, query)
       result['hits']['total'].should eq 1
     end

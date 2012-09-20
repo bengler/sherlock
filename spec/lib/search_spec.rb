@@ -12,7 +12,7 @@ describe Sherlock::Search do
   }
 
   let(:record) {
-    {'document' => {'app' => 'hot'}, 'realm' => realm, 'uid' => uid}
+    {'document' => {'app' => 'hot'}, 'realm' => realm, 'uid' => uid, 'restricted' => false}
   }
 
 
@@ -53,7 +53,7 @@ describe Sherlock::Search do
     end
 
     it "udpates an existing record" do
-      update_record = {'document' => {'app' => 'lukewarm'}, 'realm' => realm, 'uid' => uid}
+      update_record = {'document' => {'app' => 'lukewarm'}, 'realm' => realm, 'uid' => uid, 'restricted' => false}
       Sherlock::Search.index update_record
       sleep 1.4
       query = Sherlock::Query.new("hot")
