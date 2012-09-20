@@ -31,11 +31,11 @@ describe Sherlock::GroveRecord do
       end
 
       it "keep restricted attribute" do
-        attributes[:restricted] = false
+        attributes['restricted'] = false
         records = Sherlock::GroveRecord.build_records('post.card:hell.flames$1234', attributes)
         records.first['restricted'].should be false
 
-        attributes[:restricted] = true
+        attributes['restricted'] = true
         records = Sherlock::GroveRecord.build_records('post.card:hell.flames$1234', attributes)
         records.first['restricted'].should be true
       end

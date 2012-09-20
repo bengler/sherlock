@@ -30,6 +30,11 @@
               }
             },
             {
+              "term": {
+                "restricted": false
+              }
+            },
+            {
               "missing": {
                 "field": "label_2_"
               }

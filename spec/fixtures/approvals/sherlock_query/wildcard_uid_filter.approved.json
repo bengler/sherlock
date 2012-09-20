@@ -27,6 +27,11 @@
               "term": {
                 "label_1_": "flames"
               }
+            },
+            {
+              "term": {
+                "restricted": false
+              }
             }
           ]
         }

@@ -45,6 +45,7 @@ module Sherlock
       must = klasses.expanded.merge(labels.expanded).merge(oids).map do |key, value|
         {:term => {key => value}}
       end
+      must << {:term => {'restricted' => false}}
       unless Pebblebed::Uid.wildcard_path?(path)
         must << {:missing => {:field => labels.next}}
       end

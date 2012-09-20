@@ -26,7 +26,7 @@ module Sherlock
     end
 
     def to_hash
-      restricted = record[:restricted] ? record[:restricted] : false
+      restricted = record['restricted'] ? record['restricted'] : false
       flatten.merge(expand).merge('realm' => realm, 'uid' => uid.to_s, 'pristine' => @record, 'restricted' => restricted)
     end
 
