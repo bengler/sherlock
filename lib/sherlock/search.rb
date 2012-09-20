@@ -71,10 +71,8 @@ module Sherlock
           if e.message =~ /IndexMissingException/
             LOGGER.warn "Attempt to query non-existing index: #{index} (mostly harmless)"
           else
-            #LOGGER.warn "Unexpected error during query at index: #{index} with options: #{options}"
-            #LOGGER.error e
-            s = "-- Unexpected error during query at index: #{index} with options: #{options} :: #{e.message}"
-            puts s
+            LOGGER.warn "Unexpected error during query at index: #{index} with options: #{options}"
+            LOGGER.error e
           end
         end
         result
