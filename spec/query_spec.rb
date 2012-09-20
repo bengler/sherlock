@@ -69,4 +69,5 @@ describe Sherlock::Query do
       Sherlock::Query.new('scorching', :uid => 'post.card:hell.flames$123').to_json
     end
   end
+
 end

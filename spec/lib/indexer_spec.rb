@@ -60,7 +60,7 @@ describe Sherlock::Indexer do
       subject.consider message
       sleep 1.4
       query = Sherlock::Query.new("hot")
-      result = Sherlock::Search.query(realm, :source => query.to_json)
+      result = Sherlock::Search.query(realm, query)
       result['hits']['total'].should eq 1
       result['hits']['hits'].first['_source']['pristine'].should eq payload['attributes']
     end
@@ -78,7 +78,7 @@ describe Sherlock::Indexer do
       subject.consider message
       sleep 1.4
       query = Sherlock::Query.new("hot")
-      result = Sherlock::Search.query(realm, :source => query.to_json)
+      result = Sherlock::Search.query(realm, query)
       result['hits']['total'].should eq 2
       result['hits']['hits'].first['_id'].should eq 'post.card:hell.trademarks.pitchfork$1'
       result['hits']['hits'].last['_id'].should eq 'post.card:hell.tools.pitchfork$1'
@@ -90,7 +90,7 @@ describe Sherlock::Indexer do
       subject.consider message
       sleep 1.4
       query = Sherlock::Query.new(nil, :uid => 'post.card:hell.*$1')
-      result = Sherlock::Search.query(realm, :source => query.to_json)
+      result = Sherlock::Search.query(realm, query)
       result['hits']['total'].should eq 3
       result['hits']['hits'].first['_id'].should eq 'post.card:hell.trademarks.pitchfork$1'
 
@@ -100,7 +100,7 @@ describe Sherlock::Indexer do
       subject.consider message
       sleep 1.4
       query = Sherlock::Query.new(nil, :uid => 'post.card:hell.*$1')
-      result = Sherlock::Search.query(realm, :source => query.to_json)
+      result = Sherlock::Search.query(realm, query)
       result['hits']['total'].should eq 1
       result['hits']['hits'].first['_id'].should eq 'post.card:hell.tools.pitchfork$1'
     end
@@ -129,11 +129,11 @@ describe Sherlock::Indexer do
       sleep 1.4
 
       query = Sherlock::Query.new('secret@dna.no')
-      result = Sherlock::Search.query('mittap', :source => query.to_json)
+      result = Sherlock::Search.query('mittap', query)
       result['hits']['total'].should eq 0
 
       query = Sherlock::Query.new(nil, :uid => 'post:mittap.dittforslag.*$1')
-      result = Sherlock::Search.query('mittap', :source => query.to_json)
+      result = Sherlock::Search.query('mittap', query)
       result['hits']['total'].should eq 0
     end
 
@@ -143,5 +143,66 @@ describe Sherlock::Indexer do
     end
 
   end
+
+
+
+  context "restricted content" do
+
+    let(:restricted_payload) {
+      { 'event' => 'create',
+        'uid' => 'post.card:hell.pitchfork$1',
+        'attributes' => {
+          'uid' => 'post.card:hell.pitchfork$1',
+          'document' => {'secret' => 'stuff'},
+          'paths' => ['hell.pitchfork'],
+          'id' => 'post.card:hell.pitchfork$1',
+          'restricted' => true
+        }
+      }
+    }
+
+    let(:unrestricted_payload) {
+      { 'event' => 'create',
+        'uid' => 'post.card:hell.pitchfork$1',
+        'attributes' => {
+          'uid' => 'post.card:hell.pitchfork$1',
+          'document' => {'unsecret' => 'stuff'},
+          'paths' => ['hell.pitchfork'],
+          'id' => 'post.card:hell.pitchfork$1',
+          'restricted' => false
+        }
+      }
+    }
+
+    xit "does not return restricted content" do
+      message = Hash[:payload, restricted_payload.to_json]
+      subject.consider message
+      sleep 1.4
+
+      query = Sherlock::Query.new(nil, :uid => 'post.card:hell.*')
+      result = Sherlock::Search.query(realm, query)
+      result['hits']['total'].should eq 0
+
+      query = Sherlock::Query.new("secret")
+      result = Sherlock::Search.query(realm, query)
+      result['hits']['total'].should eq 0
+    end
+
+    xit "returns unrestricted content" do
+      message = Hash[:payload, restricted_payload.to_json]
+      subject.consider message
+      sleep 1.4
+
+      query = Sherlock::Query.new(nil, :uid => 'post.card:hell.*')
+      result = Sherlock::Search.query(realm, query)
+      result['hits']['total'].should eq 1
+
+      query = Sherlock::Query.new("unsecret")
+      result = Sherlock::Search.query(realm, query)
+      result['hits']['total'].should eq 1
+    end
+
+  end
+
 
 end

@@ -6,20 +6,14 @@ class SherlockV1 < Sinatra::Base
     also_reload 'lib/search.rb'
   end
 
-  # If a :source parameter is sent in, everything
-  # else will be ignored.
-  #
-  # In all other cases, a query will be built up using
-  # the :uid (optional), :q (the search term), and :limit
-  # and :offset
+  # We build up using :q (the search term), :uid, :limit and :offset
   get '/search/:realm/?:uid?' do |realm, uid|
     limit = params.delete('limit') { 10 }
     offset = params.delete('offset') { 0 }
     term = params.delete('q')
-    query = params.delete('source')
-    query ||= Sherlock::Query.new(term, :uid => uid, :limit => limit, :offset => offset).to_json
+    query = Sherlock::Query.new(term, :uid => uid, :limit => limit, :offset => offset)
     begin
-      result = Sherlock::Search.query(realm, :source => query)
+      result = Sherlock::Search.query(realm, query)
     rescue Pebblebed::HttpError => e
       LOGGER.warn "Search for #{uid}?#{params[:q]} in #{realm} failed. #{e.message}"
     end

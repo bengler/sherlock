@@ -29,8 +29,8 @@ describe Sherlock::Search do
   context "using the Query class" do
 
     it "indexes a record and finds it" do
-      query = Sherlock::Query.new("hot").to_json
-      result = Sherlock::Search.query(realm, :source => query)
+      query = Sherlock::Query.new("hot")
+      result = Sherlock::Search.query(realm, query)
       result['hits']['total'].should eq 1
       result['hits']['hits'].first['_id'].should eq uid
     end
@@ -40,13 +40,15 @@ describe Sherlock::Search do
   context "passing an options hash directly to Search" do
 
     it "indexes a record and finds it" do
-      result = Sherlock::Search.query(realm, :q => "hot")
+      query = Sherlock::Query.new("hot")
+      result = Sherlock::Search.query(realm, query)
       result['hits']['total'].should eq 1
       result['hits']['hits'].first['_id'].should eq uid
     end
 
     it "does not find something thats not there" do
-      result = Sherlock::Search.query(realm, :q => "lukewarm")
+      query = Sherlock::Query.new("lukewarm")
+      result = Sherlock::Search.query(realm, query)
       result['hits']['total'].should eq 0
     end
 
@@ -54,9 +56,11 @@ describe Sherlock::Search do
       update_record = {'document' => {'app' => 'lukewarm'}, 'realm' => realm, 'uid' => uid}
       Sherlock::Search.index update_record
       sleep 1.4
-      result = Sherlock::Search.query(realm, :q => "hot")
+      query = Sherlock::Query.new("hot")
+      result = Sherlock::Search.query(realm, query)
       result['hits']['total'].should eq 0
-      result = Sherlock::Search.query(realm, :q => "lukewarm")
+      query = Sherlock::Query.new("lukewarm")
+      result = Sherlock::Search.query(realm, query)
       result['hits']['total'].should eq 1
       result['hits']['hits'].first['_id'].should eq uid
     end
@@ -64,14 +68,16 @@ describe Sherlock::Search do
     it "removes index for a deleted record" do
       Sherlock::Search.unindex record['uid']
       sleep 1.4
-      result = Sherlock::Search.query(realm, :q => "hot")
+      query = Sherlock::Query.new("hot")
+      result = Sherlock::Search.query(realm, query)
       result['hits']['total'].should eq 0
     end
 
     it "deletes the whole index and swallows index missing errors" do
       Sherlock::Search.delete_index(realm)
       sleep 1.4
-      lambda { Sherlock::Search.query(realm, :q => "hot") }.should_not raise_error(Pebblebed::HttpError)
+      query = Sherlock::Query.new("hot")
+      lambda { Sherlock::Search.query(realm, query) }.should_not raise_error(Pebblebed::HttpError)
     end
 
   end

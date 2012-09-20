@@ -59,10 +59,11 @@ module Sherlock
         "#{ENV['RACK_ENV']}_#{realm}"
       end
 
-      def query(realm, options = {})
+      def query(realm, query_obj)
         index = index_for(realm)
         url = "#{root_url}/#{index}/_search"
         result = nil
+        options = Hash[:source => query_obj.to_json]
         begin
           response = Pebblebed::Http.get(url, options)
           result = JSON.parse(response.body)
@@ -70,19 +71,20 @@ module Sherlock
           if e.message =~ /IndexMissingException/
             LOGGER.warn "Attempt to query non-existing index: #{index} (mostly harmless)"
           else
-            LOGGER.warn "Unexpected error during query at index: #{index} with options: #{options}"
-            LOGGER.error e
+            #LOGGER.warn "Unexpected error during query at index: #{index} with options: #{options}"
+            #LOGGER.error e
+            s = "-- Unexpected error during query at index: #{index} with options: #{options} :: #{e.message}"
+            puts s
           end
         end
         result
       end
 
-
       def matching_uids(uid_string)
         uid = Pebblebed::Uid.new(uid_string)
         wildcard_uid = "#{uid.klass}:#{uid.realm}.*$#{uid.oid}"
         query = Sherlock::Query.new(nil, :uid => wildcard_uid)
-        matching = Sherlock::Search.query(uid.realm, :source => query.to_json)
+        matching = Sherlock::Search.query(uid.realm, query)
         return [] unless matching
         matching['hits']['hits'].map{|result| result['_id']}.compact
       end
