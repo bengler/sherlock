@@ -95,6 +95,7 @@ GEM
     rspec-mocks (2.11.2)
     sax-machine (0.1.0)
       nokogiri (> 0.0.0)
+    servolux (0.10.0)
     simplecov (0.6.4)
       multi_json (~> 1.0)
       simplecov-html (~> 0.5.3)
@@ -132,6 +133,7 @@ DEPENDENCIES
   petroglyph
   rack-contrib!
   rspec
+  servolux
   simplecov
   sinatra
   sinatra-contrib
