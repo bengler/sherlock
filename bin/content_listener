@@ -32,7 +32,7 @@ Shut down a daemon process:
 
   option('--pidfile=path', '-p') do
     description 'Path to PID file.'
-    default '/tmp/delta.pid'
+    default '/tmp/content_listener.pid'
   end
 
   mode 'start' do
