@@ -65,6 +65,35 @@ describe 'API v1 search' do
         hit['hit']['document']
       end.should eq ['hot stuff']
     end
+
+    context "sorting results " do
+
+      let(:record) {
+        uid = 'post.card:hell.flames.bbq$1'
+        Sherlock::GroveRecord.new(uid, { 'document' => {'item' => 'first bbq', 'start_time' => '2012-08-23T17:00:00+02:00'}, 'uid' => uid}).to_hash
+      }
+
+      let(:another_record) {
+        uid = 'post.card:hell.flames.wtf.bbq$2'
+        Sherlock::GroveRecord.new(uid, { 'document' => {'item' => 'second bbq', 'start_time' => '2012-08-24T17:00:00+02:00'}, 'uid' => uid}).to_hash
+      }
+
+      it "sorts by timestamp on correct order" do
+        Sherlock::Search.index record
+        Sherlock::Search.index another_record
+        sleep 1.4
+        get "/search/#{realm}", :q => "bbq", :sort_by => "start_time", :order => 'asc'
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 2
+        result['hits'].first['hit']['document']['item'].should eq 'first bbq'
+
+        get "/search/#{realm}", :q => "bbq", :sort_by => "start_time", :order => 'desc'
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 2
+        result['hits'].first['hit']['document']['item'].should eq 'second bbq'
+      end
+
+    end
   end
 
   describe '/search/post.card:hell.*' do
@@ -100,6 +129,7 @@ describe 'API v1 search' do
         hit['hit']['uid']
       end.sort.should eq([uid])
     end
-
   end
+
+  describe '/search/realm/'
 end

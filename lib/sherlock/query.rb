@@ -1,12 +1,14 @@
 module Sherlock
   class Query
 
-    attr_reader :search_term, :uid, :limit, :offset
+    attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order
     def initialize(search_term, options = {})
       @search_term = search_term
       @limit = options[:limit]
       @offset = options[:offset]
       @uid = options[:uid] || '*:*'
+      @sort_attribute = options[:sort_by]
+      @order = options[:order] || 'asc'
     end
 
     def pagination
@@ -17,7 +19,7 @@ module Sherlock
     end
 
     def to_hash
-      {:query => {:filtered => term.merge(filters)}}.merge(pagination)
+      {:query => {:filtered => term.merge(filters)}}.merge(pagination).merge(sort)
     end
 
     def to_json
@@ -29,6 +31,14 @@ module Sherlock
         { :query => { :query_string => { :query => search_term } } }
       else
         { :query => { :match_all => {} } }
+      end
+    end
+
+    def sort
+      if sort_attribute
+        {:sort => [{"document.#{sort_attribute}" => {'order' => order}},  '_score']}
+      else
+        {}
       end
     end
 
