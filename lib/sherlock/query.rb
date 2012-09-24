@@ -8,7 +8,7 @@ module Sherlock
       @offset = options[:offset]
       @uid = options[:uid] || '*:*'
       @sort_attribute = options[:sort_by]
-      @order = options[:order] || 'asc'
+      @order = Query.normalize_sort_order(options[:order])
     end
 
     def pagination
@@ -56,6 +56,13 @@ module Sherlock
       end
       bool = {:bool => {:must => must}}
       {:filter => bool}
+    end
+
+    def self.normalize_sort_order(order)
+      if order == 'asc' || order == 'ASC'
+        return 'asc'
+      end
+      'desc'
     end
 
   end
