@@ -23,7 +23,7 @@ module Sherlock
 
     def build_index_records(payload)
       # create a record for each entry in paths
-      Sherlock::GroveRecord.build_records(payload['uid'], payload['attributes'])
+      Sherlock::Parsers::Grove.build_records(payload['uid'], payload['attributes'])
     end
 
 
