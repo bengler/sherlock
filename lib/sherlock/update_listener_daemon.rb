@@ -10,7 +10,7 @@ module Sherlock
     end
 
     def before_starting
-      @listener = Sherlock::Indexer.new
+      @listener = Sherlock::UpdateListener.new
     end
 
     def after_starting

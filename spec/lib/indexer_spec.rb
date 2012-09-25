@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Sherlock::Indexer do
+describe Sherlock::UpdateListener do
 
   subject {
-    Sherlock::Indexer.new
+    Sherlock::UpdateListener.new
   }
 
   let(:realm) {

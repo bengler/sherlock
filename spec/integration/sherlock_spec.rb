@@ -33,7 +33,7 @@ describe Sherlock do
 
 
     subject {
-      Sherlock::Indexer.new({:name => 'highway_to_hell'})
+      Sherlock::UpdateListener.new({:name => 'highway_to_hell'})
     }
 
     let(:realm) {

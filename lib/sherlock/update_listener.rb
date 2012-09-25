@@ -3,7 +3,7 @@ require 'pebblebed'
 
 module Sherlock
 
-  class Indexer
+  class UpdateListener
 
     attr_reader :interval, :subscription
 
