@@ -20,7 +20,7 @@ class SherlockV1 < Sinatra::Base
 
     query = Sherlock::Query.new(options.merge(:q => term))
     begin
-      result = Sherlock::Search.query(realm, query)
+      result = Sherlock::Elasticsearch.query(realm, query)
     rescue Pebblebed::HttpError => e
       LOGGER.warn "Search for #{uid}?#{params[:q]} in #{realm} failed. #{e.message}"
     end

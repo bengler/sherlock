@@ -17,7 +17,7 @@ describe Sherlock do
     end
 
     specify "elasticsearch is running" do
-      response = Pebblebed::Http.get(Sherlock::Search.root_url)
+      response = Pebblebed::Http.get(Sherlock::Elasticsearch.root_url)
       JSON.parse(response.body)['status'].should eq 200
     end
 
@@ -60,7 +60,7 @@ describe Sherlock do
     }
 
     after(:each) do
-      Sherlock::Search.delete_index(realm)
+      Sherlock::Elasticsearch.delete_index(realm)
       river.queue(:name => 'highway_to_hell').purge
       river.queue(:name => 'sherlock.index').purge
       river.queue(:name => 'river.index').purge

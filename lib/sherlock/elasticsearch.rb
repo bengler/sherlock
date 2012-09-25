@@ -2,7 +2,7 @@ require 'pebblebed'
 
 module Sherlock
 
-  class Search
+  class Elasticsearch
 
     class << self
       def root_url
@@ -82,7 +82,7 @@ module Sherlock
         uid = Pebblebed::Uid.new(uid_string)
         wildcard_uid = "#{uid.klass}:#{uid.realm}.*$#{uid.oid}"
         query = Sherlock::Query.new(:uid => wildcard_uid)
-        matching = Sherlock::Search.query(uid.realm, query)
+        matching = Sherlock::Elasticsearch.query(uid.realm, query)
         return [] unless matching
         matching['hits']['hits'].map{|result| result['_id']}.compact
       end

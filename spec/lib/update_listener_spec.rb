@@ -36,7 +36,7 @@ describe Sherlock::UpdateListener do
 
 
   after(:each) do
-    Sherlock::Search.delete_index(realm)
+    Sherlock::Elasticsearch.delete_index(realm)
   end
 
   it "builds an index record from payload" do
@@ -60,7 +60,7 @@ describe Sherlock::UpdateListener do
       subject.consider message
       sleep 1.4
       query = Sherlock::Query.new(:q => "hot")
-      result = Sherlock::Search.query(realm, query)
+      result = Sherlock::Elasticsearch.query(realm, query)
       result['hits']['total'].should eq 1
       result['hits']['hits'].first['_source']['pristine'].should eq payload['attributes']
     end
@@ -70,7 +70,7 @@ describe Sherlock::UpdateListener do
   context 'index a post with multiple paths' do
 
     after(:each) do
-      Sherlock::Search.delete_index(realm)
+      Sherlock::Elasticsearch.delete_index(realm)
     end
 
     it 'indexes every path entry' do
@@ -78,7 +78,7 @@ describe Sherlock::UpdateListener do
       subject.consider message
       sleep 1.4
       query = Sherlock::Query.new(:q => "hot")
-      result = Sherlock::Search.query(realm, query)
+      result = Sherlock::Elasticsearch.query(realm, query)
       result['hits']['total'].should eq 2
       result['hits']['hits'].first['_id'].should eq 'post.card:hell.trademarks.pitchfork$1'
       result['hits']['hits'].last['_id'].should eq 'post.card:hell.tools.pitchfork$1'
@@ -90,7 +90,7 @@ describe Sherlock::UpdateListener do
       subject.consider message
       sleep 1.4
       query = Sherlock::Query.new(:uid => 'post.card:hell.*$1')
-      result = Sherlock::Search.query(realm, query)
+      result = Sherlock::Elasticsearch.query(realm, query)
       result['hits']['total'].should eq 3
       result['hits']['hits'].first['_id'].should eq 'post.card:hell.trademarks.pitchfork$1'
 
@@ -100,7 +100,7 @@ describe Sherlock::UpdateListener do
       subject.consider message
       sleep 1.4
       query = Sherlock::Query.new(:uid => 'post.card:hell.*$1')
-      result = Sherlock::Search.query(realm, query)
+      result = Sherlock::Elasticsearch.query(realm, query)
       result['hits']['total'].should eq 1
       result['hits']['hits'].first['_id'].should eq 'post.card:hell.tools.pitchfork$1'
     end
@@ -111,7 +111,7 @@ describe Sherlock::UpdateListener do
 
     it "doesnt index content from mittap.dittforslag" do
 
-      Sherlock::Search.create_index('mittap')
+      Sherlock::Elasticsearch.create_index('mittap')
 
       dittforslag_payload = {
         'event' => 'create',
@@ -129,11 +129,11 @@ describe Sherlock::UpdateListener do
       sleep 1.4
 
       query = Sherlock::Query.new(:q => 'secret@dna.no')
-      result = Sherlock::Search.query('mittap', query)
+      result = Sherlock::Elasticsearch.query('mittap', query)
       result['hits']['total'].should eq 0
 
       query = Sherlock::Query.new(:uid => 'post:mittap.dittforslag.*$1')
-      result = Sherlock::Search.query('mittap', query)
+      result = Sherlock::Elasticsearch.query('mittap', query)
       result['hits']['total'].should eq 0
     end
 
@@ -180,11 +180,11 @@ describe Sherlock::UpdateListener do
       sleep 1.4
 
       query = Sherlock::Query.new(:uid => 'post.card:hell.*')
-      result = Sherlock::Search.query(realm, query)
+      result = Sherlock::Elasticsearch.query(realm, query)
       result['hits']['total'].should eq 0
 
       query = Sherlock::Query.new(:q => "stuff")
-      result = Sherlock::Search.query(realm, query)
+      result = Sherlock::Elasticsearch.query(realm, query)
       result['hits']['total'].should eq 0
     end
 
@@ -194,11 +194,11 @@ describe Sherlock::UpdateListener do
       sleep 1.4
 
       query = Sherlock::Query.new(:uid => 'post.card:hell.*')
-      result = Sherlock::Search.query(realm, query)
+      result = Sherlock::Elasticsearch.query(realm, query)
       result['hits']['total'].should eq 1
 
       query = Sherlock::Query.new(:q => "stuff")
-      result = Sherlock::Search.query(realm, query)
+      result = Sherlock::Elasticsearch.query(realm, query)
       result['hits']['total'].should eq 1
     end
 

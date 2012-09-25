@@ -57,15 +57,15 @@ module Sherlock
       return unless payload['uid'] =~ /^post/
 
       # find all records matching uid
-      uids = Search.matching_uids(payload['uid'])
+      uids = Sherlock::Elasticsearch.matching_uids(payload['uid'])
 
       # update index for new records
       records_for_indexing = build_index_records payload
       records_for_indexing.each do |record|
         if event == 'create' || event == 'update' || event == 'exists'
-          Search.index record
+          Sherlock::Elasticsearch.index record
         elsif event == 'delete'
-          Search.unindex record['uid']
+          Sherlock::Elasticsearch.unindex record['uid']
         else
           LOGGER.warn "Sherlock indexer says: Unknown event type #{event}"
         end
@@ -74,7 +74,7 @@ module Sherlock
 
       # unindex matching paths which were not mentioned
       uids.each do |uid|
-        Search.unindex uid
+        Sherlock::Elasticsearch.unindex uid
       end
     end
 
