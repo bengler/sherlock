@@ -59,7 +59,7 @@ module Sherlock
     end
 
     def self.normalize_sort_order(order)
-      if order == 'asc' || order == 'ASC'
+      if order.try(:downcase) == 'asc'
         return 'asc'
       end
       'desc'
