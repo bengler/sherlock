@@ -2,8 +2,8 @@ module Sherlock
   class Query
 
     attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order
-    def initialize(search_term, options = {})
-      @search_term = search_term
+    def initialize(options = {})
+      @search_term = options[:q]
       @limit = options[:limit]
       @offset = options[:offset]
       @uid = options[:uid] || '*:*'

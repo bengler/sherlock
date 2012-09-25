@@ -18,7 +18,7 @@ class SherlockV1 < Sinatra::Base
       options[:order] = params.delete('order')
     end
 
-    query = Sherlock::Query.new(term, options)
+    query = Sherlock::Query.new(options.merge(:q => term))
     begin
       result = Sherlock::Search.query(realm, query)
     rescue Pebblebed::HttpError => e
