@@ -6,33 +6,33 @@ Thread.abort_on_exception = true
 
 Main do
   description <<-end
-Sherlock Content Listener
+Sherlock Update Listener
 
 Listens to the updates (posts, maybe other stuff later) from grove as they arrive on the river
 and updates the indexes in elasticsearch accordingly.
   end
 
   examples <<-end
-Start the content_listener application:
+Start the update_listener application:
 
-  content_listener start
+  update_listener start
 
 Spawn a daemon process and return:
 
-  content_listener start --daemon
+  update_listener start --daemon
 
 Show status of a daemon process:
 
-  content_listener status
+  update_listener status
 
 Shut down a daemon process:
 
-  content_listener stop
+  update_listener stop
   end
 
   option('--pidfile=path', '-p') do
     description 'Path to PID file.'
-    default '/tmp/content_listener.pid'
+    default '/tmp/update_listener.pid'
   end
 
   mode 'start' do
@@ -75,7 +75,7 @@ Shut down a daemon process:
 
   def daemon(pidfile, logger)
     return Servolux::Daemon.new(
-      :server => Sherlock::ContentListenerDaemon.new(
+      :server => Sherlock::UpdateListenerDaemon.new(
         :pid_file => pidfile,
         :logger => logger
       ),
