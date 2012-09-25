@@ -4,9 +4,12 @@ require 'approvals/rspec'
 require 'spec_helper'
 
 describe Sherlock::Query do
+  its(:limit) { should eq(10) }
+  its(:offset) { should eq(0) }
+
   specify "simple query" do
     verify :format => :json do
-      Sherlock::Query.new(:q => 'hot').to_json
+      Sherlock::Query.new('q' => 'hot').to_json
     end
   end
 

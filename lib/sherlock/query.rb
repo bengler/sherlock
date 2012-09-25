@@ -3,9 +3,10 @@ module Sherlock
 
     attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order
     def initialize(options = {})
+      options.symbolize_keys!
       @search_term = options[:q]
-      @limit = options[:limit]
-      @offset = options[:offset]
+      @limit = options.fetch(:limit) { 10 }
+      @offset = options.fetch(:offset) { 0 }
       @uid = options[:uid] || '*:*'
       @sort_attribute = options[:sort_by]
       @order = Query.normalize_sort_order(options[:order])
