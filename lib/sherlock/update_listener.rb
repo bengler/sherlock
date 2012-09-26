@@ -21,12 +21,6 @@ module Sherlock
        :interval => 1}
     end
 
-    def build_index_records(payload)
-      # create a record for each entry in paths
-      Sherlock::Parsers::Grove.build_records(payload['uid'], payload['attributes'])
-    end
-
-
     def start
       @thread = Thread.new do
         process
@@ -47,42 +41,18 @@ module Sherlock
     end
 
     def consider(message)
-      payload = JSON.parse message[:payload]
-      event = payload['event']
-
-      # temporary hack in order to not index email addresses contained in dittforslag posts
-      return if message_is_from_dittforslag(payload['uid'])
-
-      # TODO we should configure somewhere which klasses should be indexed
-      return unless payload['uid'] =~ /^post/
-
-      # find all records matching uid
-      uids = Sherlock::Elasticsearch.matching_uids(payload['uid'])
-
-      # update index for new records
-      records_for_indexing = build_index_records payload
-      records_for_indexing.each do |record|
-        if event == 'create' || event == 'update' || event == 'exists'
-          Sherlock::Elasticsearch.index record
-        elsif event == 'delete'
-          Sherlock::Elasticsearch.unindex record['uid']
+      tasks = Sherlock::Update.new(message).tasks
+      tasks.each do |task|
+        case task['action']
+        when 'index'
+          Sherlock::Elasticsearch.index task['record']
+        when 'unindex'
+          Sherlock::Elasticsearch.unindex task['record']['uid']
         else
-          LOGGER.warn "Sherlock indexer says: Unknown event type #{event}"
+          LOGGER.error "Update listener knows not how to #{task['action']}"
         end
-        uids.delete record['uid']
-      end
-
-      # unindex matching paths which were not mentioned
-      uids.each do |uid|
-        Sherlock::Elasticsearch.unindex uid
       end
     end
-
-
-    def message_is_from_dittforslag(uid)
-      Pebblebed::Uid.new(uid).path[0, 19] == 'mittap.dittforslag.'
-    end
-
 
   end
 

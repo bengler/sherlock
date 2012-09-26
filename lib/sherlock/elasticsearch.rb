@@ -27,18 +27,6 @@ module Sherlock
         end
       end
 
-      def create_index(realm)
-        begin
-          index = index_for(realm)
-          Pebblebed::Http.put("#{root_url}/#{index}", {})
-        rescue Pebblebed::HttpError => e
-          unless e.message =~ /IndexAlreadyExistsException/
-            LOGGER.warn "Error while creating index #{index}"
-            LOGGER.error e
-          end
-        end
-      end
-
       def delete_index(realm)
         begin
           Pebblebed::Http.delete("#{root_url}/#{index_for(realm)}", {})
