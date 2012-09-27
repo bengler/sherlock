@@ -1,16 +1,16 @@
-# A daemon to feed Sherlock with content updates from Grove, which is then passed on to elasticsearch for indexing
+# A daemon to feed Sherlock with updates from Grove, which is then passed on to elasticsearch for indexing
 
 module Sherlock
 
-  class ContentListenerDaemon < Servolux::Server
-    NAME = "sherlock_content_listener"
+  class UpdateListenerDaemon < Servolux::Server
+    NAME = "sherlock_update_listener"
     def initialize(opts)
       @listener = nil
       super(NAME, opts)
     end
 
     def before_starting
-      @listener = Sherlock::Indexer.new
+      @listener = Sherlock::UpdateListener.new
     end
 
     def after_starting

@@ -2,7 +2,7 @@ require 'pebblebed'
 
 module Sherlock
 
-  class Search
+  class Elasticsearch
 
     class << self
       def root_url
@@ -24,18 +24,6 @@ module Sherlock
         rescue Pebblebed::HttpError => e
           LOGGER.warn "Error while unindexing #{uid}"
           LOGGER.error e
-        end
-      end
-
-      def create_index(realm)
-        begin
-          index = index_for(realm)
-          Pebblebed::Http.put("#{root_url}/#{index}", {})
-        rescue Pebblebed::HttpError => e
-          unless e.message =~ /IndexAlreadyExistsException/
-            LOGGER.warn "Error while creating index #{index}"
-            LOGGER.error e
-          end
         end
       end
 
@@ -81,8 +69,8 @@ module Sherlock
       def matching_uids(uid_string)
         uid = Pebblebed::Uid.new(uid_string)
         wildcard_uid = "#{uid.klass}:#{uid.realm}.*$#{uid.oid}"
-        query = Sherlock::Query.new(nil, :uid => wildcard_uid)
-        matching = Sherlock::Search.query(uid.realm, query)
+        query = Sherlock::Query.new(:uid => wildcard_uid)
+        matching = Sherlock::Elasticsearch.query(uid.realm, query)
         return [] unless matching
         matching['hits']['hits'].map{|result| result['_id']}.compact
       end
