@@ -3,7 +3,6 @@ class SherlockV1 < Sinatra::Base
 
   configure :development do
     register Sinatra::Reloader
-    also_reload 'lib/search.rb'
   end
 
   # Search using :q (the search term), :uid, :limit, :offset, :sort_by and :order
