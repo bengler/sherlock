@@ -107,7 +107,7 @@ describe Sherlock::Indexer do
 
   end
 
-  context "temporary mittap email address exposure hack" do
+  context "disregards blacklisted content" do
 
     it "doesnt index content from mittap.dittforslag" do
 
@@ -138,12 +138,23 @@ describe Sherlock::Indexer do
     end
 
     it "correctly identifies dittforslag uids" do
-      subject.message_is_from_dittforslag('post:mittap.dittforslag.dont.index$1').should be true
-      subject.message_is_from_dittforslag('post:something.else.dont.index$1').should be false
+      subject.blacklisted_content?('post:mittap.dittforslag.dont.index$1').should be true
+      subject.blacklisted_content?('post:something.else.dont.index$1').should be false
+    end
+
+    it "correctly identifies checkpoint uids" do
+      subject.blacklisted_content?('group:what.evs$1').should be true
+      subject.blacklisted_content?('group_membership:what.evs$1').should be true
+      subject.blacklisted_content?('group_subtree:what.evs$1').should be true
+    end
+
+    it "avoids false positives on checkpoint-ish uids" do
+      subject.blacklisted_content?('mygroup:what.evs$1').should be false
+      subject.blacklisted_content?('group_subtreez:what.evs$1').should be false
+      subject.blacklisted_content?('post.group:what.evs$1').should be false
     end
 
   end
-
 
 
   context "restricted content" do
