@@ -81,6 +81,8 @@ module Sherlock
 
     # Don't index stuff from checkpoint
     def checkpoint_content?(uid)
+      return false
+      # TODO re-implement this when we know the new names of these checkpoint classes
       !!(uid =~ /^group(|_subtree|_membership)(\.|\:)/)
     end
 
