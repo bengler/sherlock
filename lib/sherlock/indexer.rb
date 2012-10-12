@@ -50,11 +50,7 @@ module Sherlock
       payload = JSON.parse message[:payload]
       event = payload['event']
 
-      # temporary hack in order to not index email addresses contained in dittforslag posts
-      return if message_is_from_dittforslag(payload['uid'])
-
-      # TODO we should configure somewhere which klasses should be indexed
-      return unless payload['uid'] =~ /^post/
+      return if blacklisted_content?(payload['uid'])
 
       # find all records matching uid
       uids = Search.matching_uids(payload['uid'])
@@ -79,10 +75,19 @@ module Sherlock
     end
 
 
-    def message_is_from_dittforslag(uid)
-      Pebblebed::Uid.new(uid).path[0, 19] == 'mittap.dittforslag.'
+    def blacklisted_content?(uid)
+      dittforslag_content?(uid) || checkpoint_content?(uid)
     end
 
+    # Don't index stuff from checkpoint
+    def checkpoint_content?(uid)
+      !!(uid =~ /^group(|_subtree|_membership)(\.|\:)/)
+    end
+
+    # Don't index dittforslag posts, they might contain email addresses
+    def dittforslag_content?(uid)
+      Pebblebed::Uid.new(uid).path[0, 19] == 'mittap.dittforslag.'
+    end
 
   end
 
