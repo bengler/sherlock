@@ -1,7 +1,7 @@
-require 'sherlock/grove_record'
+require 'sherlock/parsers/grove'
 require 'spec_helper'
 
-describe Sherlock::GroveRecord do
+describe Sherlock::Parsers::Grove do
 
   describe "#build_records" do
 
@@ -18,7 +18,7 @@ describe Sherlock::GroveRecord do
     }
 
     it "conserves a non-flattened copy of document" do
-      records = Sherlock::GroveRecord.build_records('post.card:hell.flames$1234', attributes)
+      records = Sherlock::Parsers::Grove.build_records('post.card:hell.flames$1234', attributes)
       records.count.should eq 2
       records.first['pristine'].should eq attributes
     end
@@ -26,17 +26,17 @@ describe Sherlock::GroveRecord do
     context "restricted" do
 
       it "add restricted attribute if none is present" do
-        records = Sherlock::GroveRecord.build_records('post.card:hell.flames$1234', attributes)
+        records = Sherlock::Parsers::Grove.build_records('post.card:hell.flames$1234', attributes)
         records.first['restricted'].should be false
       end
 
       it "keep restricted attribute" do
         attributes['restricted'] = false
-        records = Sherlock::GroveRecord.build_records('post.card:hell.flames$1234', attributes)
+        records = Sherlock::Parsers::Grove.build_records('post.card:hell.flames$1234', attributes)
         records.first['restricted'].should be false
 
         attributes['restricted'] = true
-        records = Sherlock::GroveRecord.build_records('post.card:hell.flames$1234', attributes)
+        records = Sherlock::Parsers::Grove.build_records('post.card:hell.flames$1234', attributes)
         records.first['restricted'].should be true
       end
 
@@ -46,7 +46,7 @@ describe Sherlock::GroveRecord do
 
   describe "#expand" do
 
-    subject { Sherlock::GroveRecord.new('post.card:hell.flames$1234', {}) }
+    subject { Sherlock::Parsers::Grove.new('post.card:hell.flames$1234', {}) }
 
     its(:klass) { should eq('post.card') }
     its(:path) { should eq('hell.flames') }
@@ -82,7 +82,7 @@ describe Sherlock::GroveRecord do
     }
 
     subject {
-      Sherlock::GroveRecord.new('post.card:hell.flames$1234', record)
+      Sherlock::Parsers::Grove.new('post.card:hell.flames$1234', record)
     }
 
     it "flattens a document hash" do
