@@ -57,6 +57,7 @@ module Sherlock
         result
       end
 
+      # Create a record for each entry in paths
       def self.build_records(uid, attributes)
         records = []
         klass, path, oid = Pebblebed::Uid.parse(uid)
