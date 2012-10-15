@@ -3,7 +3,7 @@ source :rubygems
 gem 'unicorn', '~> 4.1.1'
 gem 'sinatra'
 gem 'rack-contrib', :git => 'git://github.com/rack/rack-contrib.git'
-gem 'pebblebed', :git => 'git@github.com:bengler/pebblebed.git', :branch => 'labels-expander'
+gem 'pebblebed'
 gem 'petroglyph'
 gem 'main', '~> 5.0.1'
 gem 'pebble_path'
