@@ -1,5 +1,6 @@
 require 'pebblebed'
 
+# Parses a UID and divines which pebble the UID originates from.
 module Sherlock
 
   class UidOriginIdentifier
