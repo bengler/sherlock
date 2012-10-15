@@ -1,4 +1,5 @@
 require 'pebblebed'
+require 'active_support/core_ext/hash/keys'
 
 module Sherlock
   module Parsers
@@ -7,7 +8,7 @@ module Sherlock
       attr_reader :uid, :record
       def initialize(uid, record)
         @record = record
-        @uid = Pebblebed::Uid.new(uid)
+        @uid = Pebbles::Uid.new(uid)
       end
 
       def realm
@@ -15,7 +16,7 @@ module Sherlock
       end
 
       def klass
-        uid.klass
+        uid.genus
       end
 
       def path
@@ -37,9 +38,9 @@ module Sherlock
 
       def expand
         unless @expanded
-          klasses = Pebblebed::Labels.new(klass, :prefix => 'klass', :suffix => '')
-          labels = Pebblebed::Labels.new(path, :suffix => '')
-          @expanded = klasses.expanded.merge(labels.expanded).merge('oid_' => oid)
+          klasses = Pebbles::Uid::Labels.new(klass, :name => 'klass', :suffix => '')
+          labels = Pebbles::Uid::Labels.new(path, :name => 'label', :suffix => '')
+          @expanded = klasses.to_hash.merge(labels.to_hash).merge('oid_' => oid).stringify_keys
         end
         @expanded
       end
@@ -59,9 +60,9 @@ module Sherlock
 
       def self.build_records(uid, attributes)
         records = []
-        klass, path, oid = Pebblebed::Uid.parse(uid)
+        pebbles_uid = Pebbles::Uid.new(uid)
         attributes['paths'].each do |new_path|
-          new_uid = "#{klass}:#{new_path}$#{oid}"
+          new_uid = "#{pebbles_uid.genus}:#{new_path}$#{pebbles_uid.oid}"
           records << Sherlock::Parsers::Grove.new(new_uid, attributes).to_hash
         end
         records
