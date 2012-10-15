@@ -5,29 +5,34 @@ module Sherlock
 
   class Update
 
-    attr_reader :payload, :events
+    attr_reader :payload
 
     def initialize(message)
       @payload = JSON.parse message[:payload]
-      @event = payload['event']
     end
 
 
     def build_index_records(payload)
-      # Create a record for each entry in paths
-      Sherlock::Parsers::Grove.build_records(payload['uid'], payload['attributes'])
+      uid = payload['uid']
+      attributes = payload['attributes']
+
+      if Sherlock::UidOriginIdentifier.grove?(uid)
+        return Sherlock::Parsers::Grove.build_records(uid, attributes)
+      elsif Sherlock::UidOriginIdentifier.origami?(uid)
+        return Sherlock::Parsers::Origami.build_records(uid, attributes)
+      else
+        LOGGER.info "Sherlock doesn't know which parser to use on UID #{uid} ?"
+        return []
+      end
     end
 
 
     # Returns an array of hashes, each hash representing a single executable task for elasticsearch
     # e.g.: [{'action' => 'index', 'record' => {'uid' => 'u:i.d'}}, {'action' => 'unindex', 'record' => {'uid' => 'u:i.d.e'}]
     def tasks
-      # Temporary hack in order to not index email addresses contained in dittforslag posts
-      return [] if Update.message_is_from_dittforslag(payload['uid'])
-      # TODO we should configure somewhere which klasses should be indexed
-      return [] unless payload['uid'] =~ /^post/
-
       result = []
+
+      return result unless Sherlock::Update.acceptable_origin?(payload['uid'])
 
       # Find all records matching uid
       uids = Sherlock::Elasticsearch.matching_uids(payload['uid'])
@@ -53,10 +58,12 @@ module Sherlock
     end
 
 
-    def self.message_is_from_dittforslag(uid)
-      Pebblebed::Uid.new(uid).path[0, 19] == 'mittap.dittforslag.'
+    # Disregard dittforslag content
+    # Only index grove and origami stuff
+    def self.acceptable_origin?(uid)
+      return false if Sherlock::UidOriginIdentifier.dittforslag?(uid)
+      Sherlock::UidOriginIdentifier.grove?(uid) || Sherlock::UidOriginIdentifier.origami?(uid)
     end
-
 
   end
 
