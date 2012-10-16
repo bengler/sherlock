@@ -66,7 +66,8 @@ module Sherlock
         result
       end
 
-      def matching_uids(uid_string)
+      # Returns an array of all records in elasticsearch with the same species:realm.*$oid
+      def matching_records(uid_string)
         uid = Pebblebed::Uid.new(uid_string)
         wildcard_uid = "#{uid.klass}:#{uid.realm}.*$#{uid.oid}"
         query = Sherlock::Query.new(:uid => wildcard_uid)

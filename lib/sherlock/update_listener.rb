@@ -41,7 +41,10 @@ module Sherlock
     end
 
     def consider(message)
-      tasks = Sherlock::Update.new(message).tasks
+      uid = JSON.parse(message[:payload])['uid']
+      matching_uids = Sherlock::Elasticsearch.matching_records(uid)
+
+      tasks = Sherlock::Update.new(message).tasks(matching_uids)
       tasks.each do |task|
         case task['action']
         when 'index'

@@ -29,12 +29,9 @@ module Sherlock
 
     # Returns an array of hashes, each hash representing a single executable task for elasticsearch
     # e.g.: [{'action' => 'index', 'record' => {'uid' => 'u:i.d'}}, {'action' => 'unindex', 'record' => {'uid' => 'u:i.d.e'}]
-    def tasks
+    def tasks(matching_uids = [])
       result = []
       return result unless Sherlock::Update.acceptable_origin?(payload['uid'])
-
-      # Find all records matching uid
-      uids = Sherlock::Elasticsearch.matching_uids(payload['uid'])
 
       records_for_indexing = build_index_records payload
       records_for_indexing.each do |record|
@@ -46,11 +43,11 @@ module Sherlock
         else
           LOGGER.warn "Sherlock update says: Unknown event type #{payload['event']}"
         end
-        uids.delete record['uid']
+        matching_uids.delete record['uid']
       end
 
-      # Add unindex tasks for paths which where not included in the message
-      uids.each do |uid|
+      # Add an unindex task for record which where not mentioned in message paths
+      matching_uids.each do |uid|
         result << {'action' => 'unindex', 'record' => {'uid' => uid}}
       end
       result
