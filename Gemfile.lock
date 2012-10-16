@@ -70,7 +70,7 @@ GEM
       pathbuilder
       queryparams
       yajl-ruby
-    pebbles-uid (0.0.4)
+    pebbles-uid (0.0.9)
     petroglyph (0.0.3)
       tilt
     queryparams (0.0.3)

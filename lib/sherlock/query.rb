@@ -44,9 +44,7 @@ module Sherlock
     end
 
     def filters
-      _, path, _= Pebblebed::Uid.raw_parse(uid)
-
-      query = Pebbles::Uid.query(uid, :genus => 'klass', :path => 'label', :suffix => '')
+      query = Pebbles::Uid.query(uid, :species => 'klass', :path => 'label', :suffix => '')
       must = query.to_hash.map do |key, value|
         {:term => {key.to_s => value}}
       end

@@ -16,7 +16,7 @@ module Sherlock
       end
 
       def klass
-        uid.genus
+        uid.species
       end
 
       def path
@@ -62,7 +62,7 @@ module Sherlock
         records = []
         pebbles_uid = Pebbles::Uid.new(uid)
         attributes['paths'].each do |new_path|
-          new_uid = "#{pebbles_uid.genus}:#{new_path}$#{pebbles_uid.oid}"
+          new_uid = "#{pebbles_uid.species}:#{new_path}$#{pebbles_uid.oid}"
           records << Sherlock::Parsers::Grove.new(new_uid, attributes).to_hash
         end
         records
