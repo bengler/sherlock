@@ -70,7 +70,7 @@ describe Sherlock do
     it "finds a created post with query" do
       river.publish(post)
       subject.start
-      sleep 1.4
+      sleep 2
 
       get "/search/#{realm}", :q => "hot"
       result = JSON.parse(last_response.body)

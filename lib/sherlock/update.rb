@@ -54,7 +54,7 @@ module Sherlock
 
 
     def self.message_is_from_dittforslag(uid)
-      Pebblebed::Uid.new(uid).path[0, 19] == 'mittap.dittforslag.'
+      Pebbles::Uid.path(uid)[0, 19] == 'mittap.dittforslag.'
     end
 
 
