@@ -15,15 +15,15 @@ module Sherlock
     def build_index_records(payload)
       uid = payload['uid']
       attributes = payload['attributes']
-
+      result = []
       if Sherlock::UidOriginIdentifier.grove?(uid)
-        return Sherlock::Parsers::Grove.build_records(uid, attributes)
+        result = Sherlock::Parsers::Grove.build_records(uid, attributes)
       elsif Sherlock::UidOriginIdentifier.origami?(uid)
-        return Sherlock::Parsers::Origami.build_records(uid, attributes)
+        result = Sherlock::Parsers::Origami.build_records(uid, attributes)
       else
-        LOGGER.info "Sherlock doesn't know which parser to use on UID #{uid} ?"
-        return []
+        LOGGER.info "Sherlock doesn't know which parser to use on UID #{uid}"
       end
+      result
     end
 
 
@@ -31,7 +31,6 @@ module Sherlock
     # e.g.: [{'action' => 'index', 'record' => {'uid' => 'u:i.d'}}, {'action' => 'unindex', 'record' => {'uid' => 'u:i.d.e'}]
     def tasks
       result = []
-
       return result unless Sherlock::Update.acceptable_origin?(payload['uid'])
 
       # Find all records matching uid

@@ -49,7 +49,7 @@ module Sherlock
         when 'unindex'
           Sherlock::Elasticsearch.unindex task['record']['uid']
         else
-          LOGGER.error "Update listener knows not how to #{task['action']}"
+          LOGGER.error "Sherlock questions the relevancy of task #{task['action']}."
         end
       end
     end
