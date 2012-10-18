@@ -9,6 +9,14 @@ describe Sherlock::Parsers::Origami do
       'post.card:hell.tools.pitchfork$1'
     }
 
+    let(:attributes) {
+      {
+        'document' => {'app' => 'hot'},
+        'paths' => ["hell.trademarks.pitchfork"],
+        'id' => uid
+      }
+    }
+
     it "conserves a non-flattened copy of document" do
       records = Sherlock::Parsers::Origami.build_records('post.card:hell.flames$1234', attributes)
       records.count.should eq 1
