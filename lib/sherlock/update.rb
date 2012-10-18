@@ -53,7 +53,6 @@ module Sherlock
       result
     end
 
-
     # Disregard dittforslag content
     # Only index grove and origami stuff
     def self.acceptable_origin?(uid)

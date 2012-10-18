@@ -39,8 +39,8 @@ module Sherlock
       end
 
       def url(uid_string)
-        uid = Pebblebed::Uid.new(uid_string)
-        "#{root_url}/#{index_for(uid.realm)}/#{uid.klass}/#{uid_string}"
+        uid = Pebbles::Uid.new(uid_string)
+        "#{root_url}/#{index_for(uid.realm)}/#{uid.species}/#{uid_string}"
       end
 
       def index_for(realm)
@@ -68,9 +68,8 @@ module Sherlock
 
       # Returns an array of all records in elasticsearch with the same species:realm.*$oid
       def matching_records(uid_string)
-        uid = Pebblebed::Uid.new(uid_string)
-        wildcard_uid = "#{uid.klass}:#{uid.realm}.*$#{uid.oid}"
-        query = Sherlock::Query.new(:uid => wildcard_uid)
+        uid = Pebbles::Uid.new(uid_string)
+        query = Sherlock::Query.new(:uid => uid.cache_key)
         matching = Sherlock::Elasticsearch.query(uid.realm, query)
         return [] unless matching
         matching['hits']['hits'].map{|result| result['_id']}.compact

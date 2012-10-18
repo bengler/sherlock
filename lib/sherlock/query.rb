@@ -44,16 +44,13 @@ module Sherlock
     end
 
     def filters
-      klass, path, oid = Pebblebed::Uid.raw_parse(uid)
-      klasses = Pebblebed::Labels.new(klass, :prefix => 'klass', :suffix => '')
-      labels = Pebblebed::Labels.new(path, :suffix => '')
-      oids = oid ? {'oid_' => oid} : {}
-      must = klasses.expanded.merge(labels.expanded).merge(oids).map do |key, value|
-        {:term => {key => value}}
+      query = Pebbles::Uid.query(uid, :species => 'klass', :path => 'label', :suffix => '')
+      must = query.to_hash.map do |key, value|
+        {:term => {key.to_s => value}}
       end
       must << {:term => {'restricted' => false}}
-      unless Pebblebed::Uid.wildcard_path?(path)
-        must << {:missing => {:field => labels.next}}
+      unless query.path =~ /\*$/
+        must << {:missing => {:field => query.next_path_label}}
       end
       bool = {:bool => {:must => must}}
       {:filter => bool}
