@@ -1,3 +1,3 @@
 node :hit => hit do
-  attributes :uid, :document, :created_by, :created_at, :updated_at, :tags, :external_id, :paths, :restricted, :conflicted
+  attributes *hit.keys
 end
