@@ -39,8 +39,8 @@ module Sherlock
       end
 
       def url(uid_string)
-        uid = Pebblebed::Uid.new(uid_string)
-        "#{root_url}/#{index_for(uid.realm)}/#{uid.klass}/#{uid_string}"
+        uid = Pebbles::Uid.new(uid_string)
+        "#{root_url}/#{index_for(uid.realm)}/#{uid.species}/#{uid_string}"
       end
 
       def index_for(realm)
@@ -67,8 +67,8 @@ module Sherlock
       end
 
       def matching_uids(uid_string)
-        uid = Pebblebed::Uid.new(uid_string)
-        wildcard_uid = "#{uid.klass}:#{uid.realm}.*$#{uid.oid}"
+        uid = Pebbles::Uid.new(uid_string)
+        wildcard_uid = "#{uid.species}:#{uid.realm}.*$#{uid.oid}"
         query = Sherlock::Query.new(:uid => wildcard_uid)
         matching = Sherlock::Elasticsearch.query(uid.realm, query)
         return [] unless matching
