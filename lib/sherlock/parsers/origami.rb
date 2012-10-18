@@ -1,14 +1,13 @@
 require 'pebblebed'
-require 'active_support/core_ext/hash/keys'
 
 module Sherlock
   module Parsers
-    class Grove
+    class Origami
 
       attr_reader :uid, :record
       def initialize(uid, record)
         @record = record
-        @uid = Pebbles::Uid.new(uid)
+        @uid = Pebblebed::Uid.new(uid)
       end
 
       def realm
@@ -16,7 +15,7 @@ module Sherlock
       end
 
       def klass
-        uid.species
+        uid.klass
       end
 
       def path
@@ -38,9 +37,9 @@ module Sherlock
 
       def expand
         unless @expanded
-          klasses = Pebbles::Uid::Labels.new(klass, :name => 'klass', :suffix => '')
-          labels = Pebbles::Uid::Labels.new(path, :name => 'label', :suffix => '')
-          @expanded = klasses.to_hash.merge(labels.to_hash).merge('oid_' => oid).stringify_keys
+          klasses = Pebblebed::Labels.new(klass, :prefix => 'klass', :suffix => '')
+          labels = Pebblebed::Labels.new(path, :suffix => '')
+          @expanded = klasses.expanded.merge(labels.expanded).merge('oid_' => oid)
         end
         @expanded
       end
@@ -58,15 +57,8 @@ module Sherlock
         result
       end
 
-      # Create a record for each entry in paths
       def self.build_records(uid, attributes)
-        records = []
-        pebbles_uid = Pebbles::Uid.new(uid)
-        attributes['paths'].each do |new_path|
-          new_uid = "#{pebbles_uid.species}:#{new_path}$#{pebbles_uid.oid}"
-          records << Sherlock::Parsers::Grove.new(new_uid, attributes).to_hash
-        end
-        records
+        [Sherlock::Parsers::Origami.new(uid, attributes).to_hash]
       end
 
     end

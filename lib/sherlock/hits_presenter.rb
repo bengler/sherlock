@@ -9,7 +9,9 @@ module Sherlock
     def initialize(search_result, pagination_options)
       if search_result
         @hits = search_result['hits']['hits'].map do |hit|
-          DeepStruct.wrap(hit['_source']['pristine'].merge({'score' => hit['_score']}))
+          DeepStruct.wrap(
+            hit['_source']['pristine'].merge({'score' => hit['_score']}).merge({'uid' => hit['_id']})
+          )
         end
         @total = search_result['hits']['total']
       else
