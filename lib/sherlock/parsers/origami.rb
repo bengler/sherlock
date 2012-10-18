@@ -1,4 +1,5 @@
 require 'pebblebed'
+require 'active_support/core_ext/hash/keys'
 
 module Sherlock
   module Parsers
@@ -15,7 +16,7 @@ module Sherlock
       end
 
       def klass
-        uid.klass
+        uid.species
       end
 
       def path
@@ -37,8 +38,8 @@ module Sherlock
 
       def expand
         unless @expanded
-          klasses = Pebbles::Labels.new(klass, :prefix => 'klass', :suffix => '')
-          labels = Pebbles::Labels.new(path, :prefix => 'label', :suffix => '')
+          klasses = Pebbles::Uid::Labels.new(klass, :name => 'klass', :suffix => '')
+          labels = Pebbles::Uid::Labels.new(path, :name => 'label', :suffix => '')
           @expanded = klasses.to_hash.merge(labels.to_hash).merge('oid_' => oid).stringify_keys
         end
         @expanded
