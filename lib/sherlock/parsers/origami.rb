@@ -7,7 +7,7 @@ module Sherlock
       attr_reader :uid, :record
       def initialize(uid, record)
         @record = record
-        @uid = Pebblebed::Uid.new(uid)
+        @uid = Pebbles::Uid.new(uid)
       end
 
       def realm
@@ -37,9 +37,9 @@ module Sherlock
 
       def expand
         unless @expanded
-          klasses = Pebblebed::Labels.new(klass, :prefix => 'klass', :suffix => '')
-          labels = Pebblebed::Labels.new(path, :suffix => '')
-          @expanded = klasses.expanded.merge(labels.expanded).merge('oid_' => oid)
+          klasses = Pebbles::Labels.new(klass, :prefix => 'klass', :suffix => '')
+          labels = Pebbles::Labels.new(path, :prefix => 'label', :suffix => '')
+          @expanded = klasses.to_hash.merge(labels.to_hash).merge('oid_' => oid).stringify_keys
         end
         @expanded
       end
