@@ -1,28 +1,46 @@
 # Sherlock
 
-Sherlock is the glue between various pebbles and elastic search.
+Sherlock is a no-hassle service which handles all the indexing and query needs of a content-brokering Pebble [1]. Sherlock is the glue between pebbles applications and elasticsearch. 
 
+## Sherlock has three interfaces
 
-## Sherlock does three things
+1. AMQP. Sherlock subscribes to a message queue. Incoming messages are evaluated, normalized and passed via…
+2. HTTP requests to elasticsearch for indexing the content.
+3. Accept HTTP search queries, translate the query, passe it to elasticsearch and route the search result back to the client as an HTTP response.
 
-1. Listen to the river message queue from grove (and other pebbles later on).
-2. Update elastic search index with changes mentioned in said river.
-3. Accept search queries (http), redirect them to elastic search and route the search result back.
+## Installation
 
+Sherlock needs two external services to function:
 
-## TODO
+1. RabbitMQ [2]
+2. elasticsearch [3]
 
-- Rebuild es index.
-- Checkpoint authentication and filtered search result.
-- ..or just disregard restricted posts until we need more fancy authentication.
+Get RabbitMQ
 
+	brew install rabbitmq
+
+Get elasticsearch
+
+	brew install elasticsearch
+
+Get Sherlock
+
+	git clone git@github.com:bengler/sherlock.git
+	cd sherlock
+	bundle install
+
+Run the integration tests to see if Sherlock is playing well with RabbitMQ and elasticsearch
+
+	rspec spec/integration/
+	
 
 ## Usage
+* put stuff on river
+* do query
 
-Sherlock needs this to run:
+[1] http://pebblestack.org
 
-- grove (or some other service providing data to river)
-- pebblebed
-- rabbitmq (brew install rabbitmq)
-- elasticsearch (brew install elasticsearch)
+[2] http://rabbitmq.com
+
+[3] http://elasticsearch.org
 
