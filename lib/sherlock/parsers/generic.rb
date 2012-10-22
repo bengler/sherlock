@@ -3,7 +3,13 @@ require 'active_support/core_ext/hash/keys'
 
 module Sherlock
   module Parsers
-    class Origami
+
+    # Parses the payload content for an incoming message by:
+    # Expading the path read from the uid
+    # Flattening the data
+    # Adding realm, uid, pristine and restricted hash entries
+    # The pristine entry represents the original data structure (the untouched, incoming record)
+    class Generic
 
       attr_reader :uid, :record
       def initialize(uid, record)
@@ -58,8 +64,19 @@ module Sherlock
         result
       end
 
+      # Create a record for each entry in paths
       def self.build_records(uid, attributes)
-        [Sherlock::Parsers::Origami.new(uid, attributes).to_hash]
+        records = []
+        if attributes['paths']
+          pebbles_uid = Pebbles::Uid.new(uid)
+          attributes['paths'].each do |new_path|
+            new_uid = "#{pebbles_uid.species}:#{new_path}$#{pebbles_uid.oid}"
+            records << Sherlock::Parsers::Generic.new(new_uid, attributes).to_hash
+          end
+        else
+          records << Sherlock::Parsers::Generic.new(uid, attributes).to_hash
+        end
+        records
       end
 
     end

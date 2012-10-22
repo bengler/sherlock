@@ -1,7 +1,7 @@
-require 'sherlock/parsers/grove'
+require 'sherlock/parsers/generic'
 require 'spec_helper'
 
-describe Sherlock::Parsers::Origami do
+describe Sherlock::Parsers::Generic do
 
   describe "#build_records" do
 
@@ -12,31 +12,39 @@ describe Sherlock::Parsers::Origami do
     let(:attributes) {
       {
         'document' => {'app' => 'hot'},
-        'paths' => ["hell.trademarks.pitchfork"],
+        'paths' => ["hell.trademarks.pitchfork", "hell.tools.pitchfork"],
         'id' => uid
       }
     }
 
     it "conserves a non-flattened copy of document" do
-      records = Sherlock::Parsers::Origami.build_records('post.card:hell.flames$1234', attributes)
-      records.count.should eq 1
+      records = Sherlock::Parsers::Generic.build_records('post.card:hell.flames$1234', attributes)
       records.first['pristine'].should eq attributes
+    end
+
+    it "generates a single build_record if no paths entry" do
+      attributes = {
+        'document' => {'app' => 'hot'},
+        'id' => uid
+      }
+      records = Sherlock::Parsers::Generic.build_records('post.card:hell.flames$1234', attributes)
+      records.count.should eq 1
     end
 
     context "restricted" do
 
       it "add restricted attribute if none is present" do
-        records = Sherlock::Parsers::Origami.build_records('post.card:hell.flames$1234', attributes)
+        records = Sherlock::Parsers::Generic.build_records('post.card:hell.flames$1234', attributes)
         records.first['restricted'].should be false
       end
 
       it "keep restricted attribute" do
         attributes['restricted'] = false
-        records = Sherlock::Parsers::Origami.build_records('post.card:hell.flames$1234', attributes)
+        records = Sherlock::Parsers::Generic.build_records('post.card:hell.flames$1234', attributes)
         records.first['restricted'].should be false
 
         attributes['restricted'] = true
-        records = Sherlock::Parsers::Origami.build_records('post.card:hell.flames$1234', attributes)
+        records = Sherlock::Parsers::Generic.build_records('post.card:hell.flames$1234', attributes)
         records.first['restricted'].should be true
       end
 
@@ -46,7 +54,7 @@ describe Sherlock::Parsers::Origami do
 
   describe "#expand" do
 
-    subject { Sherlock::Parsers::Origami.new('post.card:hell.flames$1234', {}) }
+    subject { Sherlock::Parsers::Generic.new('post.card:hell.flames$1234', {}) }
 
     its(:klass) { should eq('post.card') }
     its(:path) { should eq('hell.flames') }
@@ -82,7 +90,7 @@ describe Sherlock::Parsers::Origami do
     }
 
     subject {
-      Sherlock::Parsers::Origami.new('post.card:hell.flames$1234', record)
+      Sherlock::Parsers::Generic.new('post.card:hell.flames$1234', record)
     }
 
     it "flattens a document hash" do

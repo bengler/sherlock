@@ -80,6 +80,7 @@ describe Sherlock::Update do
 
   it "checks to see if origin is acceptable" do
     message = Hash[:payload, payload.to_json]
+    Sherlock::Update.acceptable_origin?(nil).should be_false
     Sherlock::UidOriginIdentifier.should_receive(:grove?)
     Sherlock::UidOriginIdentifier.should_receive(:origami?)
     Sherlock::UidOriginIdentifier.should_receive(:dittforslag?)

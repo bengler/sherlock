@@ -18,17 +18,17 @@ describe 'API v1 search' do
 
   let(:record) {
     uid = 'post.card:hell.flames.devil$1'
-    Sherlock::Parsers::Grove.new(uid, {'document' => 'hot', 'uid' => uid}).to_hash
+    Sherlock::Parsers::Generic.new(uid, {'document' => 'hot', 'uid' => uid}).to_hash
   }
 
   let(:another_record) {
     uid = 'post.card:hell.flames.pitchfork$2'
-    Sherlock::Parsers::Grove.new(uid, {'document' => 'hot stuff', 'uid' => uid}).to_hash
+    Sherlock::Parsers::Generic.new(uid, {'document' => 'hot stuff', 'uid' => uid}).to_hash
   }
 
   let(:excluded_record) {
     uid = 'post.card:hell.heck.weird$3'
-    Sherlock::Parsers::Grove.new(uid, {'document' => 'warm', 'uid' => uid}).to_hash
+    Sherlock::Parsers::Generic.new(uid, {'document' => 'warm', 'uid' => uid}).to_hash
   }
 
   after(:each) do
@@ -70,12 +70,12 @@ describe 'API v1 search' do
 
       let(:record) {
         uid = 'post.card:hell.flames.bbq$1'
-        Sherlock::Parsers::Grove.new(uid, { 'document' => {'item' => 'first bbq', 'start_time' => '2012-08-23T17:00:00+02:00'}, 'uid' => uid}).to_hash
+        Sherlock::Parsers::Generic.new(uid, { 'document' => {'item' => 'first bbq', 'start_time' => '2012-08-23T17:00:00+02:00'}, 'uid' => uid}).to_hash
       }
 
       let(:another_record) {
         uid = 'post.card:hell.flames.wtf.bbq$2'
-        Sherlock::Parsers::Grove.new(uid, { 'document' => {'item' => 'second bbq', 'start_time' => '2012-08-24T17:00:00+02:00'}, 'uid' => uid}).to_hash
+        Sherlock::Parsers::Generic.new(uid, { 'document' => {'item' => 'second bbq', 'start_time' => '2012-08-24T17:00:00+02:00'}, 'uid' => uid}).to_hash
       }
 
       it "sorts by timestamp on correct order" do
