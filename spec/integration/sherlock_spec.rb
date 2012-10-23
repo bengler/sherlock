@@ -52,7 +52,6 @@ describe Sherlock do
       { :event => 'create',
         :uid => uid,
         :attributes => {
-          :uid => uid,
           :document => {:app => "hot"},
           :paths => ["hell.tools.pitchfork"]
         }
@@ -78,6 +77,27 @@ describe Sherlock do
       result['pagination'].should_not eq nil
       result['hits'].first['hit']['uid'].should eq uid
       result['hits'].first['hit']['paths'].count.should eq 1
+    end
+
+    it "finds something for each entry in paths" do
+      post = {
+        :event => 'create',
+        :uid => "associate:#{realm}.org$500",
+        :attributes => {
+          :first_name => "Frank",
+          :last_name => "Larsen",
+          :paths => ["#{realm}.org.oslo.sagene", "#{realm}.org.bergen.ulriken"]
+        }
+      }
+      river.publish(post)
+      subject.start
+      sleep 1.4
+
+      get "/search/#{realm}/associate:#{realm}.org.*"
+      result = JSON.parse(last_response.body)
+      result['total'].should eq 2
+      result['hits'][0]['hit']['uid'].should eq "associate:#{realm}.org.oslo.sagene$500"
+      result['hits'][1]['hit']['uid'].should eq "associate:#{realm}.org.bergen.ulriken$500"
     end
 
     it "udpates an existing post" do
