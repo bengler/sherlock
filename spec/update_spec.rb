@@ -20,7 +20,7 @@ describe Sherlock::Update do
       'event' => 'create',
       'uid' => 'post.card:hell.trademarks.pitchfork$1',
       'attributes' => {
-        'uid' => 'post.card:hell.pitchfork$1',
+        'uid' => 'post.card:hell.trademarks.pitchfork$1',
         'document' => {'app' => 'hot'},
         'paths' => ["hell.trademarks.pitchfork", "hell.tools.pitchfork"],
         'id' => 'post.card:hell.trademarks.pitchfork$1'
@@ -80,6 +80,7 @@ describe Sherlock::Update do
 
   it "checks to see if origin is acceptable" do
     message = Hash[:payload, payload.to_json]
+    Sherlock::Update.acceptable_origin?(nil).should be_false
     Sherlock::UidOriginIdentifier.should_receive(:grove?)
     Sherlock::UidOriginIdentifier.should_receive(:origami?)
     Sherlock::UidOriginIdentifier.should_receive(:dittforslag?)
