@@ -13,5 +13,6 @@ use Rack::CommonLogger
 map "/api/sherlock/v1" do
   use Rack::PostBodyContentTypeParser
   use Rack::MethodOverride
+  use Pebbles::Cors
   run SherlockV1
 end
