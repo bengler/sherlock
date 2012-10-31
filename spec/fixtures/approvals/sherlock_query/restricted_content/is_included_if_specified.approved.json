@@ -5,13 +5,6 @@
         "query_string": {
           "query": "scorching"
         }
-      },
-      "filter": {
-        "bool": {
-          "must": [
-
-          ]
-        }
       }
     }
   },

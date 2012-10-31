@@ -53,8 +53,8 @@ module Sherlock
       unless query.path =~ /\*$/
         must << {:missing => {:field => query.next_path_label}}
       end
-      bool = {:bool => {:must => must}}
-      {:filter => bool}
+      return {} if must.empty?
+      {:filter => {:bool => {:must => must}}}
     end
 
     def self.normalize_sort_order(order)

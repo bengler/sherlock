@@ -24,7 +24,7 @@ class SherlockV1 < Sinatra::Base
   # Search using :q (the search term), :uid, :limit, :offset, :sort_by and :order
   get '/search/:realm/?:uid?' do |realm, uid|
     halt 403, "Sherlock couldn't parse the UID \"#{uid}\"." unless valid_query?(uid)
-    params[:show_restriced] = god_mode?
+    params[:show_restricted] = god_mode?
     query = Sherlock::Query.new(params)
     begin
       result = Sherlock::Elasticsearch.query(realm, query)

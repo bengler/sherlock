@@ -31,14 +31,9 @@ describe 'API v1 search' do
     Sherlock::Parsers::Generic.new(uid, {'document' => 'warm', 'uid' => uid}).to_hash
   }
 
-  let(:restricted_record) {
-    uid = 'post.card:hell.heck.weird$3'
-    Sherlock::Parsers::Grove.new(uid, {'document' => 'warm', 'uid' => uid}).to_hash
-  }
-
   let(:guest) { DeepStruct.wrap({}) }
-
-  let(:checkpoint) { stub(:get => guest) }
+  let(:identity) {guest}
+  let(:checkpoint) { stub(:get => identity) }
 
   before :each do
     Pebblebed::Connector.any_instance.stub(:checkpoint).and_return checkpoint
@@ -80,7 +75,7 @@ describe 'API v1 search' do
       end.should eq ['hot stuff']
     end
 
-    context "sorting results " do
+    context "sorting results" do
 
       let(:record) {
         uid = 'post.card:hell.flames.bbq$1'
@@ -142,6 +137,57 @@ describe 'API v1 search' do
       result['hits'].map do |hit|
         hit['hit']['uid']
       end.sort.should eq([uid])
+    end
+  end
+
+  describe "restricted content" do
+
+    let(:restricted_uid) {'post.card:hell.heck.weird$3'}
+
+    let(:restricted_record) {
+      Sherlock::Parsers::Generic.new(restricted_uid, {'document' => 'secret', 'uid' => restricted_uid, 'restricted' => true}).to_hash
+    }
+
+    context "when god" do
+
+      let(:identity) { DeepStruct.wrap(:identity => {:id => 1337, :god => true}) }
+
+      it "is found for uid searches" do
+        Sherlock::Elasticsearch.index restricted_record
+        sleep 1
+
+        get "/search/#{realm}/#{restricted_uid}"
+
+        result = JSON.parse(last_response.body)
+        result['hits'].map do |hit|
+          hit['hit']['uid']
+        end.sort.should eq([restricted_uid])
+      end
+
+      it "is found for term searches" do
+        Sherlock::Elasticsearch.index restricted_record
+        sleep 1
+
+        get "/search/#{realm}", :q => 'secret'
+
+        result = JSON.parse(last_response.body)
+        result['hits'].map do |hit|
+          hit['hit']['uid']
+        end.sort.should eq([restricted_uid])
+      end
+
+    end
+
+    context "when John Q. Public" do
+      it "is not found" do
+        Sherlock::Elasticsearch.index restricted_record
+        sleep 1
+
+        get "/search/#{realm}", :q => 'secret'
+
+        result = JSON.parse(last_response.body)
+        result['hits'].should eq []
+      end
     end
   end
 

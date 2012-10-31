@@ -23,6 +23,15 @@ describe Sherlock do
 
   end
 
+  let(:guest) { DeepStruct.wrap({}) }
+  let(:identity) {guest}
+  let(:checkpoint) { stub(:get => identity) }
+
+  before :each do
+    Pebblebed::Connector.any_instance.stub(:checkpoint).and_return checkpoint
+  end
+
+
   context "posts to river" do
 
     include Rack::Test::Methods
