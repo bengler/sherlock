@@ -3,6 +3,8 @@ development:
   checkpoint:
     session: 'god'
     host: 'checkpoint.dev'
+  elasticsearch:
+    host: 'localhost:9200'
 
 test:
   checkpoint:
