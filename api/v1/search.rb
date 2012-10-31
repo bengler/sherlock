@@ -9,6 +9,16 @@ class SherlockV1 < Sinatra::Base
     def god_mode?
       current_identity && current_identity.respond_to?(:god) && current_identity.god
     end
+
+    def valid_query?(uid)
+      return true unless uid
+      begin
+        Pebbles::Uid.query(uid)
+        return true
+      rescue StandardError => e
+        return false
+      end
+    end
   end
 
   # Search using :q (the search term), :uid, :limit, :offset, :sort_by and :order
@@ -23,17 +33,6 @@ class SherlockV1 < Sinatra::Base
     end
     presenter = Sherlock::HitsPresenter.new(result, {:limit => query.limit, :offset => query.offset})
     pg :hits, :locals => {:hits => presenter.hits, :pagination => presenter.pagination, :total => presenter.total}
-  end
-
-
-  def valid_query?(uid)
-    return true unless uid
-    begin
-      Pebbles::Uid.query(uid)
-      return true
-    rescue StandardError => e
-      return false
-    end
   end
 
 end
