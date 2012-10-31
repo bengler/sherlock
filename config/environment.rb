@@ -12,6 +12,5 @@ Dir.glob('./lib/**/*.rb').each{ |lib| require lib }
 environment = ENV['RACK_ENV'] || "development"
 
 Pebblebed.config do
-  #TODO: add checkpoint
-  #service 'checkpoint'
+  service :checkpoint
 end
