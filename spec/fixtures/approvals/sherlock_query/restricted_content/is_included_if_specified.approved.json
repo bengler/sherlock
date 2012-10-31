@@ -1,0 +1,20 @@
+{
+  "query": {
+    "filtered": {
+      "query": {
+        "query_string": {
+          "query": "scorching"
+        }
+      },
+      "filter": {
+        "bool": {
+          "must": [
+
+          ]
+        }
+      }
+    }
+  },
+  "size": 10,
+  "from": 0
+}

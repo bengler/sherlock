@@ -1,7 +1,7 @@
 module Sherlock
   class Query
 
-    attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order
+    attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :show_restricted
     def initialize(options = {})
       options.symbolize_keys!
       @search_term = options[:q]
@@ -10,6 +10,7 @@ module Sherlock
       @uid = options[:uid] || '*:*'
       @sort_attribute = options[:sort_by]
       @order = Query.normalize_sort_order(options[:order])
+      @show_restricted = options.fetch(:show_restricted) {false}
     end
 
     def pagination
@@ -48,7 +49,7 @@ module Sherlock
       must = query.to_hash.map do |key, value|
         {:term => {key.to_s => value}}
       end
-      must << {:term => {'restricted' => false}}
+      must << {:term => {'restricted' => false}} unless show_restricted
       unless query.path =~ /\*$/
         must << {:missing => {:field => query.next_path_label}}
       end
