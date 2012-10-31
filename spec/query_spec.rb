@@ -85,4 +85,18 @@ describe Sherlock::Query do
 
   end
 
+  describe "restricted content" do
+    it "is exluded from query by default" do
+      verify :format => :json do
+        Sherlock::Query.new(:q => 'scorching').to_json
+      end
+    end
+
+    it "is included if specified" do
+      verify :format => :json do
+        Sherlock::Query.new(:q => 'scorching', :show_restricted => true).to_json
+      end
+    end
+  end
+
 end

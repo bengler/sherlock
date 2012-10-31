@@ -1,0 +1,13 @@
+{
+  "query": {
+    "filtered": {
+      "query": {
+        "query_string": {
+          "query": "scorching"
+        }
+      }
+    }
+  },
+  "size": 10,
+  "from": 0
+}

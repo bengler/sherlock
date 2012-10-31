@@ -5,10 +5,26 @@ class SherlockV1 < Sinatra::Base
     register Sinatra::Reloader
   end
 
+  helpers do
+    def god_mode?
+      current_identity && current_identity.respond_to?(:god) && current_identity.god
+    end
+
+    def valid_query?(uid)
+      return true unless uid
+      begin
+        Pebbles::Uid.query(uid)
+        return true
+      rescue StandardError => e
+        return false
+      end
+    end
+  end
+
   # Search using :q (the search term), :uid, :limit, :offset, :sort_by and :order
   get '/search/:realm/?:uid?' do |realm, uid|
     halt 403, "Sherlock couldn't parse the UID \"#{uid}\"." unless valid_query?(uid)
-
+    params[:show_restricted] = god_mode?
     query = Sherlock::Query.new(params)
     begin
       result = Sherlock::Elasticsearch.query(realm, query)
@@ -17,17 +33,6 @@ class SherlockV1 < Sinatra::Base
     end
     presenter = Sherlock::HitsPresenter.new(result, {:limit => query.limit, :offset => query.offset})
     pg :hits, :locals => {:hits => presenter.hits, :pagination => presenter.pagination, :total => presenter.total}
-  end
-
-
-  def valid_query?(uid)
-    return true unless uid
-    begin
-      Pebbles::Uid.query(uid)
-      return true
-    rescue StandardError => e
-      return false
-    end
   end
 
 end

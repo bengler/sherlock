@@ -1,27 +1,25 @@
 ---
 development:
-  grove:
-    session: 'some-god-session'
-    host: 'grove.dev'
-  elasticsearch:
-    host: 'localhost:9200'
+  checkpoint:
+    session: 'god'
+    host: 'checkpoint.dev'
 
 test:
-  grove:
-    session: 'god'
-    host: 'grove.dev'
+  checkpoint:
+    session: 'checkpoint'
+    host: 'checkpoint.dev'
   elasticsearch:
     host: 'localhost:9200'
 
 staging:
-  grove:
+  checkpoint:
     session: 'abc'
     host: 'pebbles.staging.o5.dev'
   elasticsearch:
     host: 'localhost:9200'
 
 production:
-  grove:
+  checkpoint:
     session: 'abc'
     host: 'pebbles.o5.no'
   elasticsearch:
