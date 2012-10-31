@@ -1,3 +1,5 @@
 /coverage
 config/site.rb
 .approvals
+config/services.yml
+log

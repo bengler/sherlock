@@ -13,17 +13,7 @@ module Sherlock
 
 
     def build_index_records(payload)
-      uid = payload['uid']
-      attributes = payload['attributes']
-      result = []
-      if Sherlock::UidOriginIdentifier.grove?(uid)
-        result = Sherlock::Parsers::Grove.build_records(uid, attributes)
-      elsif Sherlock::UidOriginIdentifier.origami?(uid)
-        result = Sherlock::Parsers::Origami.build_records(uid, attributes)
-      else
-        LOGGER.info "Sherlock doesn't know which parser to use on UID #{uid}"
-      end
-      result
+      Sherlock::Parsers::Generic.build_records(payload['uid'], payload['attributes'])
     end
 
 
@@ -55,7 +45,9 @@ module Sherlock
 
     # Disregard dittforslag content
     # Only index grove and origami stuff
+    # TODO: blacklist checkpoint and whitelist all other stuff when we know what checkpoints namespace is
     def self.acceptable_origin?(uid)
+      return false unless uid
       return false if Sherlock::UidOriginIdentifier.dittforslag?(uid)
       Sherlock::UidOriginIdentifier.grove?(uid) || Sherlock::UidOriginIdentifier.origami?(uid)
     end
