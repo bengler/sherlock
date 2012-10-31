@@ -31,6 +31,20 @@ describe 'API v1 search' do
     Sherlock::Parsers::Generic.new(uid, {'document' => 'warm', 'uid' => uid}).to_hash
   }
 
+  let(:restricted_record) {
+    uid = 'post.card:hell.heck.weird$3'
+    Sherlock::Parsers::Grove.new(uid, {'document' => 'warm', 'uid' => uid}).to_hash
+  }
+
+  let(:guest) { DeepStruct.wrap({}) }
+
+  let(:checkpoint) { stub(:get => guest) }
+
+  before :each do
+    Pebblebed::Connector.any_instance.stub(:checkpoint).and_return checkpoint
+  end
+
+
   after(:each) do
     Sherlock::Elasticsearch.delete_index(realm)
   end
