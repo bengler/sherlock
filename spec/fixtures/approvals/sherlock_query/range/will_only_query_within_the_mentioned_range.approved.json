@@ -1,0 +1,32 @@
+{
+  "query": {
+    "filtered": {
+      "query": {
+        "query_string": {
+          "query": "scorching"
+        }
+      },
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "term": {
+                "restricted": false
+              }
+            },
+            {
+              "range": {
+                "membership_expires_on": {
+                  "lte": "2012-11-01",
+                  "gte": "2012-11-03"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "size": 10,
+  "from": 0
+}

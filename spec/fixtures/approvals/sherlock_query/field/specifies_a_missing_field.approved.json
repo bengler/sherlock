@@ -1,0 +1,29 @@
+{
+  "query": {
+    "filtered": {
+      "query": {
+        "query_string": {
+          "query": "scorching"
+        }
+      },
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "term": {
+                "restricted": false
+              }
+            },
+            {
+              "missing": {
+                "field": "membership_expires_on"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "size": 10,
+  "from": 0
+}

@@ -99,4 +99,25 @@ describe Sherlock::Query do
     end
   end
 
+  describe "range" do
+    it "will only query within the mentioned range" do
+      verify :format => :json do
+        range = {'attribute' => 'membership_expires_on', 'to' => '2012-11-01', 'from' => '2012-11-03'}
+        Sherlock::Query.new(:q => 'scorching', :range => range).to_json
+      end
+    end
+  end
+
+  describe "field" do
+    it "specifies a missing field" do
+      verify :format => :json do
+        field = {'name' => 'membership_expires_on', 'value' => 'null'}
+        Sherlock::Query.new(:q => 'scorching', :field => field).to_json
+      end
+    end
+
+    it "specifies the attribute of a field"
+
+  end
+
 end
