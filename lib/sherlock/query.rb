@@ -1,7 +1,7 @@
 module Sherlock
   class Query
 
-    attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :show_restricted, :range, :field
+    attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :show_restricted, :range, :fields
     def initialize(options = {})
       options.symbolize_keys!
       @search_term = options[:q]
@@ -12,7 +12,7 @@ module Sherlock
       @order = Query.normalize_sort_order(options[:order])
       @show_restricted = options.fetch(:show_restricted) {false}
       @range = options[:range]
-      @field = options[:field]
+      @fields = options.fetch(:fields) {[]}
     end
 
     def pagination
@@ -55,7 +55,15 @@ module Sherlock
       unless query.path =~ /\*$/
         must << {:missing => {:field => query.next_path_label}}
       end
-      must << {:missing => {:field => field['name']}} if field && field['value'] == 'null'
+
+      fields.each do |key, value|
+        if value == 'null'
+          must << {:missing => {:field => key}}
+        else
+          must << {:term => {key => value}}
+        end
+      end
+
       must << {:range => range_filter} if range
       return {} if must.empty?
       {:filter => {:bool => {:must => must}}}
