@@ -13,6 +13,16 @@
               "term": {
                 "restricted": false
               }
+            },
+            {
+              "term": {
+                "membership_expires_on": "2012-12-24"
+              }
+            },
+            {
+              "missing": {
+                "field": "status"
+              }
             }
           ]
         }

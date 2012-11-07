@@ -109,14 +109,14 @@ describe Sherlock::Query do
   end
 
   describe "field" do
-    it "specifies a missing field" do
+    it "specifies the value of various fields" do
       verify :format => :json do
-        field = {'name' => 'membership_expires_on', 'value' => 'null'}
-        Sherlock::Query.new(:q => 'scorching', :field => field).to_json
+        fields = {}
+        fields['membership_expires_on'] = '2012-12-24'
+        fields['status'] = 'null'
+        Sherlock::Query.new(:q => 'scorching', :fields => fields).to_json
       end
     end
-
-    it "specifies the attribute of a field"
 
   end
 
