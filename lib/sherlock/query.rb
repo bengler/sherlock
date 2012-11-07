@@ -32,7 +32,7 @@ module Sherlock
 
     def term
       if search_term
-        { :query => { :query_string => { :query => search_term } } }
+        { :query => { :query_string => { :query => search_term.downcase, :default_operator => 'AND' } } }
       else
         { :query => { :match_all => {} } }
       end
@@ -60,7 +60,7 @@ module Sherlock
         if value == 'null'
           must << {:missing => {:field => key}}
         else
-          must << {:term => {key => value}}
+          must << {:term => {key => value.downcase}}
         end
       end
 
