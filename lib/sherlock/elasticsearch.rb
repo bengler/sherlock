@@ -27,15 +27,30 @@ module Sherlock
         end
       end
 
-      def delete_index(realm)
+      def delete_index(realm, should_prefix_realm = true)
+        index = should_prefix_realm ? index_for(realm) : realm
         begin
-          Pebblebed::Http.delete("#{root_url}/#{index_for(realm)}", {})
+          Pebblebed::Http.delete("#{root_url}/#{index}", {})
         rescue Pebblebed::HttpError => e
           unless e.message =~ /IndexMissingException/
             LOGGER.warn "Error while deleting index #{index}"
             LOGGER.error e
           end
         end
+      end
+
+      def server_status(realm = nil)
+        url = "#{root_url}"
+        url << "/#{index_for(realm)}" if realm
+        url << "/_status"
+        begin
+          response = Pebblebed::Http.get(url, {})
+          result = JSON.parse(response.body)
+        rescue Pebblebed::HttpError => e
+          LOGGER.warn "Unexpected error on GET #{url}"
+          LOGGER.error e
+        end
+        result
       end
 
       def url(uid_string)
