@@ -3,7 +3,8 @@
     "filtered": {
       "query": {
         "query_string": {
-          "query": "torrid"
+          "query": "torrid",
+          "default_operator": "AND"
         }
       },
       "filter": {

@@ -3,7 +3,8 @@
     "filtered": {
       "query": {
         "query_string": {
-          "query": "burning"
+          "query": "burning",
+          "default_operator": "AND"
         }
       },
       "filter": {

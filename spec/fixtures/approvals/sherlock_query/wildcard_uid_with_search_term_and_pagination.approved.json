@@ -3,7 +3,8 @@
     "filtered": {
       "query": {
         "query_string": {
-          "query": "incandescent"
+          "query": "incandescent",
+          "default_operator": "AND"
         }
       },
       "filter": {

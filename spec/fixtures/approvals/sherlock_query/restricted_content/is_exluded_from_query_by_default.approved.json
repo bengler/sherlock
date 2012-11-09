@@ -3,7 +3,8 @@
     "filtered": {
       "query": {
         "query_string": {
-          "query": "scorching"
+          "query": "scorching",
+          "default_operator": "AND"
         }
       },
       "filter": {

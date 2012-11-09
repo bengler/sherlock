@@ -3,7 +3,8 @@
     "filtered": {
       "query": {
         "query_string": {
-          "query": "blistering"
+          "query": "blistering",
+          "default_operator": "AND"
         }
       },
       "filter": {

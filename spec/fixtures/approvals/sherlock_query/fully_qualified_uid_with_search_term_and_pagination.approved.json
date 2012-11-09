@@ -3,7 +3,8 @@
     "filtered": {
       "query": {
         "query_string": {
-          "query": "fiery"
+          "query": "fiery",
+          "default_operator": "AND"
         }
       },
       "filter": {

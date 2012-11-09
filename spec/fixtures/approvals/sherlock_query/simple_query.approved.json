@@ -3,7 +3,8 @@
     "filtered": {
       "query": {
         "query_string": {
-          "query": "hot"
+          "query": "hot",
+          "default_operator": "AND"
         }
       },
       "filter": {
