@@ -27,10 +27,16 @@ Stop elasticsearch
 	
 	launchctl unload -wF ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch.plist
 
-Add these two lines to your elasticsearch.yml ('brew info elasticsearch' to locate the file):
-	
-	# Change the default analyzer for all indices
-	index.analysis.analyzer.default.type: whitespace
+Add these lines to your elasticsearch.yml ('brew info elasticsearch' to locate the file):
+
+    # Change the default analyzer
+    index:
+      analysis:
+        analyzer:
+          default:
+            filter: [lowercase]
+            tokenizer: whitespace
+            type: custom
 
 Start elasticsearch
 	
