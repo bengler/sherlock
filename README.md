@@ -15,15 +15,28 @@ Sherlock needs two external services to function:
 1. RabbitMQ [2]
 2. elasticsearch [3]
 
-Get RabbitMQ
+### RabbitMQ
 
 	brew install rabbitmq
 
-Get elasticsearch
+### Elasticsearch
 
-	brew install elasticsearch	
+	brew install elasticsearch
 
-Get Sherlock
+Stop elasticsearch
+	
+	launchctl unload -wF ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch.plist
+
+Add these two lines to your elasticsearch.yml ('brew info elasticsearch' to locate the file):
+	
+	# Change the default analyzer for all indices
+	index.analysis.analyzer.default.type: simple
+
+Start elasticsearch
+	
+	launchctl load -wF ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch.plist
+
+### Sherlock
 
 	git clone git@github.com:bengler/sherlock.git
 	cd sherlock
@@ -33,22 +46,29 @@ Run the integration tests to see if Sherlock is playing well with RabbitMQ and e
 
 	rspec spec/integration/
 	
+Start the update listener
+	
+	./bin/update_listener start --daemon
 
 ## Usage
-* put stuff on river
-* do query
 
-## Handy elasticsearch stuff
+Anything added to grove, or updated in grove, will be put on the River, which Sherlock then picks up and sends to elasticsearch for indexing.
 
-Delete an index
+You can now do queries such as:
 
-	curl -XDELETE localhost:9200/development_dna
+	http://sherlock.dev/api/sherlock/v1/search/development_dna/post.greeting:*?limit=100
 
-Create an index with a specified analyzer
+## Other handy stuff
 
-	curl -XPUT 'localhost:9200/development_dna' -d '{"index":{"analysis":{"analyzer":{"default":{"type":"simple"}}}}}'
+Drop all indexes
 
-Test how text is tokenized
+	./bin/sherlock drop_all
+	
+Empty all queues of messages
+
+	./bin/sherlock empty_all_queues
+
+Test how text is analyzed
 
 	curl -XGET 'localhost:9200/development_dna/_analyze' -d 'as sly as a fox'
 
