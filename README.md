@@ -30,7 +30,7 @@ Stop elasticsearch
 Add these two lines to your elasticsearch.yml ('brew info elasticsearch' to locate the file):
 	
 	# Change the default analyzer for all indices
-	index.analysis.analyzer.default.type: simple
+	index.analysis.analyzer.default.type: whitespace
 
 Start elasticsearch
 	
