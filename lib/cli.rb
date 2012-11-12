@@ -4,15 +4,21 @@ module Sherlock
 
   class CLI < Thor
 
-    desc "drop_all", "Drop all Elasticsearch indices"
-    def drop_all_indexes
+    desc "drop_all_indices", "Drop all Elasticsearch indices"
+    def drop_all_indices
       require_relative '../config/environment'
       indices = Sherlock::Elasticsearch.server_status['indices'].keys
       puts "No indices to drop." if indices.empty?
       indices.each do |index|
-        Sherlock::Elasticsearch.delete_index(index, false)
-        puts "Poof! Dropped index #{index}!"
+        drop_index index
       end
+    end
+
+    desc "drop_index", "Drop a single index in Elasticsearch"
+    def drop_index(index)
+      require_relative '../config/environment'
+      Sherlock::Elasticsearch.delete_index(index, false)
+      puts "Poof! Dropped index #{index}!"
     end
 
     desc "empty_all_queues", "Empties all rabbitmq queues of waiting messages"
@@ -33,7 +39,7 @@ module Sherlock
     desc "blank_slate", "Empties all rabbitmq queues and drops all indexes"
     def blank_slate
       empty_all_queues
-      drop_all_indexes
+      drop_all_indices
     end
 
   end
