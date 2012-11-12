@@ -12,6 +12,7 @@ gem 'pebble_path'
 gem 'feedzirra'
 gem 'servolux'
 gem 'airbrake', '~> 3.1.4', :require => false
+gem 'thor'
 
 group :development, :test do
   gem 'rspec'
