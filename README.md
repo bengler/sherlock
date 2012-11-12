@@ -24,12 +24,15 @@ Sherlock needs two external services to function:
 	brew install elasticsearch
 
 Stop elasticsearch
-	
+
 	launchctl unload -wF ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch.plist
 
 Add these lines to your elasticsearch.yml ('brew info elasticsearch' to locate the file):
 
-    # Change the default analyzer
+    # Turn off automatic index creation
+    action.auto_create_index: false
+
+    # Change the default analyzer. This is not mandatory, but it probably makes sense not to use the standard analyzer[4].
     index:
       analysis:
         analyzer:
@@ -39,7 +42,7 @@ Add these lines to your elasticsearch.yml ('brew info elasticsearch' to locate t
             type: custom
 
 Start elasticsearch
-	
+
 	launchctl load -wF ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch.plist
 
 ### Sherlock
@@ -51,25 +54,30 @@ Start elasticsearch
 Run the integration tests to see if Sherlock is playing well with RabbitMQ and elasticsearch
 
 	rspec spec/integration/
-	
+
 Start the update listener
-	
+
 	./bin/update_listener start --daemon
 
 ## Usage
 
-Anything added to grove, or updated in grove, will be put on the River, which Sherlock then picks up and sends to elasticsearch for indexing.
+Index something:
+
+  curl -XPUT 'http://localhost:9200/an_index_of_books/book/1' -d '{"title":"Island","author":"Aldous Huxley", "year_of_publication":"1962"}'
+
+Also, anything added to grove, or updated in grove, will be put on the River, which Sherlock then picks up and sends to elasticsearch for indexing.
 
 You can now do queries such as:
 
-	http://sherlock.dev/api/sherlock/v1/search/development_dna/post.greeting:*?limit=100
+  http://sherlock.dev/api/sherlock/v1/search/an_index_of_books/*:*
+  http://sherlock.dev/api/sherlock/v1/search/development/post.greeting:*?limit=100
 
 ## Other handy stuff
 
 Drop all indexes
 
-	./bin/sherlock drop_all
-	
+	./bin/sherlock drop_all_indices
+
 Empty all queues of messages
 
 	./bin/sherlock empty_all_queues
@@ -83,4 +91,6 @@ Test how text is analyzed
 [2] http://rabbitmq.com
 
 [3] http://elasticsearch.org
+
+[4] http://www.elasticsearch.org/guide/reference/index-modules/analysis/standard-analyzer.html
 
