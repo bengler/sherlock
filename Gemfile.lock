@@ -144,4 +144,5 @@ DEPENDENCIES
   simplecov
   sinatra
   sinatra-contrib
+  thor
   unicorn (~> 4.1.1)
