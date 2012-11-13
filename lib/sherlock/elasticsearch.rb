@@ -76,7 +76,7 @@ module Sherlock
       end
 
       def index_name(realm)
-        "#{ENV['RACK_ENV']}_#{realm}"
+        "sherlock_#{ENV['RACK_ENV']}_#{realm}"
       end
 
       def query(realm, query_obj)
