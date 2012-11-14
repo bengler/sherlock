@@ -41,8 +41,8 @@ class SherlockV1 < Sinatra::Base
   # @optional [String] range[attribute] Attribute to perform a ranged query by.
   # @optional [String] range[from] Minimum accepted value for a ranged query.
   # @optional [String] range[to] Maximum accepted value for a ranged query.
-  # @optional [String] fields[name_of_attribute] Require a named attribute to have a specific value. Use 'null' to indicate a missing value.
-  # @status 200 [JSON]
+  # @optional [String] fields[name_of_attribute] Require a named attribute to have a specific value. Use "null" to indicate a missing value.
+  # @status 200 JSON
   get '/search/:realm/?:uid?' do |realm, uid|
     halt 403, "Sherlock couldn't parse the UID \"#{uid}\"." unless valid_query?(uid)
     params[:show_restricted] = god_mode?
