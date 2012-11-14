@@ -21,7 +21,28 @@ class SherlockV1 < Sinatra::Base
     end
   end
 
-  # Search using :q (the search term), :uid, :limit, :offset, :sort_by and :order
+  # @apidoc
+  # Search indexed data.
+  #
+  # @description Search indexed data using various parameters. As in all pebbles, data is scoped by realm.
+  # @note Documents with restricted=true is only accessible by god sessions.
+  # @category Sherlock/Search
+  # @path /api/sherlock/v1/search/:realm/:uid
+  # @http GET
+  # @example /api/sherlock/v1/search/apdm/post.greeting:apdm.lifeloop.oa.*
+  # @required [String] realm Name of realm containing the searchable data.
+  # @optional [String] uid UID denoting a resource, or a wildcard UID indicating a collection of resources.
+  # @optional [String] q Query string.
+  # @optional [Integer] limit Maximum number of returned hits. Defaults to 10.
+  # @optional [Integer] offset Index of the first returned hit. Defaults to 0.
+  # @optional [String] sort_attribute Attribute to sort the result set by. Defaults to an internally calculated relevancy score.
+  # @optional [String] order Order in which to sort the returned hits. Defaults to DESC.
+  # @optional [Boolean] show_restricted Flag denoting whether the results can contain restricted hits. Defaults to false. Passing true requires a god session.
+  # @optional [String] range[attribute] Attribute to perform a ranged query by.
+  # @optional [String] range[from] Minimum accepted value for a ranged query.
+  # @optional [String] range[to] Maximum accepted value for a ranged query.
+  # @optional [String] fields[name_of_attribute] Require a named attribute to have a specific value. Use "null" to indicate a missing value.
+  # @status 200 [JSON]
   get '/search/:realm/?:uid?' do |realm, uid|
     halt 403, "Sherlock couldn't parse the UID \"#{uid}\"." unless valid_query?(uid)
     params[:show_restricted] = god_mode?
