@@ -7,6 +7,11 @@ module Sherlock
     desc "drop_all_indices", "Drop all Elasticsearch indices"
     def drop_all_indices
       require_relative '../config/environment'
+      if ENV['RACK_ENV'] == 'production'
+        puts "You're in production, you shouldn't do that."
+        return
+      end
+
       indices = Sherlock::Elasticsearch.server_status['indices'].keys
       puts "No indices to drop." if indices.empty?
       indices.each do |index|
@@ -23,6 +28,11 @@ module Sherlock
 
     desc "empty_all_queues", "Empties all rabbitmq queues of waiting messages"
     def empty_all_queues
+      if ENV['RACK_ENV'] == 'production'
+        puts "You're in production, you shouldn't do that."
+        return
+      end
+
       require 'pebblebed'
       river = Pebblebed::River.new
       result = `rabbitmqctl list_queues`

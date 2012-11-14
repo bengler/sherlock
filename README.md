@@ -32,15 +32,6 @@ Add these lines to your elasticsearch.yml ('brew info elasticsearch' to locate t
     # Turn off automatic index creation
     action.auto_create_index: false
 
-    # Change the default analyzer. This is not mandatory, but it probably makes sense not to use the standard analyzer[4].
-    index:
-      analysis:
-        analyzer:
-          default:
-            filter: [lowercase]
-            tokenizer: whitespace
-            type: custom
-
 Start elasticsearch
 
 	launchctl load -wF ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch.plist

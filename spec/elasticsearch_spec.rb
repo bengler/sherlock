@@ -85,5 +85,16 @@ describe Sherlock::Elasticsearch do
     lambda { Sherlock::Elasticsearch.query(realm, query) }.should_not raise_error(Pebblebed::HttpError)
   end
 
+  it "creates new indexes with the whitespace tokenizer and the lowercase filter" do
+    require 'pebblebed'
+    index_name = Sherlock::Elasticsearch.index_name(realm)
+    url = "http://localhost:9200/#{index_name}/_analyze"
+    text = 'a A 1 is'
+    response = Pebblebed::Http.get(url, {:text => text})
+    result = JSON.parse(response.body)
+    result['tokens'].count.should eq text.split(' ').count
+    result['tokens'][0]['token'].should eq text[0]
+  end
+
 
 end
