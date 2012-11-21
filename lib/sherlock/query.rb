@@ -59,6 +59,8 @@ module Sherlock
       fields.each do |key, value|
         if value == 'null'
           must << {:missing => {:field => key}}
+        elsif value.match(/\|/) # TODO: evaluate use of the pipe operator, this will not work with fields which value should contain a pipe!
+          must << {:terms => {key => value.downcase.split('|')}}
         else
           must << {:term => {key => value.downcase}}
         end

@@ -24,6 +24,14 @@
               "missing": {
                 "field": "status"
               }
+            },
+            {
+              "terms": {
+                "provider": [
+                  "origo",
+                  "facebook"
+                ]
+              }
             }
           ]
         }
