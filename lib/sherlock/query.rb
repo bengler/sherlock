@@ -1,8 +1,11 @@
+
+# Builds a chunk of JSON based on the query parameters, which can be passed to elasticsearch.
+
 module Sherlock
   class Query
 
     attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :range, :fields, :accessible_paths
-    def initialize(options = {})
+    def initialize(options, accessible_paths = [])
       options.symbolize_keys!
       @search_term = options[:q]
       @limit = options.fetch(:limit) { 10 }
@@ -12,7 +15,7 @@ module Sherlock
       @order = Query.normalize_sort_order(options[:order])
       @range = options[:range]
       @fields = options.fetch(:fields) {[]}
-      @accessible_paths = options.fetch(:accessible_paths) {[]}
+      @accessible_paths = accessible_paths
     end
 
     def pagination

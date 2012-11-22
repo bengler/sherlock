@@ -25,6 +25,12 @@ class SherlockV1 < Sinatra::Base
       end
     end
 
+    def accessible_paths(query_path)
+      # Gods can see everything in their realm
+      return [current_identity.identity.realm] if god_mode?
+      Sherlock::Access.accessible_paths(pebbles, current_identity_id, query_path)
+    end
+
   end
 
   # @apidoc
@@ -51,20 +57,11 @@ class SherlockV1 < Sinatra::Base
   get '/search/:realm/?:uid?' do |realm, uid|
     halt 403, "Sherlock couldn't parse the UID \"#{uid}\"." unless valid_uid_query? uid
 
-    if god_mode?
-      # Gods can see everything in their realm
-      params[:accessible_paths] = [current_identity.identity.realm]
-    else
-      query_path = uid ? Pebbles::Uid.query(uid).path : nil
-      params[:accessible_paths] = Sherlock::Access.accessible_paths(pebbles, current_identity_id, query_path)
-    end
+    query_path = uid ? Pebbles::Uid.query(uid).path : nil
+    query = Sherlock::Query.new(params, accessible_paths(query_path))
 
-    query = Sherlock::Query.new(params)
-    begin
-      result = Sherlock::Elasticsearch.query(realm, query)
-    rescue Pebblebed::HttpError => e
-      LOGGER.warn "Search failed. Params: #{params.inspect}. Error message: #{e.message}"
-    end
+    result = Sherlock::Elasticsearch.query(realm, query)
+
     presenter = Sherlock::HitsPresenter.new(result, {:limit => query.limit, :offset => query.offset})
     pg :hits, :locals => {:hits => presenter.hits, :pagination => presenter.pagination, :total => presenter.total}
   end
