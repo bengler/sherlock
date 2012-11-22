@@ -7,11 +7,6 @@ module Sherlock
 
     class << self
 
-      def checkpoint?(uid)
-        # TODO re-implement this when we know the new names of these checkpoint classes
-        !!(uid =~ /^group(|_subtree|_membership)(\.|\:)/)
-      end
-
       def grove?(uid)
         !!(uid =~ /^post\.|^post\:/)
       end

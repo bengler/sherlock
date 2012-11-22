@@ -31,18 +31,10 @@ describe 'API v1 search' do
     Sherlock::Parsers::Generic.new(uid, {'document' => 'warm', 'uid' => uid}).to_hash
   }
 
-  let(:guest) { DeepStruct.wrap({}) }
-  let(:identity) {guest}
-  let(:checkpoint) { stub(:get => identity) }
-
-  before :each do
-    Pebblebed::Connector.any_instance.stub(:checkpoint).and_return checkpoint
-  end
-
-
   after(:each) do
     Sherlock::Elasticsearch.delete_index(realm)
   end
+
 
   describe "GET /search/:realm/?:uid?" do
     it 'finds existing record' do
@@ -148,11 +140,45 @@ describe 'API v1 search' do
       Sherlock::Parsers::Generic.new(restricted_uid, {'document' => 'secret', 'uid' => restricted_uid, 'restricted' => true}).to_hash
     }
 
+    context "when somewhat entrusted" do
+
+      before :each do
+        Sherlock::Access.stub(:accessible_paths).and_return ['hell.heck', 'hell.tools']
+      end
+
+      let(:another_restricted_record) {
+        uid = 'post.card:hell.tools.weird$4'
+        Sherlock::Parsers::Generic.new(uid, {'document' => 'secret', 'uid' => uid, 'restricted' => true}).to_hash
+      }
+
+      let(:inaccessible_restricted_record) {
+        uid = 'post.card:hell.no.weird$5'
+        Sherlock::Parsers::Generic.new(uid, {'document' => 'secret', 'uid' => uid, 'restricted' => true}).to_hash
+      }
+
+      it "finds what it should and not more" do
+        Sherlock::Elasticsearch.index restricted_record
+        Sherlock::Elasticsearch.index another_restricted_record
+        Sherlock::Elasticsearch.index inaccessible_restricted_record
+        sleep 1
+        get "/search/#{realm}", :q => 'secret'
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 2
+        result['hits'].map do |hit|
+          hit['hit']['uid']
+        end.sort.should eq([restricted_record['uid'], another_restricted_record['uid']])
+      end
+
+    end
+
+
     context "when god" do
 
-      let(:identity) { DeepStruct.wrap(:identity => {:id => 1337, :god => true}) }
+      before :each do
+        Sherlock::Access.stub(:accessible_paths).and_return [realm]
+      end
 
-      it "is found for uid searches" do
+      it "finds the record on a uid search" do
         Sherlock::Elasticsearch.index restricted_record
         sleep 1
 
@@ -164,7 +190,7 @@ describe 'API v1 search' do
         end.sort.should eq([restricted_uid])
       end
 
-      it "is found for term searches" do
+      it "it finds the record on a term search" do
         Sherlock::Elasticsearch.index restricted_record
         sleep 1
 
@@ -174,6 +200,18 @@ describe 'API v1 search' do
         result['hits'].map do |hit|
           hit['hit']['uid']
         end.sort.should eq([restricted_uid])
+      end
+
+      it "doesnt find stuff in another realm" do
+        restricted_uid = 'post.card:heaven.wish.you.were.here$1'
+        restricted_record = Sherlock::Parsers::Generic.new(restricted_uid, {'document' => 'secret', 'uid' => restricted_uid, 'restricted' => true}).to_hash
+
+        Sherlock::Elasticsearch.index restricted_record
+        sleep 1
+        get "/search/heaven", :q => 'secret'
+
+        result = JSON.parse(last_response.body)
+        result['hits'].should eq []
       end
 
     end

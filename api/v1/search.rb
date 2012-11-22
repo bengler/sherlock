@@ -6,11 +6,16 @@ class SherlockV1 < Sinatra::Base
   end
 
   helpers do
+
     def god_mode?
       current_identity && current_identity.respond_to?(:god) && current_identity.god
     end
 
-    def valid_query?(uid)
+    def current_identity_id
+      current_identity && current_identity.identity? ? current_identity.identity.id : nil
+    end
+
+    def valid_uid_query?(uid)
       return true unless uid
       begin
         Pebbles::Uid.query(uid)
@@ -19,6 +24,7 @@ class SherlockV1 < Sinatra::Base
         return false
       end
     end
+
   end
 
   # @apidoc
@@ -37,20 +43,27 @@ class SherlockV1 < Sinatra::Base
   # @optional [Integer] offset Index of the first returned hit. Defaults to 0.
   # @optional [String] sort_attribute Attribute to sort the result set by. Defaults to an internally calculated relevancy score.
   # @optional [String] order Order in which to sort the returned hits. Defaults to DESC.
-  # @optional [Boolean] show_restricted Flag denoting whether the results can contain restricted hits. Defaults to false. Passing true requires a god session.
   # @optional [String] range[attribute] Attribute to perform a ranged query by.
   # @optional [String] range[from] Minimum accepted value for a ranged query.
   # @optional [String] range[to] Maximum accepted value for a ranged query.
   # @optional [String] fields[name_of_attribute] Require a named attribute to have a specific value. Use "null" to indicate a missing value.
   # @status 200 JSON
   get '/search/:realm/?:uid?' do |realm, uid|
-    halt 403, "Sherlock couldn't parse the UID \"#{uid}\"." unless valid_query?(uid)
-    params[:show_restricted] = god_mode?
+    halt 403, "Sherlock couldn't parse the UID \"#{uid}\"." unless valid_uid_query? uid
+
+    if god_mode?
+      # Gods can see everything in their realm
+      params[:accessible_paths] = [current_identity.identity.realm]
+    else
+      query_path = uid ? Pebbles::Uid.query(uid).path : nil
+      params[:accessible_paths] = Sherlock::Access.accessible_paths(pebbles, current_identity_id, query_path)
+    end
+
     query = Sherlock::Query.new(params)
     begin
       result = Sherlock::Elasticsearch.query(realm, query)
     rescue Pebblebed::HttpError => e
-      LOGGER.warn "Search for #{uid}?#{params[:q]} in #{realm} failed. #{e.message}"
+      LOGGER.warn "Search failed. Params: #{params.inspect}. Error message: #{e.message}"
     end
     presenter = Sherlock::HitsPresenter.new(result, {:limit => query.limit, :offset => query.offset})
     pg :hits, :locals => {:hits => presenter.hits, :pagination => presenter.pagination, :total => presenter.total}

@@ -85,20 +85,6 @@ describe Sherlock::Query do
 
   end
 
-  describe "restricted content" do
-    it "is exluded from query by default" do
-      verify :format => :json do
-        Sherlock::Query.new(:q => 'scorching').to_json
-      end
-    end
-
-    it "is included if specified" do
-      verify :format => :json do
-        Sherlock::Query.new(:q => 'scorching', :show_restricted => true).to_json
-      end
-    end
-  end
-
   describe "range" do
     it "will only query within the mentioned range" do
       verify :format => :json do
@@ -115,6 +101,38 @@ describe Sherlock::Query do
         fields['membership_expires_on'] = '2012-12-24'
         fields['status'] = 'null'
         Sherlock::Query.new(:q => 'scorching', :fields => fields).to_json
+      end
+    end
+
+  end
+
+  describe "access" do
+
+    it "grants access to a specifc path" do
+      paths = ['dna.org.vaffel']
+      verify :format => :json do
+        Sherlock::Query.new(:q => 'scorching', :accessible_paths => paths).to_json
+      end
+    end
+
+    it "grants access to specifc sub-paths" do
+      paths = ['dna.org.vaffel', 'dna.org.pannekake']
+      verify :format => :json do
+        Sherlock::Query.new(:q => 'asdf', :accessible_paths => paths).to_json
+      end
+    end
+
+    it "grants access to a specifc path with overlapping uid" do
+      paths = ['dna.org.vaffel']
+      verify :format => :json do
+        Sherlock::Query.new(:q => 'scorching', :accessible_paths => paths, :uid => '*:dna.org.*').to_json
+      end
+    end
+
+    it "denies access to a specifc path with non-overlapping uid" do
+      paths = ['dna.org.vaffel']
+      verify :format => :json do
+        Sherlock::Query.new(:q => 'scorching', :accessible_paths => paths, :uid => '*:dna.gro.*').to_json
       end
     end
 

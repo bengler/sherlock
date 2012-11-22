@@ -1,0 +1,56 @@
+{
+  "query": {
+    "filtered": {
+      "query": {
+        "query_string": {
+          "query": "asdf",
+          "default_operator": "AND"
+        }
+      },
+      "filter": {
+        "or": [
+          {
+            "and": [
+              {
+                "term": {
+                  "label_0_": "dna"
+                }
+              },
+              {
+                "term": {
+                  "label_1_": "org"
+                }
+              },
+              {
+                "term": {
+                  "label_2_": "vaffel"
+                }
+              }
+            ]
+          },
+          {
+            "and": [
+              {
+                "term": {
+                  "label_0_": "dna"
+                }
+              },
+              {
+                "term": {
+                  "label_1_": "org"
+                }
+              },
+              {
+                "term": {
+                  "label_2_": "pannekake"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "size": 10,
+  "from": 0
+}

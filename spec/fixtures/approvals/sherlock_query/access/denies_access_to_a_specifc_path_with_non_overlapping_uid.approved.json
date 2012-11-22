@@ -1,0 +1,49 @@
+{
+  "query": {
+    "filtered": {
+      "query": {
+        "query_string": {
+          "query": "scorching",
+          "default_operator": "AND"
+        }
+      },
+      "filter": {
+        "and": [
+          {
+            "term": {
+              "label_0_": "dna"
+            }
+          },
+          {
+            "term": {
+              "label_1_": "gro"
+            }
+          }
+        ],
+        "or": [
+          {
+            "and": [
+              {
+                "term": {
+                  "label_0_": "dna"
+                }
+              },
+              {
+                "term": {
+                  "label_1_": "org"
+                }
+              },
+              {
+                "term": {
+                  "label_2_": "vaffel"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "size": 10,
+  "from": 0
+}

@@ -8,23 +8,21 @@
         }
       },
       "filter": {
-        "bool": {
-          "must": [
-            {
-              "term": {
-                "restricted": false
-              }
-            },
-            {
-              "range": {
-                "membership_expires_on": {
-                  "lte": "2012-11-01",
-                  "gte": "2012-11-03"
-                }
+        "and": [
+          {
+            "range": {
+              "membership_expires_on": {
+                "lte": "2012-11-01",
+                "gte": "2012-11-03"
               }
             }
-          ]
-        }
+          },
+          {
+            "term": {
+              "restricted": false
+            }
+          }
+        ]
       }
     }
   },

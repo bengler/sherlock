@@ -8,25 +8,23 @@
         }
       },
       "filter": {
-        "bool": {
-          "must": [
-            {
-              "term": {
-                "label_0_": "hell"
-              }
-            },
-            {
-              "term": {
-                "label_1_": "flames"
-              }
-            },
-            {
-              "term": {
-                "restricted": false
-              }
+        "and": [
+          {
+            "term": {
+              "label_0_": "hell"
             }
-          ]
-        }
+          },
+          {
+            "term": {
+              "label_1_": "flames"
+            }
+          },
+          {
+            "term": {
+              "restricted": false
+            }
+          }
+        ]
       }
     }
   },
