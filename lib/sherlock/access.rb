@@ -1,4 +1,4 @@
-# Generates a filter for elasticsearch that makes the results respect the Pebbles Security Model
+# Supply accessible paths for an identity, according to the Pebbles Security Model.
 module Sherlock
 
   class Access
