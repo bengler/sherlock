@@ -20,6 +20,14 @@
             }
           },
           {
+            "terms": {
+              "provider": [
+                "origo",
+                "facebook"
+              ]
+            }
+          },
+          {
             "term": {
               "restricted": false
             }

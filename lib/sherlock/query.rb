@@ -66,6 +66,8 @@ module Sherlock
       fields.each do |key, value|
         if value == 'null'
           and_queries << {:missing => {:field => key}}
+        elsif value.match(/\|/) # A value containing a pipe will be parsed as an OR statement
+          and_queries << {:terms => {key => value.downcase.split('|')}}
         else
           and_queries << {:term => {key => value.downcase}}
         end
