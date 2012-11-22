@@ -18,8 +18,8 @@ module Sherlock
             # now try again
             index(record)
           else
-            LOGGER.warn "Error while indexing #{record['uid']}"
-            LOGGER.error e
+            LOGGER.error "Error while indexing #{record['uid']}"
+            raise e
           end
         end
       end
@@ -28,8 +28,8 @@ module Sherlock
         begin
           Pebblebed::Http.delete(url(uid), nil)
         rescue Pebblebed::HttpError => e
-          LOGGER.warn "Error while unindexing #{uid}"
-          LOGGER.error e
+          LOGGER.error "Error while unindexing #{uid}"
+          raise e
         end
       end
 
@@ -39,8 +39,8 @@ module Sherlock
           Pebblebed::Http.delete("#{root_url}/#{index}", {})
         rescue Pebblebed::HttpError => e
           unless e.message =~ /IndexMissingException/
-            LOGGER.warn "Error while deleting index #{index}"
-            LOGGER.error e
+            LOGGER.error "Error while deleting index #{index}"
+            raise e
           end
         end
       end
@@ -51,8 +51,8 @@ module Sherlock
           Pebblebed::Http.put("#{root_url}/#{index}", config)
           LOGGER.info "Created index #{index}"
         rescue Pebblebed::HttpError => e
-          LOGGER.warn "Unexpected error while creating index #{index}"
-          LOGGER.error e
+          LOGGER.error "Unexpected error while creating index #{index}"
+          raise e
         end
       end
 
@@ -64,8 +64,8 @@ module Sherlock
           response = Pebblebed::Http.get(url, {})
           result = JSON.parse(response.body)
         rescue Pebblebed::HttpError => e
-          LOGGER.warn "Unexpected error on GET #{url}"
-          LOGGER.error e
+          LOGGER.error "Unexpected error on GET #{url}"
+          raise e
         end
         result
       end
@@ -91,7 +91,7 @@ module Sherlock
           if e.message =~ /IndexMissingException/
             LOGGER.warn "Attempt to query non-existing index: #{index} (mostly harmless)"
           else
-            LOGGER.warn "Unexpected error during query at index: #{index} with options: #{options}"
+            LOGGER.error "Unexpected error during query at index: #{index} with options: #{options}"
             LOGGER.error e
           end
         end
