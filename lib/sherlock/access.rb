@@ -7,6 +7,8 @@ module Sherlock
     IDENTITY_CACHE_TTL = 2*60
 
 
+    # Returns a lists of paths the current user has privileged access to.
+    # Optionally scoped to wildcard_path.
     def self.accessible_paths(connector, identity_id, wildcard_path = nil)
       access_data = fetch_access_data(identity_id, connector)
       result = access_data.relevant_subtrees(wildcard_path || '') if access_data
