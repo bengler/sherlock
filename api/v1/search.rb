@@ -12,7 +12,7 @@ class SherlockV1 < Sinatra::Base
     end
 
     def current_identity_id
-      current_identity && current_identity.identity? ? current_identity.identity.id : nil
+      (current_identity && current_identity.id) ? current_identity.id : nil
     end
 
     def valid_uid_query?(uid)
@@ -27,7 +27,7 @@ class SherlockV1 < Sinatra::Base
 
     def accessible_paths(query_path)
       # Gods can see everything in their realm
-      return [current_identity.identity.realm] if god_mode?
+      return [current_identity.realm] if god_mode?
       Sherlock::Access.accessible_paths(pebbles, current_identity_id, query_path)
     end
 
