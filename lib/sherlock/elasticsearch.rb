@@ -12,14 +12,16 @@ module Sherlock
       def index(record)
         begin
           Pebblebed::Http.put(url(record['uid']), record)
+          # puts "indexed:"
+          # puts record.to_json
         rescue Pebblebed::HttpError => e
           if e.message =~ /IndexMissingException/
             create_index(Pebbles::Uid.new(record['uid']).realm, index_config)
             # now try again
             index(record)
           else
-            LOGGER.warn "Error while indexing #{record['uid']}"
-            LOGGER.error e
+            LOGGER.error "Error while indexing #{record['uid']}"
+            raise e
           end
         end
       end
@@ -28,8 +30,8 @@ module Sherlock
         begin
           Pebblebed::Http.delete(url(uid), nil)
         rescue Pebblebed::HttpError => e
-          LOGGER.warn "Error while unindexing #{uid}"
-          LOGGER.error e
+          LOGGER.error "Error while unindexing #{uid}"
+          raise e
         end
       end
 
@@ -39,8 +41,8 @@ module Sherlock
           Pebblebed::Http.delete("#{root_url}/#{index}", {})
         rescue Pebblebed::HttpError => e
           unless e.message =~ /IndexMissingException/
-            LOGGER.warn "Error while deleting index #{index}"
-            LOGGER.error e
+            LOGGER.error "Error while deleting index #{index}"
+            raise e
           end
         end
       end
@@ -51,8 +53,8 @@ module Sherlock
           Pebblebed::Http.put("#{root_url}/#{index}", config)
           LOGGER.info "Created index #{index}"
         rescue Pebblebed::HttpError => e
-          LOGGER.warn "Unexpected error while creating index #{index}"
-          LOGGER.error e
+          LOGGER.error "Unexpected error while creating index #{index}"
+          raise e
         end
       end
 
@@ -64,8 +66,8 @@ module Sherlock
           response = Pebblebed::Http.get(url, {})
           result = JSON.parse(response.body)
         rescue Pebblebed::HttpError => e
-          LOGGER.warn "Unexpected error on GET #{url}"
-          LOGGER.error e
+          LOGGER.error "Unexpected error on GET #{url}"
+          raise e
         end
         result
       end
@@ -79,11 +81,11 @@ module Sherlock
         "sherlock_#{ENV['RACK_ENV']}_#{realm}"
       end
 
-      def query(realm, query_obj)
+      def query(realm, query_obj) # TODO: I want to do query_obj.to_json berfore passing it in
+        options = Hash[:source => query_obj.to_json]
         index = index_name(realm)
         url = "#{root_url}/#{index}/_search"
         result = nil
-        options = Hash[:source => query_obj.to_json]
         begin
           response = Pebblebed::Http.get(url, options)
           result = JSON.parse(response.body)
@@ -91,7 +93,7 @@ module Sherlock
           if e.message =~ /IndexMissingException/
             LOGGER.warn "Attempt to query non-existing index: #{index} (mostly harmless)"
           else
-            LOGGER.warn "Unexpected error during query at index: #{index} with options: #{options}"
+            LOGGER.error "Unexpected error during query at index: #{index} with options: #{options}"
             LOGGER.error e
           end
         end
@@ -101,7 +103,7 @@ module Sherlock
       # Returns an array of all records in elasticsearch with the same species:realm.*$oid
       def matching_records(uid_string)
         uid = Pebbles::Uid.new(uid_string)
-        query = Sherlock::Query.new(:uid => uid.cache_key)
+        query = Sherlock::Query.new({:uid => uid.cache_key}, [uid.realm])
         matching = Sherlock::Elasticsearch.query(uid.realm, query)
         return [] unless matching
         matching['hits']['hits'].map{|result| result['_id']}.compact

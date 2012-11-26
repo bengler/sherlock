@@ -1,43 +1,35 @@
 {
+  "from": 0,
+  "size": 10,
   "query": {
-    "filtered": {
-      "query": {
-        "match_all": {
+    "bool": {
+      "must": [
+        {
+          "term": {
+            "klass_0_": "post"
+          }
+        },
+        {
+          "term": {
+            "klass_1_": "card"
+          }
+        },
+        {
+          "term": {
+            "label_0_": "hell"
+          }
+        },
+        {
+          "term": {
+            "label_1_": "flames"
+          }
         }
-      },
-      "filter": {
-        "bool": {
-          "must": [
-            {
-              "term": {
-                "klass_0_": "post"
-              }
-            },
-            {
-              "term": {
-                "klass_1_": "card"
-              }
-            },
-            {
-              "term": {
-                "label_0_": "hell"
-              }
-            },
-            {
-              "term": {
-                "label_1_": "flames"
-              }
-            },
-            {
-              "term": {
-                "restricted": false
-              }
-            }
-          ]
-        }
-      }
+      ]
     }
   },
-  "size": 10,
-  "from": 0
+  "filter": {
+    "term": {
+      "restricted": false
+    }
+  }
 }
