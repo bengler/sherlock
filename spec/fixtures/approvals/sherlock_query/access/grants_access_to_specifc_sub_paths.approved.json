@@ -1,56 +1,63 @@
 {
+  "from": 0,
+  "size": 10,
   "query": {
-    "filtered": {
-      "query": {
-        "query_string": {
-          "query": "asdf",
-          "default_operator": "AND"
-        }
-      },
-      "filter": {
-        "or": [
-          {
-            "and": [
-              {
-                "term": {
-                  "label_0_": "dna"
-                }
-              },
-              {
-                "term": {
-                  "label_1_": "org"
-                }
-              },
-              {
-                "term": {
-                  "label_2_": "vaffel"
-                }
-              }
-            ]
-          },
-          {
-            "and": [
-              {
-                "term": {
-                  "label_0_": "dna"
-                }
-              },
-              {
-                "term": {
-                  "label_1_": "org"
-                }
-              },
-              {
-                "term": {
-                  "label_2_": "pannekake"
-                }
-              }
-            ]
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "query": "asdf",
+            "default_operator": "AND"
           }
-        ]
-      }
+        }
+      ]
     }
   },
-  "size": 10,
-  "from": 0
+  "filter": {
+    "or": [
+      {
+        "and": [
+          {
+            "term": {
+              "label_0_": "dna"
+            }
+          },
+          {
+            "term": {
+              "label_1_": "org"
+            }
+          },
+          {
+            "term": {
+              "label_2_": "vaffel"
+            }
+          }
+        ]
+      },
+      {
+        "and": [
+          {
+            "term": {
+              "label_0_": "dna"
+            }
+          },
+          {
+            "term": {
+              "label_1_": "org"
+            }
+          },
+          {
+            "term": {
+              "label_2_": "pannekake"
+            }
+          }
+        ]
+      },
+      {
+        "term": {
+          "restricted": false
+        }
+      }
+    ]
+  }
 }

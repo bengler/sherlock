@@ -12,6 +12,8 @@ module Sherlock
       def index(record)
         begin
           Pebblebed::Http.put(url(record['uid']), record)
+          # puts "indexed:"
+          # puts record.to_json
         rescue Pebblebed::HttpError => e
           if e.message =~ /IndexMissingException/
             create_index(Pebbles::Uid.new(record['uid']).realm, index_config)
@@ -79,11 +81,11 @@ module Sherlock
         "sherlock_#{ENV['RACK_ENV']}_#{realm}"
       end
 
-      def query(realm, query_obj)
+      def query(realm, query_obj) # TODO: I want to do query_obj.to_json berfore passing it in
+        options = Hash[:source => query_obj.to_json]
         index = index_name(realm)
         url = "#{root_url}/#{index}/_search"
         result = nil
-        options = Hash[:source => query_obj.to_json]
         begin
           response = Pebblebed::Http.get(url, options)
           result = JSON.parse(response.body)

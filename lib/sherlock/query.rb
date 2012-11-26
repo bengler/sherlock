@@ -4,7 +4,7 @@
 module Sherlock
   class Query
 
-    attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :range, :fields, :accessible_paths
+    attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :range, :fields, :accessible_paths, :uid_query
     def initialize(options, accessible_paths = [])
       options.symbolize_keys!
       @search_term = options[:q]
@@ -16,104 +16,122 @@ module Sherlock
       @range = options[:range]
       @fields = options.fetch(:fields) {[]}
       @accessible_paths = accessible_paths
-    end
-
-    def pagination
-      bounds = {}
-      bounds.merge!(:size => limit) if limit
-      bounds.merge!(:from => offset) if offset
-      bounds
+      @uid_query = Pebbles::Uid.query(uid, :species => 'klass', :path => 'label', :suffix => '')
     end
 
     def to_hash
-      {:query => {:filtered => query_term.merge(filters)}}.merge(pagination).merge(sort)
-    end
-
-    def to_json
-      to_hash.to_json
-    end
-
-    def query_term
-      if search_term
-        { :query => {
-          :query_string => {
-            :query => search_term.downcase,
-            :default_operator => 'AND' }
+      result = sort.merge(
+        { :from => offset.to_i, # 'from' _has_ to be at the beginning of the json blotch
+          :size => limit.to_i,  # 'size' can be wherever, but hey, why not let it keep 'from' company?
+          :query => {
+            :bool => bool_query
           }
         }
-      else
-        { :query => { :match_all => {} } }
-      end
-    end
-
-    def sort
-      if sort_attribute
-        {:sort => [{"document.#{sort_attribute}" => {'order' => order}},  '_score']}
-      else
-        {}
-      end
+      )
+      filter = filters
+      result[:filter] = filter if filter
+      result
     end
 
     def filters
+      result = []
+      result << security_filter
 
-      # uid query
-      query = Pebbles::Uid.query(uid, :species => 'klass', :path => 'label', :suffix => '')
-      and_queries = query.to_hash.map do |key, value|
+      missing = missing_filter
+      #result << {:constant_score => {:filter => missing}} if missing
+      result << missing if missing
+
+      return {:and => result} if result.count > 1
+      return result.first if result.count == 1
+      return nil
+    end
+
+    def bool_query
+      queries = []
+      queries << query_string if search_term
+      queries = queries + uid_fields_query
+      queries = queries + field_query
+      queries = queries + range_query if range
+      {:must => queries}
+    end
+
+    def query_string
+      { :query_string => {
+          :query => search_term.downcase,
+          :default_operator => 'AND'
+        }
+      }
+    end
+
+    # TODO: :missing is a filter, not a query. Move it to the filter section. AND style?
+
+    def uid_fields_query
+      result = uid_query.to_hash.map do |key, value|
         {:term => {key.to_s => value}}
       end
-      unless query.path =~ /\*$/
-        and_queries << {:missing => {:field => query.next_path_label}}
-      end
+      result
+    end
 
-      # query on specific field value
+    # query on specific field value
+    def field_query
+      result = []
       fields.each do |key, value|
-        if value == 'null'
-          and_queries << {:missing => {:field => key}}
-        elsif value.match(/\|/) # A value containing a pipe will be parsed as an OR statement
-          and_queries << {:terms => {key => value.downcase.split('|')}}
-        else
-          and_queries << {:term => {key => value.downcase}}
-        end
-      end
-
-      # ranged query
-      and_queries << {:range => range_filter} if range
-
-      # restricting access
-      or_queries = []
-      if accessible_paths.empty?
-        and_queries << {:term => {'restricted' => false}}
-      else
-        accessible_paths.each do |path|
-          or_query = []
-          Pebbles::Uid::Labels.new(path, :name => 'label', :suffix => '').to_hash.each do |key, value|
-            or_query << {:term => {key.to_s => value}}
+        unless value == 'null'
+          if value.match(/\|/) # A value containing a pipe will be parsed as an OR statement
+            result << {:terms => {key => value.downcase.split('|')}}
+          else
+            result << {:term => {key => value.downcase}}
           end
-          or_queries << or_query
-        end
-      end
-
-      # build filters hash from queries
-      result = {}
-      unless and_queries.empty?
-        result[:filter] = {:and => and_queries}
-      end
-      unless or_queries.empty?
-        result[:filter] ||= {}
-        result[:filter][:or] = []
-        or_queries.each do |query|
-          result[:filter][:or] << {:and => query}
         end
       end
       result
     end
 
 
-    def range_filter
-        result = {}
-        result['lte'] = range['to'] if range['to']
-        result['gte'] = range['from'] if range['from']
-        {range['attribute'] => result}
+    def missing_filter
+      missing_fields = []
+
+      # Fields specified by client which must be missing
+      fields.each do |key, value|
+        missing_fields << {:missing => {:field => key, :existence => true, :null_value => true}} if value == 'null'
+      end
+
+      # Implicit missing label field because of uid search
+      unless uid_query.path =~ /\*$/
+        missing_fields << {:missing => {:field => uid_query.next_path_label}}
+      end
+
+      return {:and => missing_fields} if missing_fields.count > 1
+      return missing_fields.first if missing_fields.count == 1
+      nil
+    end
+
+
+    def range_query
+      result = {}
+      result['lte'] = range['to'] if range['to']
+      result['gte'] = range['from'] if range['from']
+      {range['attribute'] => result}
+      {:range => result}
+    end
+
+    def security_filter
+      return {:term => {'restricted' => false}} if accessible_paths.empty?
+      access_requirements = []
+      accessible_paths.each do |path|
+        requirement_set = []
+        Pebbles::Uid::Labels.new(path, :name => 'label', :suffix => '').to_hash.each do |key, value|
+          requirement_set << {:term => {key.to_s => value}}
+        end
+        access_requirements << {:and => requirement_set}
+      end
+      access_requirements << {:term => {'restricted' => false}}
+      {:or => access_requirements}
+    end
+
+    def sort
+      return {} unless sort_attribute
+      {:sort => [{ "document.#{sort_attribute}" => {'order' => order} }, '_score']}
     end
 
     def self.normalize_sort_order(order)
@@ -121,6 +139,10 @@ module Sherlock
         return 'asc'
       end
       'desc'
+    end
+
+    def to_json
+      to_hash.to_json
     end
 
   end

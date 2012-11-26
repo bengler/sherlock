@@ -1,23 +1,21 @@
 {
+  "from": 0,
+  "size": 10,
   "query": {
-    "filtered": {
-      "query": {
-        "query_string": {
-          "query": "torrid",
-          "default_operator": "AND"
-        }
-      },
-      "filter": {
-        "and": [
-          {
-            "term": {
-              "restricted": false
-            }
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "query": "torrid",
+            "default_operator": "AND"
           }
-        ]
-      }
+        }
+      ]
     }
   },
-  "size": 10,
-  "from": 0
+  "filter": {
+    "term": {
+      "restricted": false
+    }
+  }
 }

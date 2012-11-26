@@ -1,48 +1,50 @@
 {
+  "from": 0,
+  "size": 10,
   "query": {
-    "filtered": {
-      "query": {
-        "query_string": {
-          "query": "scalding",
-          "default_operator": "AND"
-        }
-      },
-      "filter": {
-        "and": [
-          {
-            "term": {
-              "klass_0_": "post"
-            }
-          },
-          {
-            "term": {
-              "klass_1_": "card"
-            }
-          },
-          {
-            "term": {
-              "label_0_": "hell"
-            }
-          },
-          {
-            "term": {
-              "label_1_": "flames"
-            }
-          },
-          {
-            "missing": {
-              "field": "label_2_"
-            }
-          },
-          {
-            "term": {
-              "restricted": false
-            }
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "query": "scalding",
+            "default_operator": "AND"
           }
-        ]
-      }
+        },
+        {
+          "term": {
+            "klass_0_": "post"
+          }
+        },
+        {
+          "term": {
+            "klass_1_": "card"
+          }
+        },
+        {
+          "term": {
+            "label_0_": "hell"
+          }
+        },
+        {
+          "term": {
+            "label_1_": "flames"
+          }
+        }
+      ]
     }
   },
-  "size": 10,
-  "from": 0
+  "filter": {
+    "and": [
+      {
+        "term": {
+          "restricted": false
+        }
+      },
+      {
+        "missing": {
+          "field": "label_2_"
+        }
+      }
+    ]
+  }
 }

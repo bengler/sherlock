@@ -1,13 +1,31 @@
 {
+  "from": 0,
+  "size": 10,
   "query": {
-    "filtered": {
-      "query": {
-        "query_string": {
-          "query": "scorching",
-          "default_operator": "AND"
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "query": "scorching",
+            "default_operator": "AND"
+          }
+        },
+        {
+          "term": {
+            "label_0_": "dna"
+          }
+        },
+        {
+          "term": {
+            "label_1_": "org"
+          }
         }
-      },
-      "filter": {
+      ]
+    }
+  },
+  "filter": {
+    "or": [
+      {
         "and": [
           {
             "term": {
@@ -18,32 +36,19 @@
             "term": {
               "label_1_": "org"
             }
-          }
-        ],
-        "or": [
+          },
           {
-            "and": [
-              {
-                "term": {
-                  "label_0_": "dna"
-                }
-              },
-              {
-                "term": {
-                  "label_1_": "org"
-                }
-              },
-              {
-                "term": {
-                  "label_2_": "vaffel"
-                }
-              }
-            ]
+            "term": {
+              "label_2_": "vaffel"
+            }
           }
         ]
+      },
+      {
+        "term": {
+          "restricted": false
+        }
       }
-    }
-  },
-  "size": 10,
-  "from": 0
+    ]
+  }
 }

@@ -1,23 +1,21 @@
 {
+  "from": 10,
+  "size": 5,
   "query": {
-    "filtered": {
-      "query": {
-        "query_string": {
-          "query": "blazing",
-          "default_operator": "AND"
-        }
-      },
-      "filter": {
-        "and": [
-          {
-            "term": {
-              "restricted": false
-            }
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "query": "blazing",
+            "default_operator": "AND"
           }
-        ]
-      }
+        }
+      ]
     }
   },
-  "size": 5,
-  "from": 10
+  "filter": {
+    "term": {
+      "restricted": false
+    }
+  }
 }

@@ -18,17 +18,17 @@ describe 'API v1 search' do
 
   let(:record) {
     uid = 'post.card:hell.flames.devil$1'
-    Sherlock::Parsers::Generic.new(uid, {'document' => 'hot', 'uid' => uid}).to_hash
+    Sherlock::Parsers::Generic.new(uid, {'document' => 'hot', 'uid' => uid, :restricted => false}).to_hash
   }
 
   let(:another_record) {
     uid = 'post.card:hell.flames.pitchfork$2'
-    Sherlock::Parsers::Generic.new(uid, {'document' => 'hot stuff', 'uid' => uid}).to_hash
+    Sherlock::Parsers::Generic.new(uid, {'document' => 'hot stuff', 'uid' => uid, :restricted => false}).to_hash
   }
 
   let(:excluded_record) {
     uid = 'post.card:hell.heck.weird$3'
-    Sherlock::Parsers::Generic.new(uid, {'document' => 'warm', 'uid' => uid}).to_hash
+    Sherlock::Parsers::Generic.new(uid, {'document' => 'warm', 'uid' => uid, :restricted => false}).to_hash
   }
 
   after(:each) do
@@ -37,6 +37,7 @@ describe 'API v1 search' do
 
 
   describe "GET /search/:realm/?:uid?" do
+
     it 'finds existing record' do
       Sherlock::Elasticsearch.index record
       Sherlock::Elasticsearch.index another_record
@@ -47,7 +48,7 @@ describe 'API v1 search' do
       result['hits'].map do |hit|
         hit['hit']['document']
       end.should eq ["hot", "hot stuff"]
-      result['hits'].first['hit']['uid'].should eq "post.card:hell.flames.devil$1"
+      result['hits'].first['hit']['uid'].should eq record['uid']
     end
 
     it 'delivers empty result set for non-existing index' do
@@ -69,26 +70,26 @@ describe 'API v1 search' do
 
     context "sorting results" do
 
-      let(:record) {
+      let(:first_record) {
         uid = 'post.card:hell.flames.bbq$1'
-        Sherlock::Parsers::Generic.new(uid, { 'document' => {'item' => 'first bbq', 'start_time' => '2012-08-23T17:00:00+02:00'}, 'uid' => uid}).to_hash
+        Sherlock::Parsers::Generic.new(uid, {:restricted => false, 'document' => {'item' => 'first bbq', 'happens_on' => '2000-12-24'}, 'uid' => uid}).to_hash
       }
 
-      let(:another_record) {
-        uid = 'post.card:hell.flames.wtf.bbq$2'
-        Sherlock::Parsers::Generic.new(uid, { 'document' => {'item' => 'second bbq', 'start_time' => '2012-08-24T17:00:00+02:00'}, 'uid' => uid}).to_hash
+      let(:second_record) {
+        uid = 'post.card:hell.flames.bbq$2'
+        Sherlock::Parsers::Generic.new(uid, {:restricted => false, 'document' => {'item' => 'second bbq', 'happens_on' => '2001-12-24'}, 'uid' => uid}).to_hash
       }
 
-      it "sorts by timestamp on correct order" do
-        Sherlock::Elasticsearch.index record
-        Sherlock::Elasticsearch.index another_record
+      it "sorts by date in correct order" do
+        Sherlock::Elasticsearch.index first_record
+        Sherlock::Elasticsearch.index second_record
         sleep 1.4
-        get "/search/#{realm}", :q => "bbq", :sort_by => "start_time", :order => 'asc'
+        get "/search/#{realm}", :q => "bbq", :sort_by => "happens_on", :order => 'asc'
         result = JSON.parse(last_response.body)
         result['hits'].count.should eq 2
         result['hits'].first['hit']['document']['item'].should eq 'first bbq'
 
-        get "/search/#{realm}", :q => "bbq", :sort_by => "start_time", :order => 'desc'
+        get "/search/#{realm}", :q => "bbq", :sort_by => "happens_on", :order => 'desc'
         result = JSON.parse(last_response.body)
         result['hits'].count.should eq 2
         result['hits'].first['hit']['document']['item'].should eq 'second bbq'
@@ -119,22 +120,21 @@ describe 'API v1 search' do
     it "works" do
       Sherlock::Elasticsearch.index record
       Sherlock::Elasticsearch.index another_record
-      sleep 1
+      sleep 1.4
 
-      uid = 'post.card:hell.flames.devil$1'
-      get "/search/#{realm}/#{uid}", :q => 'hot'
+      get "/search/#{realm}/#{record['uid']}"
 
       result = JSON.parse(last_response.body)
 
       result['hits'].map do |hit|
         hit['hit']['uid']
-      end.sort.should eq([uid])
+      end.sort.should eq([record['uid']])
     end
   end
 
   describe "restricted content" do
 
-    let(:restricted_uid) {'post.card:hell.heck.weird$3'}
+    let(:restricted_uid) {'post.card:hell.heck.weird$1'}
 
     let(:restricted_record) {
       Sherlock::Parsers::Generic.new(restricted_uid, {'document' => 'secret', 'uid' => restricted_uid, 'restricted' => true}).to_hash
@@ -147,26 +147,72 @@ describe 'API v1 search' do
       end
 
       let(:another_restricted_record) {
-        uid = 'post.card:hell.tools.weird$4'
+        uid = 'post.card:hell.tools.weird$2'
         Sherlock::Parsers::Generic.new(uid, {'document' => 'secret', 'uid' => uid, 'restricted' => true}).to_hash
       }
 
       let(:inaccessible_restricted_record) {
-        uid = 'post.card:hell.no.weird$5'
+        uid = 'post.card:hell.no.weird$3'
         Sherlock::Parsers::Generic.new(uid, {'document' => 'secret', 'uid' => uid, 'restricted' => true}).to_hash
       }
 
-      it "finds what it should and not more" do
-        Sherlock::Elasticsearch.index restricted_record
-        Sherlock::Elasticsearch.index another_restricted_record
-        Sherlock::Elasticsearch.index inaccessible_restricted_record
-        sleep 1
-        get "/search/#{realm}", :q => 'secret'
-        result = JSON.parse(last_response.body)
-        result['hits'].count.should eq 2
-        result['hits'].map do |hit|
-          hit['hit']['uid']
-        end.sort.should eq([restricted_record['uid'], another_restricted_record['uid']])
+      let(:inaccessible_restricted_record) {
+        uid = 'post.card:hell.yeah.weird$4'
+        Sherlock::Parsers::Generic.new(uid, {'document' => 'secret', 'uid' => uid, 'restricted' => true}).to_hash
+      }
+
+      context "searching by path" do
+
+        it "finds what it should and not more" do
+          Sherlock::Elasticsearch.index restricted_record
+          Sherlock::Elasticsearch.index another_restricted_record
+          Sherlock::Elasticsearch.index inaccessible_restricted_record
+          record['document'] = 'not secret'
+          record['restricted'] = false
+          Sherlock::Elasticsearch.index record
+
+          sleep 1
+          get "/search/#{realm}", :q => 'secret'
+          result = JSON.parse(last_response.body)
+          result['hits'].map do |hit|
+            hit['hit']['uid']
+          end.sort.should eq([record['uid'], restricted_record['uid'], another_restricted_record['uid']])
+        end
+
+      end
+
+      context "searching by uid" do
+
+        it "finds what it should and not more" do
+          Sherlock::Elasticsearch.index restricted_record
+          Sherlock::Elasticsearch.index another_restricted_record
+          Sherlock::Elasticsearch.index inaccessible_restricted_record
+          record['restricted'] = false
+          Sherlock::Elasticsearch.index record
+
+          sleep 1
+          get "/search/#{realm}/post.card:hell.*"
+          result = JSON.parse(last_response.body)
+          result['hits'].map do |hit|
+            hit['hit']['uid']
+          end.sort.should eq([record['uid'], restricted_record['uid'], another_restricted_record['uid']])
+        end
+
+        it "finds what it should and not more and missing field does not cause query breakage" do
+          Sherlock::Elasticsearch.index restricted_record
+          Sherlock::Elasticsearch.index another_restricted_record
+          Sherlock::Elasticsearch.index inaccessible_restricted_record
+          record['restricted'] = false
+          Sherlock::Elasticsearch.index record
+
+          sleep 1
+          get "/search/#{realm}/post.card:hell.*", 'fields[blipp]' => 'null'
+          result = JSON.parse(last_response.body)
+          result['hits'].map do |hit|
+            hit['hit']['uid']
+          end.sort.should eq([record['uid'], restricted_record['uid'], another_restricted_record['uid']])
+        end
+
       end
 
     end
@@ -179,9 +225,10 @@ describe 'API v1 search' do
       end
 
       it "finds the record on a uid search" do
+        # denne testen feiler når query.rb:95 er med
         Sherlock::Elasticsearch.index restricted_record
         sleep 1
-
+        puts restricted_record.inspect
         get "/search/#{realm}/#{restricted_uid}"
 
         result = JSON.parse(last_response.body)

@@ -1,41 +1,45 @@
 {
+  "from": 0,
+  "size": 10,
   "query": {
-    "filtered": {
-      "query": {
-        "query_string": {
-          "query": "scorching",
-          "default_operator": "AND"
-        }
-      },
-      "filter": {
-        "and": [
-          {
-            "term": {
-              "membership_expires_on": "2012-12-24"
-            }
-          },
-          {
-            "missing": {
-              "field": "status"
-            }
-          },
-          {
-            "terms": {
-              "provider": [
-                "origo",
-                "facebook"
-              ]
-            }
-          },
-          {
-            "term": {
-              "restricted": false
-            }
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "query": "scorching",
+            "default_operator": "AND"
           }
-        ]
-      }
+        },
+        {
+          "term": {
+            "membership_expires_on": "2012-12-24"
+          }
+        },
+        {
+          "terms": {
+            "provider": [
+              "origo",
+              "facebook"
+            ]
+          }
+        }
+      ]
     }
   },
-  "size": 10,
-  "from": 0
+  "filter": {
+    "and": [
+      {
+        "term": {
+          "restricted": false
+        }
+      },
+      {
+        "missing": {
+          "field": "status",
+          "existence": true,
+          "null_value": true
+        }
+      }
+    ]
+  }
 }
