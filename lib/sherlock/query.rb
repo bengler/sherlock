@@ -49,9 +49,9 @@ module Sherlock
     def bool_query
       queries = []
       queries << query_string if search_term
-      queries = queries + uid_fields_query
-      queries = queries + field_query
-      queries = queries + range_query if range
+      queries = queries + uid_field_queries
+      queries = queries + field_queries
+      queries = queries << range_query if range
       {:must => queries}
     end
 
@@ -63,9 +63,7 @@ module Sherlock
       }
     end
 
-    # TODO: :missing is a filter, not a query. Move it to the filter section. AND style?
-
-    def uid_fields_query
+    def uid_field_queries
       result = uid_query.to_hash.map do |key, value|
         {:term => {key.to_s => value}}
       end
@@ -73,7 +71,7 @@ module Sherlock
     end
 
     # query on specific field value
-    def field_query
+    def field_queries
       result = []
       fields.each do |key, value|
         unless value == 'null'
@@ -108,11 +106,10 @@ module Sherlock
 
 
     def range_query
-      result = {}
-      result['lte'] = range['to'] if range['to']
-      result['gte'] = range['from'] if range['from']
-      {range['attribute'] => result}
-      {:range => result}
+      params = {}
+      params['lte'] = range['to'] if range['to']
+      params['gte'] = range['from'] if range['from']
+      {:range => {range['attribute'] => params}}
     end
 
     def security_filter

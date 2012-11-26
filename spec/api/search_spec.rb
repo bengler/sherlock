@@ -68,6 +68,29 @@ describe 'API v1 search' do
       end.should eq ['hot stuff']
     end
 
+    context "ranged query" do
+
+      let(:record) {
+        uid = 'post.card:hell.flames.devil$1'
+        Sherlock::Parsers::Generic.new(uid, {'happens_on' => (Date.today-5).to_s, 'document' => 'past', 'uid' => uid, :restricted => false}).to_hash
+      }
+      let(:another_record) {
+        uid = 'post.card:hell.flames.pitchfork$2'
+        Sherlock::Parsers::Generic.new(uid, {'happens_on' => (Date.today+5).to_s, 'document' => 'future', 'uid' => uid, :restricted => false}).to_hash
+      }
+
+      it "works" do
+        Sherlock::Elasticsearch.index record
+        Sherlock::Elasticsearch.index another_record
+        sleep 1.4
+        get "/search/#{realm}", {:range => {:attribute => 'happens_on', :to => Date.today.to_s}}
+        result = JSON.parse(last_response.body)
+        result['hits'].map do |hit|
+          hit['hit']['document']
+        end.should eq ['past']
+      end
+    end
+
     context "sorting results" do
 
       let(:first_record) {
@@ -228,7 +251,7 @@ describe 'API v1 search' do
         # denne testen feiler når query.rb:95 er med
         Sherlock::Elasticsearch.index restricted_record
         sleep 1
-        puts restricted_record.inspect
+
         get "/search/#{realm}/#{restricted_uid}"
 
         result = JSON.parse(last_response.body)
@@ -276,5 +299,4 @@ describe 'API v1 search' do
     end
   end
 
-  describe '/search/realm/'
 end
