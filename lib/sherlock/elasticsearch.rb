@@ -12,8 +12,7 @@ module Sherlock
       def index(record)
         begin
           Pebblebed::Http.put(url(record['uid']), record)
-          # puts "indexed:"
-          # puts record.to_json
+          LOGGER.info "INDEXED: #{record.inspect}"
         rescue Pebblebed::HttpError => e
           if e.message =~ /IndexMissingException/
             create_index(Pebbles::Uid.new(record['uid']).realm, index_config)
