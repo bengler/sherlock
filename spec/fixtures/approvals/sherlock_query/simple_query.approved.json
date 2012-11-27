@@ -1,25 +1,21 @@
 {
+  "from": 0,
+  "size": 10,
   "query": {
-    "filtered": {
-      "query": {
-        "query_string": {
-          "query": "hot",
-          "default_operator": "AND"
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "query": "hot",
+            "default_operator": "AND"
+          }
         }
-      },
-      "filter": {
-        "bool": {
-          "must": [
-            {
-              "term": {
-                "restricted": false
-              }
-            }
-          ]
-        }
-      }
+      ]
     }
   },
-  "size": 10,
-  "from": 0
+  "filter": {
+    "term": {
+      "restricted": false
+    }
+  }
 }

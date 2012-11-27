@@ -1,33 +1,29 @@
 {
+  "from": 0,
+  "size": 10,
   "query": {
-    "filtered": {
-      "query": {
-        "query_string": {
-          "query": "scorching",
-          "default_operator": "AND"
-        }
-      },
-      "filter": {
-        "bool": {
-          "must": [
-            {
-              "term": {
-                "restricted": false
-              }
-            },
-            {
-              "range": {
-                "membership_expires_on": {
-                  "lte": "2012-11-01",
-                  "gte": "2012-11-03"
-                }
-              }
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "query": "scorching",
+            "default_operator": "AND"
+          }
+        },
+        {
+          "range": {
+            "membership_expires_on": {
+              "lte": "2012-11-01",
+              "gte": "2012-11-03"
             }
-          ]
+          }
         }
-      }
+      ]
     }
   },
-  "size": 10,
-  "from": 0
+  "filter": {
+    "term": {
+      "restricted": false
+    }
+  }
 }

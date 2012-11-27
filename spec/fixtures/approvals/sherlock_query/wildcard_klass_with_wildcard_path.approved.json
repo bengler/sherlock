@@ -1,35 +1,31 @@
 {
+  "from": 0,
+  "size": 10,
   "query": {
-    "filtered": {
-      "query": {
-        "query_string": {
-          "query": "blistering",
-          "default_operator": "AND"
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "query": "blistering",
+            "default_operator": "AND"
+          }
+        },
+        {
+          "term": {
+            "label_0_": "hell"
+          }
+        },
+        {
+          "term": {
+            "label_1_": "flames"
+          }
         }
-      },
-      "filter": {
-        "bool": {
-          "must": [
-            {
-              "term": {
-                "label_0_": "hell"
-              }
-            },
-            {
-              "term": {
-                "label_1_": "flames"
-              }
-            },
-            {
-              "term": {
-                "restricted": false
-              }
-            }
-          ]
-        }
-      }
+      ]
     }
   },
-  "size": 10,
-  "from": 0
+  "filter": {
+    "term": {
+      "restricted": false
+    }
+  }
 }
