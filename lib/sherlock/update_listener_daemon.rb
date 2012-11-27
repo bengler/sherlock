@@ -31,7 +31,7 @@ module Sherlock
     def run
       @listener.start
       sleep
-    rescue StandardError => e
+    rescue Pebblebed::HttpError, Pebblebed::HttpNotFoundError, StandardError => e
       if logger.respond_to?:exception
         logger.exception(e)
       else
