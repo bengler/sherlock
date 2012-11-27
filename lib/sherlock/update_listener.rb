@@ -27,11 +27,11 @@ module Sherlock
           begin
             process
           rescue Pebblebed::HttpError, Pebblebed::HttpNotFoundError, StandardError => e
-            if logger.respond_to?:exception
-              logger.exception(e)
+            if LOGGER.respond_to?:exception
+              LOGGER.exception(e)
             else
-              logger.error(e.inspect)
-              logger.error(e.backtrace.join("\n"))
+              LOGGER.error(e.inspect)
+              LOGGER.error(e.backtrace.join("\n"))
             end
           end
         end
