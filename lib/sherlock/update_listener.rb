@@ -47,7 +47,11 @@ module Sherlock
       river = Pebblebed::River.new
       queue = river.queue subscription
       queue.subscribe(ack: true) do |message|
-        consider message
+        begin
+          consider message
+        rescue Pebblebed::HttpError => e
+          LOGGER.error(e.inspect)
+        end
       end
     end
 
