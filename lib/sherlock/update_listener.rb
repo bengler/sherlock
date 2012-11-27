@@ -23,7 +23,18 @@ module Sherlock
 
     def start
       @thread = Thread.new do
-        process
+        loop do
+          begin
+            process
+          rescue Pebblebed::HttpError, Pebblebed::HttpNotFoundError, StandardError => e
+            if logger.respond_to?:exception
+              logger.exception(e)
+            else
+              logger.error(e.inspect)
+              logger.error(e.backtrace.join("\n"))
+            end
+          end
+        end
       end
     end
 
