@@ -128,7 +128,7 @@ module Sherlock
 
     def sort
       return {} unless sort_attribute
-      {:sort => [{ "document.#{sort_attribute}" => {'order' => order} }, '_score']}
+      {:sort => [{ sort_attribute => {'order' => order} }, '_score']}
     end
 
     def self.normalize_sort_order(order)

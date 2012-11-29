@@ -105,14 +105,15 @@ describe 'API v1 search' do
 
       it "sorts by date in correct order" do
         Sherlock::Elasticsearch.index first_record
+        sleep 1
         Sherlock::Elasticsearch.index second_record
         sleep 1.4
-        get "/search/#{realm}", :q => "bbq", :sort_by => "happens_on", :order => 'asc'
+        get "/search/#{realm}", :q => "bbq", :sort_by => "document.happens_on", :order => 'asc'
         result = JSON.parse(last_response.body)
         result['hits'].count.should eq 2
         result['hits'].first['hit']['document']['item'].should eq 'first bbq'
 
-        get "/search/#{realm}", :q => "bbq", :sort_by => "happens_on", :order => 'desc'
+        get "/search/#{realm}", :q => "bbq", :sort_by => "document.happens_on", :order => 'desc'
         result = JSON.parse(last_response.body)
         result['hits'].count.should eq 2
         result['hits'].first['hit']['document']['item'].should eq 'second bbq'
