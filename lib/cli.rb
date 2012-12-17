@@ -41,8 +41,11 @@ module Sherlock
       lines.pop
       lines.each do |line|
         queue_name, count = line.split("\t")
-        river.queue(:name => queue_name).purge
-        puts "Poof! Emptied queue #{queue_name} of #{count} messages"
+        queue = river.queue(:name => queue_name)
+        if queue
+          queue.purge
+          puts "Poof! Emptied queue #{queue_name} of #{count} messages"
+        end
       end
     end
 
