@@ -47,7 +47,7 @@ class SherlockV1 < Sinatra::Base
   # @optional [String] q Query string.
   # @optional [Integer] limit Maximum number of returned hits. Defaults to 10.
   # @optional [Integer] offset Index of the first returned hit. Defaults to 0.
-  # @optional [String] sort_attribute Attribute to sort the result set by. Defaults to an internally calculated relevancy score.
+  # @optional [String] sort_by Document attribute (don't prefix with 'document.') to sort the result set by. Defaults to an internally calculated relevancy score.
   # @optional [String] order Order in which to sort the returned hits. Defaults to DESC.
   # @optional [String] range[attribute] Attribute to perform a ranged query by.
   # @optional [String] range[from] Minimum accepted value for a ranged query.
