@@ -43,7 +43,7 @@ module Sherlock
         queue_name, count = line.split("\t")
         queue = river.queue(:name => queue_name)
         if queue
-          puts "Emptying queue #{queue_name}..."
+          puts "Emptying #{count} messages from queue #{queue_name}..."
           begin
             queue.purge
             puts "Poof! Emptied queue #{queue_name} of #{count} messages"
