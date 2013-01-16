@@ -21,7 +21,6 @@ module Sherlock
     # e.g.: [{'action' => 'index', 'record' => {'uid' => 'u:i.d'}}, {'action' => 'unindex', 'record' => {'uid' => 'u:i.d.e'}]
     def tasks(matching_uids = [])
       result = []
-      return result unless Sherlock::Update.acceptable_origin?(payload['uid'])
 
       records_for_indexing = build_index_records payload
       records_for_indexing.each do |record|
@@ -41,15 +40,6 @@ module Sherlock
         result << {'action' => 'unindex', 'record' => {'uid' => uid}}
       end
       result
-    end
-
-    # Disregard dittforslag content
-    # Only index grove and origami stuff
-    # TODO: blacklist checkpoint and whitelist all other stuff when we know what checkpoints namespace is
-    def self.acceptable_origin?(uid)
-      return false unless uid
-      return false if Sherlock::UidOriginIdentifier.dittforslag?(uid)
-      Sherlock::UidOriginIdentifier.grove?(uid) || Sherlock::UidOriginIdentifier.origami?(uid)
     end
 
   end
