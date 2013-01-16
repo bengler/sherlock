@@ -61,31 +61,4 @@ describe Sherlock::Update do
     tasks = Sherlock::Update.new(message).tasks
     tasks.first['action'].should eq 'unindex'
   end
-
-  it "doesnt index content from mittap.dittforslag" do
-    dittforslag_payload = {
-      'event' => 'create',
-      'uid' => 'post:mittap.dittforslag.dont.index$1',
-      'attributes' => {
-        'uid' => 'post:mittap.dittforslag.dont.index$1',
-        'document' => {'email' => 'secret@dna.no'},
-        'paths' => ['mittap.dittforslag.dont.index'],
-        'id' => 'post:mittap.dittforslag.dont.index$1'
-      }
-    }
-    message = Hash[:payload, dittforslag_payload.to_json]
-    tasks = Sherlock::Update.new(message).tasks
-    tasks.count.should eq 0
-  end
-
-  it "checks to see if origin is acceptable" do
-    message = Hash[:payload, payload.to_json]
-    Sherlock::Update.acceptable_origin?(nil).should be_false
-    Sherlock::UidOriginIdentifier.should_receive(:grove?)
-    Sherlock::UidOriginIdentifier.should_receive(:origami?)
-    Sherlock::UidOriginIdentifier.should_receive(:dittforslag?)
-    Sherlock::Update.acceptable_origin?("genus.species:canis.lupus$1")
-  end
-
-
 end
