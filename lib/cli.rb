@@ -26,8 +26,8 @@ module Sherlock
       puts "Poof! Dropped index #{index}!"
     end
 
-    desc "empty_all_queues", "Empties all rabbitmq queues of waiting messages"
-    def empty_all_queues
+    desc "purge_all_queues", "Empties all rabbitmq queues of waiting messages"
+    def purge_all_queues
       if ENV['RACK_ENV'] == 'production'
         puts "You're in production, you shouldn't do that."
         return
@@ -46,14 +46,31 @@ module Sherlock
           river.queue(:name => queue_name).purge
           puts "Poof! Emptied queue #{queue_name} of #{count} messages"
         rescue => e
-          puts "Unable to empty queue #{queue_name}. Error was: #{e}"
+          puts "Unable to purge queue #{queue_name}. Error was: #{e}"
         end
       end
     end
 
+    desc "delete_queue", "Delete a queue. Use when subscription params are going to change."
+    def delete_queue(name)
+      require 'pebblebed'
+      river = Pebblebed::River.new
+      queue = river.queue(:name => name)
+
+      if queue.message_count > 0
+        unless yes?("There are #{queue.message_count} messages #{name}. Proceed?", :red)
+          say "The sun's not yellow it's chicken", :yellow
+          return
+        end
+      end
+      queue.purge
+      queue.delete
+      say "Queue #{name} was purged and deleted."
+    end
+
     desc "blank_slate", "Empties all rabbitmq queues and drops all indexes"
     def blank_slate
-      empty_all_queues
+      purge_all_queues
       drop_all_indices
     end
 
