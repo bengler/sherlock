@@ -16,7 +16,7 @@ module Sherlock
     def default_options
       {:name => 'sherlock.index',
        :path => '**',
-       :klass => 'post.*|unit.*|organization.*|note.*|group.*|capacity.*|associate.*|affiliation.*',
+       :klass => 'post.*|unit|organization|group|capacity|associate|affiliation',
        :event => '**',
        :interval => 1}
     end
