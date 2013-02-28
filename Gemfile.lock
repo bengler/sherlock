@@ -1,10 +1,4 @@
 GIT
-  remote: git://github.com/bengler/bengler_test_helper.git
-  revision: e9258320a096beeaa6b1bdae33252f290886f9bd
-  specs:
-    bengler_test_helper (0.0.2)
-
-GIT
   remote: git://github.com/rack/rack-contrib.git
   revision: b7e7c38fd02c3b5da91aa57af78b3f571c6ebcd0
   specs:
@@ -21,7 +15,7 @@ GIT
       rack
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     activesupport (3.2.9)
       i18n (~> 0.6)
@@ -130,7 +124,6 @@ PLATFORMS
 DEPENDENCIES
   airbrake (~> 3.1.4)
   approvals
-  bengler_test_helper!
   feedzirra
   main (~> 5.0.1)
   pebble_path
