@@ -1,5 +1,7 @@
 # Sherlock
 
+[![Build Status](https://semaphoreapp.com/api/v1/projects/ef5dcc4d6e420430033d8928194536f7784316e1/28278/badge.png)](https://semaphoreapp.com/projects/1579/branches/28278)
+
 Sherlock is a no-hassle service which handles all the indexing and query needs of a content-brokering [Pebble] [1]. For example, consider using Sherlock if you need to full-text query [Grove] [4] content.
 
 ## Warning: Experimental software
