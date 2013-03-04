@@ -66,6 +66,7 @@ Also, anything added to grove, or updated in grove, will be put on the River, wh
 
 You can now do queries such as:
 
+	http://sherlock.dev/api/sherlock/v1/search/my_index/*:*/?q=foo+bar
 	http://sherlock.dev/api/sherlock/v1/search/my_index/*:*
 	http://sherlock.dev/api/sherlock/v1/search/development/post.greeting:*?limit=100
 
