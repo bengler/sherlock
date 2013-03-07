@@ -31,6 +31,44 @@ describe Sherlock do
     Pebblebed::Connector.any_instance.stub(:checkpoint).and_return checkpoint
   end
 
+  describe "Elasticsearch server configuration" do
+    let(:record) {
+      {
+        'uid' => 'post.card:hell.pitchfork$1',
+        'document.app' => 'hot',
+        'paths' => ['hell.pitchfork'],
+        'id' => 'post.card:hell.pitchfork$1',
+        'klass_0_' => 'post',
+        'klass_1_' => 'card',
+        'label_0_' => 'hell',
+        'label_1_' => 'pitchfork',
+        'oid_' => '1',
+        'realm' => 'hell',
+        'pristine' => {
+          'uid' => 'post.card:hell.pitchfork$1',
+          'document' => {'app' => 'hot'},
+          'paths' => ['hell.pitchfork'],
+          'id' => 'post.card:hell.pitchfork$1'
+        },
+        'restricted' => false}
+    }
+
+    before(:each) do
+      Sherlock::Elasticsearch.index record
+      sleep 1.4
+    end
+
+    it "creates new indexes with the whitespace tokenizer and the lowercase filter" do
+      require 'pebblebed'
+      index_name = Sherlock::Elasticsearch.index_name('hell')
+      url = "http://localhost:9200/#{index_name}/_analyze"
+      text = 'a A 1 is'
+      response = Pebblebed::Http.get(url, {:text => text})
+      result = JSON.parse(response.body)
+      result['tokens'].count.should eq text.split(' ').count
+      result['tokens'][0]['token'].should eq text[0]
+    end
+  end
 
   context "posts to river" do
 
