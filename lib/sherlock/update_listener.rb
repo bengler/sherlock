@@ -17,7 +17,7 @@ module Sherlock
       {:name => 'sherlock.index',
        :path => '**',
        :klass => 'post.*|unit|organization|group|capacity|associate|affiliation',
-       :event => '**',
+       :event => 'create|update|exists|delete',
        :interval => 1}
     end
 
@@ -47,7 +47,6 @@ module Sherlock
       river = Pebblebed::River.new
       queue = river.queue subscription
       queue.subscribe(ack: true) do |message|
-        LOGGER.warn "=== PROCESS: #{message}"
         begin
           consider message
         rescue Pebblebed::HttpError => e
