@@ -74,5 +74,10 @@ module Sherlock
       drop_all_indices
     end
 
+    desc "list_queues", "List all queues with number of messages"
+    def list_queues
+      puts `rabbitmqctl list_queues`
+    end
+
   end
 end
