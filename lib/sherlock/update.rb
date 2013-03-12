@@ -30,7 +30,7 @@ module Sherlock
         when 'delete'
           result << {'action' => 'unindex', 'record' => {'uid' => record['uid']}}
         else
-          LOGGER.warn "Sherlock update says: Unknown event type #{payload['event']}"
+          LOGGER.warn "Sherlock update says: Unknown event type #{payload['event']} for payload #{payload.inspect}"
         end
         matching_uids.delete record['uid']
       end

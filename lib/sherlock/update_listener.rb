@@ -47,6 +47,7 @@ module Sherlock
       river = Pebblebed::River.new
       queue = river.queue subscription
       queue.subscribe(ack: true) do |message|
+        LOGGER.warn "=== PROCESS: #{message}"
         begin
           consider message
         rescue Pebblebed::HttpError => e
@@ -56,7 +57,6 @@ module Sherlock
     end
 
     def consider(message)
-      LOGGER.error "=== CONSIDER: #{message.inspect}"
       uid = JSON.parse(message[:payload])['uid']
 
       matching_uids = Sherlock::Elasticsearch.matching_records(uid)
