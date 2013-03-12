@@ -56,7 +56,9 @@ module Sherlock
     end
 
     def consider(message)
+      LOGGER.error "=== CONSIDER: #{message.inspect}"
       uid = JSON.parse(message[:payload])['uid']
+
       matching_uids = Sherlock::Elasticsearch.matching_records(uid)
 
       tasks = Sherlock::Update.new(message).tasks(matching_uids)
