@@ -38,12 +38,14 @@ module Sherlock
         index = should_prefix_realm ? index_name(realm) : realm
         begin
           Pebblebed::Http.delete("#{root_url}/#{index}", {})
+          return true
         rescue Pebblebed::HttpError => e
           unless e.message =~ /IndexMissingException/
             LOGGER.error "Error while deleting index #{index}"
             raise e
           end
         end
+        return false
       end
 
       def create_index(realm, config)

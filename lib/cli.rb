@@ -19,11 +19,14 @@ module Sherlock
       end
     end
 
-    desc "drop_index", "Drop a single index in Elasticsearch"
+    desc "drop_index", "Drop a single index in Elasticsearch, index name should be on this format: sherlock_staging_apdm"
     def drop_index(index)
       require_relative '../config/environment'
-      Sherlock::Elasticsearch.delete_index(index, false)
-      puts "Poof! Dropped index #{index}!"
+      if Sherlock::Elasticsearch.delete_index(index, false)
+        puts "Poof! Dropped index #{index}!"
+      else
+        puts "Index unknown: \"#{index}\" :-/"
+      end
     end
 
     desc "purge_all_queues", "Empties all rabbitmq queues of waiting messages"
