@@ -112,6 +112,19 @@ describe Sherlock::Query do
 
   end
 
+  describe "tags" do
+    it "support simple tag queries" do
+      Sherlock::Query.new({:q => 'music', :tags => "rock"}).to_json.should == "{\"from\":0,\"size\":10,\"query\":{\"bool\":{\"must\":[{\"query_string\":{\"query\":\"music\",\"default_operator\":\"AND\"}}]}},\"filter\":{\"and\":[{\"term\":{\"tags_vector\":\"rock\"}},{\"term\":{\"restricted\":false}}]}}"
+      Sherlock::Query.new({:q => 'music', :tags => "!rock"}).to_json.should == "{\"from\":0,\"size\":10,\"query\":{\"bool\":{\"must\":[{\"query_string\":{\"query\":\"music\",\"default_operator\":\"AND\"}}]}},\"filter\":{\"and\":[{\"not\":{\"term\":{\"tags_vector\":\"rock\"}}},{\"term\":{\"restricted\":false}}]}}"
+      Sherlock::Query.new({:q => 'music', :tags => "!rock & pop"}).to_json.should == "{\"from\":0,\"size\":10,\"query\":{\"bool\":{\"must\":[{\"query_string\":{\"query\":\"music\",\"default_operator\":\"AND\"}}]}},\"filter\":{\"and\":[{\"not\":{\"term\":{\"tags_vector\":\"rock\"}}},{\"term\":{\"tags_vector\":\"pop\"}},{\"term\":{\"restricted\":false}}]}}"
+      Sherlock::Query.new({:q => 'music', :tags => "!rock & (pop|techno)"}).to_json.should == "{\"from\":0,\"size\":10,\"query\":{\"bool\":{\"must\":[{\"query_string\":{\"query\":\"music\",\"default_operator\":\"AND\"}}]}},\"filter\":{\"and\":[{\"not\":{\"term\":{\"tags_vector\":\"rock\"}}},{\"term\":{\"restricted\":false}}],\"or\":[{\"term\":{\"tags_vector\":\"pop\"}},{\"term\":{\"tags_vector\":\"techno\"}},{\"term\":{\"restricted\":false}}]}}"
+      Sherlock::Query.new({:q => 'music', :tags => "rock & pop"}).to_json.should ==  "{\"from\":0,\"size\":10,\"query\":{\"bool\":{\"must\":[{\"query_string\":{\"query\":\"music\",\"default_operator\":\"AND\"}}]}},\"filter\":{\"and\":[{\"term\":{\"tags_vector\":\"rock\"}},{\"term\":{\"tags_vector\":\"pop\"}},{\"term\":{\"restricted\":false}}]}}"
+      Sherlock::Query.new({:q => 'music', :tags => "rock & !pop"}).to_json.should == "{\"from\":0,\"size\":10,\"query\":{\"bool\":{\"must\":[{\"query_string\":{\"query\":\"music\",\"default_operator\":\"AND\"}}]}},\"filter\":{\"and\":[{\"term\":{\"tags_vector\":\"rock\"}},{\"not\":{\"term\":{\"tags_vector\":\"pop\"}}},{\"term\":{\"restricted\":false}}]}}"
+      Sherlock::Query.new({:q => 'music', :tags => "rock,pop,blues"}).to_json.should == "{\"from\":0,\"size\":10,\"query\":{\"bool\":{\"must\":[{\"query_string\":{\"query\":\"music\",\"default_operator\":\"AND\"}}]}},\"filter\":{\"and\":[{\"term\":{\"tags_vector\":\"rock\"}},{\"term\":{\"tags_vector\":\"pop\"}},{\"term\":{\"tags_vector\":\"blues\"}},{\"term\":{\"restricted\":false}}]}}"
+    end
+
+  end
+
   describe "access" do
 
     it "grants access to a specifc path" do

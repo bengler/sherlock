@@ -4,7 +4,7 @@
 module Sherlock
   class Query
 
-    attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :range, :fields, :accessible_paths, :uid_query
+    attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :range, :fields, :accessible_paths, :uid_query, :tags_query
     def initialize(options, accessible_paths = [])
       options.symbolize_keys!
       @search_term = options[:q]
@@ -17,6 +17,7 @@ module Sherlock
       @fields = options.fetch(:fields) {[]}
       @accessible_paths = accessible_paths
       @uid_query = Pebbles::Uid.query(uid, :species => 'klass', :path => 'label', :suffix => '')
+      @tags_query = options[:tags]
     end
 
     def to_hash
@@ -28,8 +29,22 @@ module Sherlock
           }
         }
       )
-      filter = filters
-      result[:filter] = filter if filter
+      if tags_queries
+        tags_queries.each do |rk,rv|
+          unless rv.empty?
+            result[:filter] ||= {}
+            result[:filter][rk] ||= []
+            result[:filter][rk] << rv
+            result[:filter][rk] << security_filter if security_filter
+            result[:filter][rk] << missing_filter if missing_filter
+            result[:filter][rk].flatten!
+          end
+        end
+      end
+      unless result[:filter]
+        filter = filters
+        result[:filter] = filter if filter
+      end
       result
     end
 
@@ -40,7 +55,6 @@ module Sherlock
       missing = missing_filter
       #result << {:constant_score => {:filter => missing}} if missing
       result << missing if missing
-
       return {:and => result} if result.count > 1
       return result.first if result.count == 1
       return nil
@@ -68,6 +82,44 @@ module Sherlock
         {:term => {key.to_s => value}}
       end
       result
+    end
+
+    def tags_queries
+      if @tags_query
+        results = {}
+        results[:and] = []
+        results[:or] = []
+        results[:not] = []
+        if @tags_query.include?(",")
+          terms = @tags_query.split(",").map{|tag| tag.strip}
+          results[:and] << terms.map{|t| {"term" => {"tags_vector" => t}}}
+        else
+          ands = @tags_query.split('&')
+          ands.each do |a|
+            if a.strip[0] != "!"
+              if a.index("|")
+                a.split("|").each do |o|
+                  o = o.gsub("(", "").strip
+                    o = o.gsub(")", "").strip
+                  results[:or] << {
+                    "term" => { "tags_vector" => o.strip}
+                  }
+                end
+              else
+                results[:and] << {
+                  "term" => { "tags_vector" => a.strip}
+                }
+              end
+            else
+              results[:and] << {
+                "not" => { "term" => { "tags_vector" => a.gsub("!", "").strip} }
+              }
+            end
+          end
+        end
+        return results
+      end
+      nil
     end
 
     # query on specific field value
