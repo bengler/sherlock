@@ -45,6 +45,7 @@ module Sherlock
         filter = filters
         result[:filter] = filter if filter
       end
+      LOGGER.warn result.inspect
       result
     end
 
@@ -165,7 +166,7 @@ module Sherlock
     end
 
     def security_filter
-      return {:term => {'restricted' => false}} if accessible_paths.empty?
+      return {:and => [{:term => {'restricted' => false}}]} if accessible_paths.empty?
       access_requirements = []
       accessible_paths.each do |path|
         requirement_set = []
