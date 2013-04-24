@@ -28,8 +28,12 @@
     }
   },
   "filter": {
-    "term": {
-      "restricted": false
-    }
+    "and": [
+      {
+        "term": {
+          "restricted": false
+        }
+      }
+    ]
   }
 }
