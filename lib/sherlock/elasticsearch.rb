@@ -11,8 +11,12 @@ module Sherlock
 
       def index(record)
         begin
+          if record['tags_vector']
+            record['tags_vector'] = record['tags_vector'].split("' '").map{|t| t.gsub("'", '')}
+            record['pristine']['tags_vector'] = record['tags_vector']
+          end
           Pebblebed::Http.put(url(record['uid']), record)
-          LOGGER.info "INDEXED: #{record.inspect}"
+          LOGGER.warn "INDEXED: #{record.inspect}"
         rescue Pebblebed::HttpError => e
           if e.message =~ /IndexMissingException/
             create_index(Pebbles::Uid.new(record['uid']).realm, index_config)
