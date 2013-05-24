@@ -36,9 +36,13 @@
   "filter": {
     "and": [
       {
-        "term": {
-          "restricted": false
-        }
+        "and": [
+          {
+            "term": {
+              "restricted": false
+            }
+          }
+        ]
       },
       {
         "missing": {
