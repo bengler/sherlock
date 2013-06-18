@@ -11,8 +11,7 @@ describe Sherlock::UpdateListener do
           'uid' => 'post.card:hell.pitchfork$1',
           'document' => {'app' => 'hot'},
           'paths' => ['hell.pitchfork'],
-          'id' => 'post.card:hell.pitchfork$1',
-          'published' => true
+          'id' => 'post.card:hell.pitchfork$1'
         }
       }
     }
