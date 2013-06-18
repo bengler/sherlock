@@ -26,7 +26,12 @@ module Sherlock
       records_for_indexing.each do |record|
         case payload['event']
         when 'create', 'update', 'exists'
-          result << {'action' => 'index', 'record' => record}
+          # unindex explicitly unpublished records
+          if unpublished? payload
+            result << {'action' => 'unindex', 'record' => {'uid' => record['uid']}}
+          else
+            result << {'action' => 'index', 'record' => record}
+          end
         when 'delete'
           result << {'action' => 'unindex', 'record' => {'uid' => record['uid']}}
         else
@@ -40,6 +45,10 @@ module Sherlock
         result << {'action' => 'unindex', 'record' => {'uid' => uid}}
       end
       result
+    end
+
+    def unpublished?(payload)
+      payload['attributes']['published'] == false
     end
 
   end
