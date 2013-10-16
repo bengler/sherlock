@@ -80,6 +80,10 @@ Empty all queues of messages
 
 	./bin/sherlock empty_all_queues
 
+...or you can also scratch the queue itself with
+
+	rabbitmqadmin purge queue=response.report.river
+
 Test how text is analyzed
 
 	curl -XGET 'localhost:9200/development_dna/_analyze' -d 'as sly as a fox'
