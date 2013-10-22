@@ -4,7 +4,7 @@
 module Sherlock
   class Query
 
-    attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :range, :fields, :accessible_paths, :uid_query, :tags_query
+    attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :range, :fields, :accessible_paths, :uid_query, :tags_query, :deleted
     def initialize(options, accessible_paths = [])
       options.symbolize_keys!
       @search_term = options[:q]
@@ -18,6 +18,7 @@ module Sherlock
       @accessible_paths = accessible_paths
       @uid_query = Pebbles::Uid.query(uid, :species => 'klass', :path => 'label', :suffix => '')
       @tags_query = options[:tags]
+      @deleted = options[:deleted]
     end
 
     def to_hash
@@ -166,16 +167,32 @@ module Sherlock
     end
 
     def security_filter
-      return {:and => [{:term => {'restricted' => false}}]} if accessible_paths.empty?
+      return {:and => [{:term => {'restricted' => false}}, {:not => {:term => {'deleted' => true}}}]} if accessible_paths.empty?
       access_requirements = []
       accessible_paths.each do |path|
         requirement_set = []
         Pebbles::Uid::Labels.new(path, :name => 'label', :suffix => '').to_hash.each do |key, value|
           requirement_set << {:term => {key.to_s => value}}
         end
+        if deleted == 'only'
+          # explicitly only include deleted records
+          requirement_set << {:term => {'deleted' => true}}
+        elsif deleted == 'include'
+          # no extra filter -> include all
+        else
+          # explicitly exclude deleted records
+          requirement_set << {:not => {:term => {'deleted' => true}}}
+        end
         access_requirements << {:and => requirement_set}
       end
-      access_requirements << {:term => {'restricted' => false}}
+
+      non_access_requirements = [{:term => {"restricted" => false}}]
+      if deleted == 'only'
+        non_access_requirements << {:term =>{'deleted' => true}}
+      else
+        non_access_requirements << {:not => {:term => {'deleted' => true}}}
+      end
+      access_requirements << { :and => non_access_requirements}
       {:or => access_requirements}
     end
 
