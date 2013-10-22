@@ -39,6 +39,13 @@
         "term": {
           "restricted": false
         }
+      },
+      {
+        "not": {
+          "term": {
+            "deleted": true
+          }
+        }
       }
     ]
   }
