@@ -156,6 +156,77 @@ describe 'API v1 search' do
     end
   end
 
+  describe "content marked as deleted" do
+
+    let(:uid) {'post.card:hell.tools.weird$1'}
+    let(:restricted_uid) {'post.card:hell.tools.weird$2'}
+    let(:deleted_uid) {'post.card:hell.tools.weird$3'}
+    let(:inaccessible_deleted_uid) {'post.card:hell.climate.weird$4'}
+
+    let(:record) {
+      Sherlock::Parsers::Generic.new(uid, {'document' => 'secret', 'uid' => uid, 'deleted' => false}).to_hash
+    }
+    let(:restricted_record) {
+      Sherlock::Parsers::Generic.new(restricted_uid, {'document' => 'secret', 'uid' => restricted_uid, 'deleted' => false, 'restricted' => true}).to_hash
+    }
+    let(:deleted_record) {
+      Sherlock::Parsers::Generic.new(deleted_uid, {'document' => 'secret', 'uid' => deleted_uid, 'deleted' => true}).to_hash
+    }
+    let(:inaccessible_deleted_record) {
+      Sherlock::Parsers::Generic.new(inaccessible_deleted_uid, {'document' => 'secret', 'uid' => inaccessible_deleted_uid, 'deleted' => true}).to_hash
+    }
+
+    context "when somewhat entrusted" do
+
+      before :each do
+        Sherlock::Access.stub(:accessible_paths).and_return ['hell.tools']
+      end
+
+      it "finds what it should and not more" do
+        Sherlock::Elasticsearch.index record
+        Sherlock::Elasticsearch.index restricted_record
+        Sherlock::Elasticsearch.index deleted_record
+        Sherlock::Elasticsearch.index inaccessible_deleted_record
+        sleep 1
+        get "/search/#{realm}", :q => 'secret', :deleted => 'include'
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 3
+        result['hits'].map do |hit|
+          hit['hit']['uid']
+        end.sort.should eq([record['uid'], restricted_record['uid'], deleted_record['uid']])
+      end
+
+    end
+
+    context "only deleted content" do
+
+      before :each do
+        Sherlock::Access.stub(:accessible_paths).and_return ['hell.tools']
+      end
+
+      let(:uid) {'post.card:hell.tools.weird$1'}
+      let(:deleted_uid) {'post.card:hell.tools.weird$2'}
+      let(:record) {
+        Sherlock::Parsers::Generic.new(uid, {'document' => 'secret', 'uid' => uid, 'deleted' => false}).to_hash
+      }
+      let(:deleted_record) {
+        Sherlock::Parsers::Generic.new(deleted_uid, {'document' => 'secret', 'uid' => deleted_uid, 'deleted' => true}).to_hash
+      }
+
+      it "finds what it should and not more" do
+        Sherlock::Elasticsearch.index record
+        Sherlock::Elasticsearch.index deleted_record
+        sleep 1
+        get "/search/#{realm}", :q => 'secret', :deleted => 'only'
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 1
+        result['hits'].first['hit']['uid'].should eq deleted_record['uid']
+      end
+
+    end
+  end
+
+
   describe "restricted content" do
 
     let(:restricted_uid) {'post.card:hell.heck.weird$1'}
@@ -176,12 +247,7 @@ describe 'API v1 search' do
       }
 
       let(:inaccessible_restricted_record) {
-        uid = 'post.card:hell.no.weird$3'
-        Sherlock::Parsers::Generic.new(uid, {'document' => 'secret', 'uid' => uid, 'restricted' => true}).to_hash
-      }
-
-      let(:inaccessible_restricted_record) {
-        uid = 'post.card:hell.yeah.weird$4'
+        uid = 'post.card:hell.yeah.weird$3'
         Sherlock::Parsers::Generic.new(uid, {'document' => 'secret', 'uid' => uid, 'restricted' => true}).to_hash
       }
 
