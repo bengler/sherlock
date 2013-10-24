@@ -53,6 +53,7 @@ class SherlockV1 < Sinatra::Base
   # @optional [String] range[from] Minimum accepted value for a ranged query.
   # @optional [String] range[to] Maximum accepted value for a ranged query.
   # @optional [String] fields[name_of_attribute] Require a named attribute to have a specific value. Use "null" to indicate a missing value. Use 'value1|value2' to indicate 'or'.
+  # @optional [String] deleted How to treat the deleted attribute. Accepts 'include' or 'only'. Default is to not include these records. Getting a deleted record requires access to its path.
   # @status 200 JSON
   get '/search/:realm/?:uid?' do |realm, uid|
     halt 403, "Sherlock couldn't parse the UID \"#{uid}\"." unless valid_uid_query? uid

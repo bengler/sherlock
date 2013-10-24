@@ -41,13 +41,31 @@
             "term": {
               "label_2_": "vaffel"
             }
+          },
+          {
+            "not": {
+              "term": {
+                "deleted": true
+              }
+            }
           }
         ]
       },
       {
-        "term": {
-          "restricted": false
-        }
+        "and": [
+          {
+            "term": {
+              "restricted": false
+            }
+          },
+          {
+            "not": {
+              "term": {
+                "deleted": true
+              }
+            }
+          }
+        ]
       }
     ]
   }
