@@ -42,7 +42,7 @@ describe 'API v1 search' do
       Sherlock::Elasticsearch.index record
       Sherlock::Elasticsearch.index another_record
       Sherlock::Elasticsearch.index excluded_record
-      sleep 1.4
+      sleep 1.5
       get "/search/#{realm}", :q => "hot"
       result = JSON.parse(last_response.body)
       result['hits'].map do |hit|
@@ -60,7 +60,7 @@ describe 'API v1 search' do
     it "honors limit and offset" do
       Sherlock::Elasticsearch.index record
       Sherlock::Elasticsearch.index another_record
-      sleep 1.4
+      sleep 1.5
       get "/search/#{realm}", :q => "hot", :limit => 1, :offset => 1
       result = JSON.parse(last_response.body)
       result['hits'].map do |hit|
@@ -82,7 +82,7 @@ describe 'API v1 search' do
       it "works" do
         Sherlock::Elasticsearch.index record
         Sherlock::Elasticsearch.index another_record
-        sleep 1.4
+        sleep 1.5
         get "/search/#{realm}", {:range => {:attribute => 'happens_on', :to => Date.today.to_s}}
         result = JSON.parse(last_response.body)
         result['hits'].map do |hit|
@@ -105,9 +105,9 @@ describe 'API v1 search' do
 
       it "sorts by date in correct order" do
         Sherlock::Elasticsearch.index first_record
-        sleep 1
+        sleep 1.5
         Sherlock::Elasticsearch.index second_record
-        sleep 1.4
+        sleep 1.5
         get "/search/#{realm}", :q => "bbq", :sort_by => "document.happens_on", :order => 'asc'
         result = JSON.parse(last_response.body)
         result['hits'].count.should eq 2
@@ -127,7 +127,7 @@ describe 'API v1 search' do
       Sherlock::Elasticsearch.index record
       Sherlock::Elasticsearch.index another_record
       Sherlock::Elasticsearch.index excluded_record
-      sleep 1
+      sleep 1.5
 
       get "/search/#{realm}/post.card:hell.flames.*", :q => "hot"
 
@@ -144,7 +144,7 @@ describe 'API v1 search' do
     it "works" do
       Sherlock::Elasticsearch.index record
       Sherlock::Elasticsearch.index another_record
-      sleep 1.4
+      sleep 1.5
 
       get "/search/#{realm}/#{record['uid']}"
 
@@ -187,10 +187,10 @@ describe 'API v1 search' do
         Sherlock::Elasticsearch.index restricted_record
         Sherlock::Elasticsearch.index deleted_record
         Sherlock::Elasticsearch.index inaccessible_deleted_record
-        sleep 1
+        sleep 1.5
         get "/search/#{realm}", :q => 'secret', :deleted => 'include'
         result = JSON.parse(last_response.body)
-        result['hits'].count.should eq 3
+        #result['hits'].count.should eq 3
         result['hits'].map do |hit|
           hit['hit']['uid']
         end.sort.should eq([record['uid'], restricted_record['uid'], deleted_record['uid']])
@@ -216,7 +216,7 @@ describe 'API v1 search' do
       it "finds what it should and not more" do
         Sherlock::Elasticsearch.index record
         Sherlock::Elasticsearch.index deleted_record
-        sleep 1
+        sleep 1.5
         get "/search/#{realm}", :q => 'secret', :deleted => 'only'
         result = JSON.parse(last_response.body)
         result['hits'].count.should eq 1
@@ -261,7 +261,7 @@ describe 'API v1 search' do
           record['restricted'] = false
           Sherlock::Elasticsearch.index record
 
-          sleep 1
+          sleep 1.5
           get "/search/#{realm}", :q => 'secret'
           result = JSON.parse(last_response.body)
           result['hits'].map do |hit|
@@ -280,7 +280,7 @@ describe 'API v1 search' do
           record['restricted'] = false
           Sherlock::Elasticsearch.index record
 
-          sleep 1
+          sleep 1.5
           get "/search/#{realm}/post.card:hell.*"
           result = JSON.parse(last_response.body)
           result['hits'].map do |hit|
@@ -295,7 +295,7 @@ describe 'API v1 search' do
           record['restricted'] = false
           Sherlock::Elasticsearch.index record
 
-          sleep 1
+          sleep 1.5
           get "/search/#{realm}/post.card:hell.*", 'fields[blipp]' => 'null'
           result = JSON.parse(last_response.body)
           result['hits'].map do |hit|
@@ -317,7 +317,7 @@ describe 'API v1 search' do
       it "finds the record on a uid search" do
         # denne testen feiler når query.rb:95 er med
         Sherlock::Elasticsearch.index restricted_record
-        sleep 1
+        sleep 1.5
 
         get "/search/#{realm}/#{restricted_uid}"
 
@@ -329,7 +329,7 @@ describe 'API v1 search' do
 
       it "it finds the record on a term search" do
         Sherlock::Elasticsearch.index restricted_record
-        sleep 1
+        sleep 1.5
 
         get "/search/#{realm}", :q => 'secret'
 
@@ -344,7 +344,7 @@ describe 'API v1 search' do
         restricted_record = Sherlock::Parsers::Generic.new(restricted_uid, {'document' => 'secret', 'uid' => restricted_uid, 'restricted' => true}).to_hash
 
         Sherlock::Elasticsearch.index restricted_record
-        sleep 1
+        sleep 1.5
         get "/search/heaven", :q => 'secret'
 
         result = JSON.parse(last_response.body)
@@ -356,7 +356,7 @@ describe 'API v1 search' do
     context "when John Q. Public" do
       it "is not found" do
         Sherlock::Elasticsearch.index restricted_record
-        sleep 1
+        sleep 1.5
 
         get "/search/#{realm}", :q => 'secret'
 
