@@ -41,6 +41,20 @@ describe Sherlock::Update do
     }
   }
 
+  let(:soft_delete_payload) {
+    {
+      'event' => 'delete',
+      'uid' => 'post.card:hell.trademarks.pitchfork$1',
+      'soft_deleted' => true,
+      'attributes' => {
+        'uid' => 'post.card:hell.pitchfork$1',
+        'document' => {'app' => 'hot'},
+        'paths' => ["hell.trademarks.pitchfork"],
+        'id' => 'post.card:hell.trademarks.pitchfork$1'
+      }
+    }
+  }
+
   it "creates an array of tasks from payload" do
     message = Hash[:payload, payload.to_json]
     tasks = Sherlock::Update.new(message).tasks
@@ -61,4 +75,11 @@ describe Sherlock::Update do
     tasks = Sherlock::Update.new(message).tasks
     tasks.first['action'].should eq 'unindex'
   end
+
+  it "creates index tasks for delete events where the record is soft_deleted" do
+    message = Hash[:payload, soft_delete_payload.to_json]
+    tasks = Sherlock::Update.new(message).tasks
+    tasks.first['action'].should eq 'index'
+  end
+
 end
