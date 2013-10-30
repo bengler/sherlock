@@ -33,7 +33,11 @@ module Sherlock
             result << {'action' => 'index', 'record' => record}
           end
         when 'delete'
-          result << {'action' => 'unindex', 'record' => {'uid' => record['uid']}}
+          if soft_deleted? payload
+            result << {'action' => 'index', 'record' => record}
+          else
+            result << {'action' => 'unindex', 'record' => {'uid' => record['uid']}}
+          end
         else
           LOGGER.warn "Sherlock update says: Unknown event type #{payload['event']} for payload #{payload.inspect}"
         end
@@ -49,6 +53,10 @@ module Sherlock
 
     def unpublished?(payload)
       payload['attributes']['published'] == false
+    end
+
+    def soft_deleted?(payload)
+      payload['soft_deleted'] == true
     end
 
   end
