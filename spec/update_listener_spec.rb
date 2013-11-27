@@ -85,5 +85,29 @@ describe Sherlock::UpdateListener do
 
   end
 
+  context 'indexing the protected field' do
+
+    let(:payload) {
+      { 'event' => 'create',
+        'uid' => 'post.card:hell.pitchfork$1',
+        'attributes' => {
+          'uid' => 'post.card:hell.pitchfork$1',
+          'document' => {'app' => 'hot'},
+          'protected' => {'price' => 'expensive'},
+          'paths' => ['hell.pitchfork'],
+          'id' => 'post.card:hell.pitchfork$1'
+        }
+      }
+    }
+
+    it 'works' do
+      message = Hash[:payload, payload.to_json]
+      expected = {"uid"=>"post.card:hell.pitchfork$1", "document.app"=>"hot", "protected.price"=>"expensive", "paths"=>["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$1", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "pristine"=>{"uid"=>"post.card:hell.pitchfork$1", "document"=>{"app"=>"hot"}, "protected"=>{"price"=>"expensive"}, "paths"=>["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$1"}, "restricted"=>false}
+      Sherlock::Elasticsearch.should_receive(:index).with(expected)
+      Sherlock::UpdateListener.new.consider message
+    end
+
+  end
+
 
 end
