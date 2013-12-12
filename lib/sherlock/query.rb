@@ -38,6 +38,7 @@ module Sherlock
             result[:filter][rk] << rv
             result[:filter][rk] << security_filter if security_filter
             result[:filter][rk] << missing_filter if missing_filter
+            result[:filter][rk] << exists_filter if exists_filter
             result[:filter][rk].flatten!
           end
         end
@@ -46,7 +47,6 @@ module Sherlock
         filter = filters
         result[:filter] = filter if filter
       end
-      LOGGER.warn result.inspect
       result
     end
 
@@ -55,8 +55,11 @@ module Sherlock
       result << security_filter
 
       missing = missing_filter
-      #result << {:constant_score => {:filter => missing}} if missing
       result << missing if missing
+
+      exists = exists_filter
+      result << exists if exists
+
       return {:and => result} if result.count > 1
       return result.first if result.count == 1
       return nil
@@ -128,7 +131,7 @@ module Sherlock
     def field_queries
       result = []
       fields.each do |key, value|
-        unless value == 'null'
+        if value != 'null' && value != '!null'
           if value.match(/\|/) # A value containing a pipe will be parsed as an OR statement
             result << {:terms => {key => value.downcase.split('|')}}
           else
@@ -155,6 +158,16 @@ module Sherlock
 
       return {:and => missing_fields} if missing_fields.count > 1
       return missing_fields.first if missing_fields.count == 1
+      nil
+    end
+
+    def exists_filter
+      exists_fields = []
+      fields.each do |key, value|
+        exists_fields << {:exists => {:field => key}} if value == '!null'
+      end
+      return {:and => exists_fields} if exists_fields.count > 1
+      return exists_fields.first if exists_fields.count == 1
       nil
     end
 

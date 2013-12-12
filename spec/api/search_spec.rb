@@ -91,6 +91,30 @@ describe 'API v1 search' do
       end
     end
 
+
+    context 'field must exist' do
+      let(:record) {
+        uid = 'post.card:hell.flames.devil$1'
+        Sherlock::Parsers::Generic.new(uid, {'document' => 'bling', 'uid' => uid}).to_hash
+      }
+      let(:another_record) {
+        uid = 'post.card:hell.flames.pitchfork$2'
+        Sherlock::Parsers::Generic.new(uid, {'document' => nil, 'uid' => uid}).to_hash
+      }
+
+      it "works" do
+        Sherlock::Elasticsearch.index record
+        Sherlock::Elasticsearch.index another_record
+        sleep 1.5
+
+        get "/search/#{realm}/post.card:hell.*", {:fields => {:document => '!null'}}
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 1
+        result['hits'].first['hit']['uid'].should eq 'post.card:hell.flames.devil$1'
+      end
+    end
+
+
     context "sorting results" do
 
       let(:first_record) {
