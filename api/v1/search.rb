@@ -52,10 +52,8 @@ class SherlockV1 < Sinatra::Base
   # @optional [String] range[attribute] Attribute to perform a ranged query by. DEPRECATED, use to/from.
   # @optional [String] range[from] Minimum accepted value for a ranged query. DEPRECATED, use to/from.
   # @optional [String] range[to] Maximum accepted value for a ranged query. DEPRECATED, use to/from.
-
   # @optional [String] min[name_of_attribute] Minimum accepted value for a ranged query.
   # @optional [String] max[name_of_attribute] Maximum accepted value for a ranged query.
-
   # @optional [String] fields[name_of_attribute] Require a named attribute to have a specific value. Use "null" to indicate a missing value. Use 'value1|value2' to indicate 'or'.
   # @optional [String] deleted How to treat the deleted attribute. Accepts 'include' or 'only'. Default is to not include these records. Getting a deleted record requires access to its path.
   # @status 200 JSON
