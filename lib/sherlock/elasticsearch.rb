@@ -15,7 +15,8 @@ module Sherlock
             record['tags_vector'] = record['tags_vector'].split("' '").map{|t| t.gsub("'", '')}
             record['pristine']['tags_vector'] = record['tags_vector']
           end
-          Pebblebed::Http.put(url(record['uid']), record)
+          url = url(record['uid'])
+          Pebblebed::Http.put(url, record)
           LOGGER.warn "INDEXED: #{record.inspect}"
         rescue Pebblebed::HttpError => e
           if e.message =~ /IndexMissingException/

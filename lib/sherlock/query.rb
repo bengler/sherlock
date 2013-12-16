@@ -4,7 +4,7 @@
 module Sherlock
   class Query
 
-    attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :range, :fields, :accessible_paths, :uid_query, :tags_query, :deleted
+    attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :min, :max, :deprecated_range, :fields, :accessible_paths, :uid_query, :tags_query, :deleted
     def initialize(options, accessible_paths = [])
       options.symbolize_keys!
       @search_term = options[:q]
@@ -13,13 +13,16 @@ module Sherlock
       @uid = options[:uid] || '*:*'
       @sort_attribute = options[:sort_by]
       @order = Query.normalize_sort_order(options[:order])
-      @range = options[:range]
+      @min = options[:min]
+      @max = options[:max]
+      @deprecated_range = options[:range]
       @fields = options.fetch(:fields) {[]}
       @accessible_paths = accessible_paths
       @uid_query = Pebbles::Uid.query(uid, :species => 'klass', :path => 'label', :suffix => '')
       @tags_query = options[:tags]
       @deleted = options[:deleted]
     end
+
 
     def to_hash
       result = sort.merge(
@@ -50,6 +53,7 @@ module Sherlock
       result
     end
 
+
     def filters
       result = []
       result << security_filter
@@ -65,14 +69,17 @@ module Sherlock
       return nil
     end
 
+
     def bool_query
       queries = []
       queries << query_string if search_term
       queries = queries + uid_field_queries
       queries = queries + field_queries
-      queries = queries << range_query if range
+      queries = queries << deprecated_range_query if deprecated_range
+      queries = queries + range_query if (min || max)
       {:must => queries}
     end
+
 
     def query_string
       { :query_string => {
@@ -171,13 +178,28 @@ module Sherlock
       nil
     end
 
-
     def range_query
-      params = {}
-      params['lte'] = range['to'] if range['to']
-      params['gte'] = range['from'] if range['from']
-      {:range => {range['attribute'] => params}}
+      ranges = []
+
+      min.each do |attribute, value|
+        ranges << {:range => {attribute => {'gte' => value}}}
+      end if min
+
+      max.each do |attribute, value|
+        ranges << {:range => {attribute => {'lte' => value}}}
+      end if max
+
+      ranges
     end
+
+
+    def deprecated_range_query
+      params = {}
+      params['lte'] = deprecated_range['to'] if deprecated_range['to']
+      params['gte'] = deprecated_range['from'] if deprecated_range['from']
+      {:range => {deprecated_range['attribute'] => params}}
+    end
+
 
     def security_filter
       return {:and => [{:term => {'restricted' => false}}, {:not => {:term => {'deleted' => true}}}]} if accessible_paths.empty?
