@@ -68,7 +68,7 @@ describe 'API v1 search' do
       end.should eq ['hot stuff']
     end
 
-    context "ranged query" do
+    context "deprecated ranged query" do
 
       let(:record) {
         uid = 'post.card:hell.flames.devil$1'
@@ -88,6 +88,90 @@ describe 'API v1 search' do
         result['hits'].map do |hit|
           hit['hit']['document']
         end.should eq ['past']
+      end
+    end
+
+    context "ranged query" do
+
+      let(:record) {
+        uid = 'post.card:hell.flames.devil$1'
+        Sherlock::Parsers::Generic.new(uid, {'happens_on' => (Date.today-5).to_s, 'document' => 'past', 'uid' => uid, :restricted => false}).to_hash
+      }
+      let(:another_record) {
+        uid = 'post.card:hell.flames.pitchfork$2'
+        Sherlock::Parsers::Generic.new(uid, {'happens_on' => (Date.today+5).to_s, 'document' => 'future', 'uid' => uid, :restricted => false}).to_hash
+      }
+
+      it "works" do
+        Sherlock::Elasticsearch.index record
+        Sherlock::Elasticsearch.index another_record
+        sleep 1.5
+        get "/search/#{realm}", {:max => {'happens_on' => Date.today.to_s}}
+        result = JSON.parse(last_response.body)
+
+        result['hits'].map do |hit|
+          hit['hit']['document']
+        end.should eq ['past']
+      end
+    end
+
+
+    context "ranged query with multiple ranges" do
+
+      let(:record1) {
+        uid = 'post.card:hell.flames.devil$1'
+        Sherlock::Parsers::Generic.new(uid,
+          {
+            'happens_on' => (Date.today-5).to_s,
+            'created_at' => (Date.today-7).to_s,
+            'document' => 'one',
+            'uid' => uid,
+            :restricted => false
+          }).to_hash
+      }
+      let(:record2) {
+        uid = 'post.card:hell.flames.pitchfork$2'
+        Sherlock::Parsers::Generic.new(uid,
+          {
+            'happens_on' => (Date.today+0).to_s,
+            'created_at' => (Date.today+0).to_s,
+            'document' => 'two',
+            'uid' => uid,
+            :restricted => false
+          }).to_hash
+      }
+      let(:record3) {
+        uid = 'post.card:hell.flames.pitchfork$3'
+        Sherlock::Parsers::Generic.new(uid,
+          {
+            'happens_on' => (Date.today+10).to_s,
+            'created_at' => (Date.today+0).to_s,
+            'document' => 'three',
+            'uid' => uid,
+            :restricted => false
+          }).to_hash
+      }
+
+      it "works" do
+        Sherlock::Elasticsearch.index record1
+        Sherlock::Elasticsearch.index record2
+        Sherlock::Elasticsearch.index record3
+        sleep 1.5
+        options = {
+          :max => {
+            :happens_on => (Date.today+1).to_s,
+            :created_at => (Date.today+1).to_s
+          },
+          :min => {
+            :happens_on => (Date.today-10).to_s,
+            :created_at => (Date.today-1).to_s
+          }
+        }
+        get "/search/#{realm}", options
+        result = JSON.parse(last_response.body)
+        result['hits'].map do |hit|
+          hit['hit']['document']
+        end.should eq ['two']
       end
     end
 
