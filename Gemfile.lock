@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/rack/rack-contrib.git
-  revision: b7e7c38fd02c3b5da91aa57af78b3f571c6ebcd0
+  revision: 951760b1710634623ebbccef8d65df9139bb41c2
   specs:
-    rack-contrib (1.1.0)
+    rack-contrib (1.2.0)
       rack (>= 0.9.1)
 
 GIT
