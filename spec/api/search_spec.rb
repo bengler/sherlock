@@ -211,20 +211,40 @@ describe 'API v1 search' do
         Sherlock::Parsers::Generic.new(uid, {:restricted => false, 'document' => {'item' => 'second bbq', 'happens_on' => '2001-12-24'}, 'uid' => uid}).to_hash
       }
 
+      let(:third_record) {
+        uid = 'post.card:hell.flames.bbq$3'
+        Sherlock::Parsers::Generic.new(uid, {:restricted => false, 'document' => {'item' => 'second bbq', 'happens_on' => '2001-12-25'}, 'uid' => uid}).to_hash
+      }
+
       it "sorts by date in correct order" do
         Sherlock::Elasticsearch.index first_record
         sleep 1.5
         Sherlock::Elasticsearch.index second_record
         sleep 1.5
+        Sherlock::Elasticsearch.index third_record
+        sleep 1.5
         get "/search/#{realm}", :q => "bbq", :sort_by => "document.happens_on", :order => 'asc'
         result = JSON.parse(last_response.body)
-        result['hits'].count.should eq 2
+        result['hits'].count.should eq 3
         result['hits'].first['hit']['document']['item'].should eq 'first bbq'
 
         get "/search/#{realm}", :q => "bbq", :sort_by => "document.happens_on", :order => 'desc'
         result = JSON.parse(last_response.body)
-        result['hits'].count.should eq 2
+        result['hits'].count.should eq 3
         result['hits'].first['hit']['document']['item'].should eq 'second bbq'
+
+        get "/search/#{realm}", :q => "bbq", :sort_by => "document.item, document.happens_on", :order => 'desc'
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 3
+        result['hits'].first['hit']['document']['item'].should eq 'second bbq'
+        result['hits'].first['hit']['document']['happens_on'].should eq '2001-12-25'
+
+        get "/search/#{realm}", :q => "bbq", :sort_by => "document.item, document.happens_on", :order => 'desc,asc'
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 3
+        result['hits'].first['hit']['document']['item'].should eq 'second bbq'
+        result['hits'].first['hit']['document']['happens_on'].should eq '2001-12-24'
+
       end
 
     end

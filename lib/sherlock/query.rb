@@ -233,14 +233,37 @@ module Sherlock
 
     def sort
       return {} unless sort_attribute
-      {:sort => [{ sort_attribute => {'order' => order} }, '_score']}
+      if sort_attribute.match(",")
+        attributes = sort_attribute.split(",").map{|attr| attr.strip}
+        h = {:sort => []}
+        i = 0
+        attributes.each do |attr|
+          h[:sort] << { attr => {'order' => order[i] || order[0]} }
+          i = i+1
+        end
+        h[:sort] << '_score'
+        h
+      else        
+        {:sort => [{ sort_attribute => {'order' => order.first} }, '_score']}
+      end
     end
 
     def self.normalize_sort_order(order)
-      if order.try(:downcase) == 'asc'
-        return 'asc'
+      order ||= "desc"
+      if order.match(",")
+        orders = order.split(",").map{|o| o.strip}
+      else
+        orders = [order]
       end
-      'desc'
+      result = []
+      orders.each do |order|
+        if order.try(:downcase) == 'asc'
+          result << 'asc'
+        else
+          result << 'desc'
+        end
+      end
+      result
     end
 
     def to_json
