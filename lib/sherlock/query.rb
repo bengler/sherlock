@@ -236,10 +236,8 @@ module Sherlock
       if sort_attribute.match(",")
         attributes = sort_attribute.split(",").map{|attr| attr.strip}
         h = {:sort => []}
-        i = 0
-        attributes.each do |attr|
+        attributes.each_with_index do |attr, i|
           h[:sort] << { attr => {'order' => order[i] || order[0]} }
-          i = i+1
         end
         h[:sort] << '_score'
         h
