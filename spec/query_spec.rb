@@ -81,11 +81,12 @@ describe Sherlock::Query do
   describe "normalizing input" do
 
     specify "sort order" do
-      Sherlock::Query.normalize_sort_order('asc').should eq 'asc'
-      Sherlock::Query.normalize_sort_order('ASC').should eq 'asc'
-      Sherlock::Query.normalize_sort_order('desc').should eq 'desc'
-      Sherlock::Query.normalize_sort_order('DESC').should eq 'desc'
-      Sherlock::Query.normalize_sort_order('anything').should eq 'desc'
+      Sherlock::Query.normalize_sort_order('asc').should eq ['asc']
+      Sherlock::Query.normalize_sort_order('ASC').should eq ['asc']
+      Sherlock::Query.normalize_sort_order('desc').should eq ['desc']
+      Sherlock::Query.normalize_sort_order('DESC').should eq ['desc']
+      Sherlock::Query.normalize_sort_order('ASC,DESC').should eq ['asc', 'desc']
+      Sherlock::Query.normalize_sort_order('anything').should eq ['desc']
     end
 
   end
