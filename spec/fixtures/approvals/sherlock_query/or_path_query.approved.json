@@ -6,6 +6,11 @@
       "must": [
         {
           "term": {
+            "klass_0_": "post"
+          }
+        },
+        {
+          "term": {
             "label_0_": "hell"
           }
         }
@@ -16,6 +21,16 @@
     "and": [
       {
         "or": [
+          {
+            "term": {
+              "klass_1_": "fork"
+            }
+          },
+          {
+            "term": {
+              "klass_1_": "horn"
+            }
+          },
           {
             "term": {
               "label_1_": "flames"

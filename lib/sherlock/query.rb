@@ -86,7 +86,7 @@ module Sherlock
       filter = {}
       uid_query.to_hash.map do |key, value|
         if value.is_a?(Array)
-          filter[:or] = []
+          filter[:or] ||= []
           value.each do |v|
             filter[:or] << {:term => {key.to_s => v}}
           end
