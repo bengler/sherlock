@@ -33,9 +33,6 @@ module Sherlock
           }
         }
       )
-      result = result.merge(
-        :filter => path_or_query
-      ) if path_or_query
 
       if tags_queries
         tags_queries.each do |rk,rv|
@@ -60,6 +57,7 @@ module Sherlock
 
     def filters
       result = []
+      result << path_or_query if path_or_query
       result << security_filter
 
       missing = missing_filter

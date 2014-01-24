@@ -13,21 +13,41 @@
     }
   },
   "filter": {
-    "or": [
+    "and": [
       {
-        "term": {
-          "label_1_": "flames"
-        }
+        "or": [
+          {
+            "term": {
+              "label_1_": "flames"
+            }
+          },
+          {
+            "term": {
+              "label_1_": "fire"
+            }
+          },
+          {
+            "term": {
+              "label_1_": "torment"
+            }
+          }
+        ]
       },
       {
-        "term": {
-          "label_1_": "fire"
-        }
-      },
-      {
-        "term": {
-          "label_1_": "torment"
-        }
+        "and": [
+          {
+            "term": {
+              "restricted": false
+            }
+          },
+          {
+            "not": {
+              "term": {
+                "deleted": true
+              }
+            }
+          }
+        ]
       }
     ]
   }
