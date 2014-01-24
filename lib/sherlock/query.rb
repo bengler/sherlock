@@ -33,6 +33,10 @@ module Sherlock
           }
         }
       )
+      result = result.merge(
+        :filter => path_or_query
+      ) if path_or_query
+
       if tags_queries
         tags_queries.each do |rk,rv|
           unless rv.empty?
@@ -80,6 +84,20 @@ module Sherlock
       {:must => queries}
     end
 
+    def path_or_query
+      filter = {}
+      uid_query.to_hash.map do |key, value|
+        if value.is_a?(Array)
+          filter[:or] = []
+          value.each do |v|
+            filter[:or] << {:term => {key.to_s => v}}
+          end
+        end
+      end
+      return filter if filter[:or]
+      nil
+    end
+
 
     def query_string
       { :query_string => {
@@ -91,9 +109,9 @@ module Sherlock
 
     def uid_field_queries
       result = uid_query.to_hash.map do |key, value|
-        {:term => {key.to_s => value}}
+        {:term => {key.to_s => value}} unless value.is_a?(Array)
       end
-      result
+      result.compact
     end
 
     def tags_queries

@@ -34,6 +34,12 @@ describe Sherlock::Query do
     end
   end
 
+  specify "or-path query" do
+    verify :format => :json do
+      Sherlock::Query.new(:uid => '*:hell.flames|fire|torment.*').to_json
+    end
+  end
+
   specify "fully qualified path in uid filter without search term" do
     verify :format => :json do
       Sherlock::Query.new(:uid => 'post.card:hell.flames').to_json

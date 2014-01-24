@@ -1,0 +1,40 @@
+{
+  "from": 0,
+  "size": 10,
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "term": {
+            "label_0_": "hell"
+          }
+        },
+        {
+          "term": {
+            "label_1_": [
+              "flames",
+              "fire",
+              "torment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "filter": {
+    "and": [
+      {
+        "term": {
+          "restricted": false
+        }
+      },
+      {
+        "not": {
+          "term": {
+            "deleted": true
+          }
+        }
+      }
+    ]
+  }
+}
