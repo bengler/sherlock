@@ -100,7 +100,7 @@ module Sherlock
             LOGGER.warn "Attempt to query non-existing index: #{index} (mostly harmless)"
           else
             LOGGER.error "Unexpected error during query at index: #{index} with options: #{options}"
-            LOGGER.error e
+            raise e
           end
         end
         result

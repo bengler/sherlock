@@ -2,8 +2,6 @@
 
 require './config/environment.rb'
 
-Thread.abort_on_exception = true
-
 Main do
   description <<-end
 Sherlock Update Listener
