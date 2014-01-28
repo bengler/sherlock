@@ -1,10 +1,10 @@
 source 'https://rubygems.org/'
 
 gem 'sinatra'
-gem 'rack-contrib', :git => 'git://github.com/rack/rack-contrib.git'
+gem 'rack-contrib', :git => 'https://github.com/rack/rack-contrib'
 gem 'pebblebed'
 gem 'pebbles-uid'
-gem 'pebbles-cors', :git => 'git@github.com:bengler/pebbles-cors.git'
+gem 'pebbles-cors', :git => 'https://github.com/bengler/pebbles-cors'
 gem 'petroglyph'
 gem 'main', '~> 5.0.1'
 gem 'pebble_path'
