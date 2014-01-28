@@ -26,8 +26,13 @@ module Sherlock
         loop do
           begin
             process
-          rescue StandardError => e
-            LOGGER.exception(e)
+          rescue Pebblebed::HttpError, Pebblebed::HttpNotFoundError, StandardError => e
+            if false #LOGGER.respond_to?:exception
+              LOGGER.exception(e)
+            else
+              LOGGER.error(e.inspect)
+              LOGGER.error(e.backtrace.join("\n"))
+            end
           end
         end
       end
@@ -42,7 +47,11 @@ module Sherlock
       river = Pebblebed::River.new
       queue = river.queue subscription
       queue.subscribe(ack: true) do |message|
-        consider message
+        begin
+          consider message
+        rescue Pebblebed::HttpError => e
+          LOGGER.error(e.inspect)
+        end
       end
     end
 
