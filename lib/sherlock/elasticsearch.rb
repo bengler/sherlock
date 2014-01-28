@@ -17,7 +17,6 @@ module Sherlock
           end
           url = url(record['uid'])
           Pebblebed::Http.put(url, record)
-          LOGGER.warn "INDEXED: #{record.inspect}"
         rescue Pebblebed::HttpError => e
           if e.message =~ /IndexMissingException/
             create_index(Pebbles::Uid.new(record['uid']).realm, index_config)
@@ -33,9 +32,10 @@ module Sherlock
       def unindex(uid)
         begin
           Pebblebed::Http.delete(url(uid), nil)
+        rescue Pebblebed::HttpNotFoundError => e
+          # no unindex-able resource found
         rescue Pebblebed::HttpError => e
-          LOGGER.error "Error while unindexing #{uid}"
-          raise e
+          LOGGER.exception e
         end
       end
 
