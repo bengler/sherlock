@@ -36,7 +36,7 @@ describe Sherlock::Query do
 
   specify "or-path query" do
     verify :format => :json do
-      Sherlock::Query.new(:uid => '*:hell.flames|fire|torment.*').to_json
+      Sherlock::Query.new(:uid => 'post.fork|horn:hell.flames|fire|torment.*').to_json
     end
   end
 
