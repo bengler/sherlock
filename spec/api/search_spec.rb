@@ -1,3 +1,4 @@
+# encoding: utf-8
 require "spec_helper"
 require 'api/v1'
 require 'rack/test'
@@ -175,6 +176,57 @@ describe 'API v1 search' do
       end
     end
 
+
+    context 'field must match' do
+      let(:record) {
+        uid = 'post.card:hell.flames.devil$1'
+        Sherlock::Parsers::Generic.new(uid, {'document' => {'id' => 123, 'foo' => 'Foo BØr'}, 'uid' => uid}).to_hash
+      }
+      let(:another_record) {
+        uid = 'post.card:hell.flames.pitchfork$2'
+        Sherlock::Parsers::Generic.new(uid, {'document' => {'id' => 234, 'foo' => 'foo bør'}, 'id' => 123, 'uid' => uid}).to_hash
+      }
+      let(:third_record) {
+        uid = 'post.card:hell.flames.pitchfork$2'
+        Sherlock::Parsers::Generic.new(uid, {'document' => {'id' => 345, 'foo' => 'banana'}, 'uid' => uid}).to_hash
+      }
+
+      it "is utf-8 case insensitive" do
+        Sherlock::Elasticsearch.index record
+        Sherlock::Elasticsearch.index another_record
+        Sherlock::Elasticsearch.index third_record
+        sleep 1.5
+        get "/search/#{realm}/post.card:hell.*", {:"field[document.foo]" => 'Foo Bør'}
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 2
+        result['hits'].map{|h| h['hit']['uid']}.should == ["post.card:hell.flames.devil$1", "post.card:hell.flames.pitchfork$2"]
+      end
+
+      it "can search for id-field if prefixed with document" do
+        Sherlock::Elasticsearch.index record
+        Sherlock::Elasticsearch.index another_record
+        Sherlock::Elasticsearch.index third_record
+        sleep 1.5
+        get "/search/#{realm}/post.card:hell.*", {:"fields[document.id]" => 123}
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 1
+        result['hits'].first['hit']['uid'].should eq 'post.card:hell.flames.devil$1'
+        get "/search/#{realm}/post.card:hell.*", {:"fields[id]" => 123}
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 0
+      end
+
+      it "can not search for id-field if 'id' is ambiguous in the data and not prefixed with document in the query" do
+        Sherlock::Elasticsearch.index record
+        Sherlock::Elasticsearch.index another_record
+        Sherlock::Elasticsearch.index third_record
+        sleep 1.5
+        get "/search/#{realm}/post.card:hell.*", {:"fields[id]" => 123}
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 0
+      end
+
+    end
 
     context 'field must exist' do
       let(:record) {
