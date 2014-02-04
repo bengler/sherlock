@@ -88,6 +88,11 @@ Test how text is analyzed
 
 	curl -XGET 'localhost:9200/development_dna/_analyze' -d 'as sly as a fox'
 
+Type mapping of fields in an index
+
+	curl -XGET 'http://localhost:9200/sherlock_development_apdm/_mapping'
+
+
 [1]:	http://pebblestack.org	"Pebblestack"
 
 [2]:	http://rabbitmq.com		"Rabbitmq"
