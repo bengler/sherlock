@@ -33,7 +33,7 @@ describe Sherlock::ResultCensor do
             "_type"=>"post.card",
             "_id"=>"post.card:hell.pitchfork$3",
             "_score"=>0.09492774,
-            "_source"=>{"document.app"=>"hot stuff", "created_by" => 777, "sensitive" => "yup", "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$2", "pristine"=>{"document"=>{"app"=>"hot stuff"}, "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$1"}}
+            "_source"=>{"document.app"=>"hot stuff", "created_by" => 777, "sensitive.email" => "asdf@example.com", "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$2", "pristine"=>{"sensitive" => {"email" => "asdf@example.com"}, "document"=>{"app"=>"hot stuff"}, "realm"=>"hell", "uid"=>"post.card:hell.pitchfork$1"}}
           }
 
         ]
@@ -41,29 +41,28 @@ describe Sherlock::ResultCensor do
     }
   }
 
-  subject {
-    Sherlock::ResultCensor
-  }
-
   it "conceals the sensitive field for John Smith" do
-    censored_result = subject.consider(search_result, false, 111)
+    censored_result = Sherlock::ResultCensor.consider(search_result, false, 111)
     censored_result['hits']['hits'].map do |hit|
-      hit['sensitive'].should eq nil
+      hit['_source']['pristine']['sensitive'].should eq nil
+      hit['_source']['sensitive.email'].should eq nil
     end
   end
 
   it "discloses the sensitive field to owner" do
-    censored_result = subject.consider(search_result, false, 777)
-    censored_result['hits']['hits'][0]['_source']['sensitive'] == nil
-    censored_result['hits']['hits'][1]['_source']['sensitive'] == nil
-    censored_result['hits']['hits'][2]['_source']['sensitive'] == "yup"
+    censored_result = Sherlock::ResultCensor.consider(search_result, false, 777)
+    censored_result['hits']['hits'][0]['_source']['sensitive'].should eq nil
+    censored_result['hits']['hits'][1]['_source']['sensitive'].should eq nil
+    censored_result['hits']['hits'][2]['_source']['pristine']['sensitive'].should eq({'email' => 'asdf@example.com'})
+    censored_result['hits']['hits'][2]['_source']['sensitive.email'].should eq 'asdf@example.com'
   end
 
   it "discloses the sensitive field to god herself" do
-    censored_result = subject.consider(search_result, true, nil)
-    censored_result['hits']['hits'][0]['_source']['sensitive'] == nil
-    censored_result['hits']['hits'][1]['_source']['sensitive'] == nil
-    censored_result['hits']['hits'][2]['_source']['sensitive'] == "yup"
+    censored_result = Sherlock::ResultCensor.consider(search_result, true, nil)
+    censored_result['hits']['hits'][0]['_source']['sensitive'].should eq nil
+    censored_result['hits']['hits'][1]['_source']['sensitive'].should eq nil
+    censored_result['hits']['hits'][2]['_source']['pristine']['sensitive'].should eq({'email' => 'asdf@example.com'})
+    censored_result['hits']['hits'][2]['_source']['sensitive.email'].should eq 'asdf@example.com'
   end
 
 end

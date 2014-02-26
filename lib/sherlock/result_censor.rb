@@ -9,8 +9,10 @@ module Sherlock
         return search_result if god_mode
         search_result['hits']['hits'].each do |hit|
           unless user_identity && user_identity == hit['_source']['created_by']
-            hit['_source'].delete('sensitive.email')
             hit['_source']['pristine'].delete('sensitive')
+            hit['_source'].each_pair do |key, value|
+              hit['_source'].delete(key) if key.start_with? 'sensitive.'
+            end
           end
         end
         search_result
