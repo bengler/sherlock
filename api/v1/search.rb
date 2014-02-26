@@ -37,7 +37,7 @@ class SherlockV1 < Sinatra::Base
   # Search indexed data.
   #
   # @description Search indexed data using various parameters. As in all pebbles data is scoped by realm.
-  # @note Documents with restricted=true is only accessible by god sessions.
+  # @note Documents with restricted=true is only accessible by god sessions or users with checkpoint-specified access to that path.
   # @category Sherlock/Search
   # @path /api/sherlock/v1/search/:realm/:uid
   # @http GET
