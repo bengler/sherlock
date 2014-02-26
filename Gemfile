@@ -17,6 +17,7 @@ group :development, :test do
   gem 'approvals'
   gem 'simplecov'
   gem 'sinatra-contrib'
+  gem 'memcache_mock'
 end
 
 group :production do

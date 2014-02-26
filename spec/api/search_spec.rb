@@ -8,6 +8,8 @@ class TestSherlockV1 < SherlockV1; end
 describe 'API v1 search' do
 
   include Rack::Test::Methods
+  include Pebblebed::RSpecHelper
+
 
   def app
     TestSherlockV1
@@ -544,6 +546,68 @@ describe 'API v1 search' do
         result['hits'].should eq []
       end
     end
+  end
+
+  describe "sensitive field" do
+
+    before :each do
+      Sherlock::Access.stub(:accessible_paths).and_return ['hell.tools']
+    end
+
+    let(:uid) {
+      'post.card:hell.tools.devil$1'
+    }
+
+    let(:sensitive_record) {
+      Sherlock::Parsers::Generic.new(uid, {'created_by' => 1, 'document' => {'title' => 'hot'}, 'sensitive' => {'email' => 'jazzydevil88@hotmail.com'}, 'uid' => uid, :restricted => false}).to_hash
+    }
+
+    context 'is disclosed to owner' do
+
+      before(:each) { user!(:id => 1) }
+
+      it 'works' do
+        Sherlock::Elasticsearch.index sensitive_record
+        sleep 1.5
+        get "/search/#{realm}", :q => "hot"
+        result = JSON.parse(last_response.body)
+        hit = result['hits'].first['hit']
+        hit['uid'].should eq uid
+        hit['sensitive']['email'].should eq 'jazzydevil88@hotmail.com'
+      end
+
+    end
+
+    context 'is concealed from non-owners' do
+
+      before(:each) { user!(:id => 2) }
+
+      it 'works' do
+        Sherlock::Elasticsearch.index sensitive_record
+        sleep 1.5
+        get "/search/#{realm}", :q => "hot"
+        result = JSON.parse(last_response.body)
+        hit = result['hits'].first['hit']
+        hit['uid'].should eq uid
+        hit['sensitive'].should eq nil
+      end
+    end
+
+    context 'is concealed from non-owners' do
+
+      before(:each) { god! }
+
+      it 'works' do
+        Sherlock::Elasticsearch.index sensitive_record
+        sleep 1.5
+        get "/search/#{realm}", :q => "hot"
+        result = JSON.parse(last_response.body)
+        hit = result['hits'].first['hit']
+        hit['uid'].should eq uid
+        hit['sensitive']['email'].should eq 'jazzydevil88@hotmail.com'
+      end
+    end
+
   end
 
 end
