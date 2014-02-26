@@ -64,6 +64,7 @@ class SherlockV1 < Sinatra::Base
     query = Sherlock::Query.new(params, accessible_paths(query_path))
 
     result = Sherlock::Elasticsearch.query(realm, query)
+    result = Sherlock::ResultCensor.consider(result, god_mode?, current_identity_id)
 
     presenter = Sherlock::HitsPresenter.new(result, {:limit => query.limit, :offset => query.offset})
     pg :hits, :locals => {:hits => presenter.hits, :pagination => presenter.pagination, :total => presenter.total}
