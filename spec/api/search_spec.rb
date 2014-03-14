@@ -71,6 +71,13 @@ describe 'API v1 search' do
       end.should eq ['hot stuff']
     end
 
+    it "requires limit and offset to be parsable as int" do
+      Sherlock::Elasticsearch.index record
+      sleep 1.5
+      get "/search/#{realm}", :q => "hot", :limit => 'a'
+      last_response.status.should eq 400
+    end
+
     context "deprecated ranged query" do
 
       let(:record) {

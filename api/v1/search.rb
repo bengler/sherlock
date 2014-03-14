@@ -59,6 +59,9 @@ class SherlockV1 < Sinatra::Base
   # @status 200 JSON
   get '/search/:realm/?:uid?' do |realm, uid|
     halt 403, "Sherlock couldn't parse the UID \"#{uid}\"." unless valid_uid_query? uid
+    ['offset', 'limit'].each do |param|
+      halt 400, "#{param} must be an integer" if params[param] && !is_integer?(params[param])
+    end
 
     query_path = uid ? Pebbles::Uid.query(uid).path : nil
     query = Sherlock::Query.new(params, accessible_paths(query_path))
@@ -68,6 +71,16 @@ class SherlockV1 < Sinatra::Base
 
     presenter = Sherlock::HitsPresenter.new(result, {:limit => query.limit, :offset => query.offset})
     pg :hits, :locals => {:hits => presenter.hits, :pagination => presenter.pagination, :total => presenter.total}
+  end
+
+
+  def is_integer?(string)
+    begin
+      Integer(string)
+      return true
+    rescue ArgumentError, TypeError
+      false
+    end
   end
 
 end
