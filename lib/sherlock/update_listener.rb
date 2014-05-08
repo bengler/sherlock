@@ -57,7 +57,7 @@ module Sherlock
 
     def consider(message)
       payload_hash = JSON.parse(message[:payload])
-      LOGGER.info("#{payload_hash}")
+      LOGGER.info("Considering: #{payload_hash}")
 
       matching_uids = Sherlock::Elasticsearch.matching_records(payload_hash['uid'])
 
