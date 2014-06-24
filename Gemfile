@@ -2,7 +2,7 @@ source 'https://rubygems.org/'
 
 gem 'sinatra'
 gem 'rack-contrib', :git => 'https://github.com/rack/rack-contrib'
-gem 'pebblebed', '>=0.2'
+gem 'pebblebed', '>=0.2.1'
 gem 'pebbles-uid'
 gem 'pebbles-cors', :git => 'https://github.com/bengler/pebbles-cors'
 gem 'petroglyph'
