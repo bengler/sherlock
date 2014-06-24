@@ -46,7 +46,7 @@ module Sherlock
     def process
       river = Pebblebed::River.new
       queue = river.queue subscription
-      queue.subscribe(auto_delete: true) do |delivery_info, metadata, payload|
+      queue.subscribe(auto_delete: true, block: true) do |delivery_info, metadata, payload|
         message = {:payload => payload}
         begin
           consider message
