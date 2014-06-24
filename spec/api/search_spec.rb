@@ -617,4 +617,66 @@ describe 'API v1 search' do
 
   end
 
+
+  describe 'find fresh stuff' do
+
+    context 'reindexing a field' do
+
+      let(:uid) {
+        'post.card:hell.pitchfork$99'
+      }
+      let(:createPayload) {
+        { 'event' => 'create',
+          'uid' => uid,
+          'attributes' => {
+            'uid' => uid,
+            'document' => {'app' => 'fridayisspandexday'},
+            'protected' => {'price' => 'expensive'},
+            'paths' => ['hell.pitchfork'],
+            'id' => uid
+          }
+        }
+      }
+      let(:updatePayload) {
+        { 'event' => 'update',
+          'uid' => uid,
+          'attributes' => {
+            'uid' => uid,
+            'document' => {'app' => 'fridayisspandexday'},
+            'protected' => {'price' => 'expensive', 'status' => 'all good'},
+            'paths' => ['hell.pitchfork'],
+            'id' => uid
+          }
+        }
+      }
+
+      it 'works' do
+        createMessage = Hash[:payload, createPayload.to_json]
+        expectedCreate = {"uid"=>uid, "document.app"=>"fridayisspandexday", "protected.price"=>"expensive", "paths"=>["hell.pitchfork"], "id"=>uid, "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "pristine"=>{"uid"=>uid, "document"=>{"app"=>"fridayisspandexday"}, "protected"=>{"price"=>"expensive"}, "paths"=>["hell.pitchfork"], "id"=>uid}, "restricted"=>false}
+        updateMessage = Hash[:payload, updatePayload.to_json]
+        expectedUpdate = {"uid"=>uid, "document.app"=>"fridayisspandexday", "protected.price"=>"expensive", "protected.status"=>"all good", "paths"=>["hell.pitchfork"], "id"=>uid, "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"99", "realm"=>"hell", "pristine"=>{"uid"=>uid, "document"=>{"app"=>"fridayisspandexday"}, "protected"=>{"price"=>"expensive", "status"=>"all good"}, "paths"=>["hell.pitchfork"], "id"=>uid}, "restricted"=>false}
+
+        pass = 1
+        Sherlock::Elasticsearch.should_receive(:index).exactly(20).with do |args|
+          args['protected.status'].should eq nil if (pass % 2) == 1
+          args['protected.status'].should eq 'all good' if (pass % 2) == 0
+          pass += 1
+        end.and_call_original
+
+        10.times do
+          Sherlock::UpdateListener.new.consider createMessage
+          Sherlock::UpdateListener.new.consider updateMessage
+        end
+        sleep 2.5
+
+        get '/search/hell/post.card:*', :q => '99'
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 1
+        result['hits'].first['hit']['protected']['status'].should eq 'all good'
+      end
+
+    end
+
+  end
+
 end

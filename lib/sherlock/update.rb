@@ -27,13 +27,13 @@ module Sherlock
         case payload['event']
         when 'create', 'update', 'exists'
           # unindex explicitly unpublished records
-          if unpublished? payload
+          if unpublished?
             result << {'action' => 'unindex', 'record' => {'uid' => record['uid']}}
           else
             result << {'action' => 'index', 'record' => record}
           end
         when 'delete'
-          if soft_deleted? payload
+          if soft_deleted?
             result << {'action' => 'index', 'record' => record}
           else
             result << {'action' => 'unindex', 'record' => {'uid' => record['uid']}}
@@ -51,11 +51,11 @@ module Sherlock
       result
     end
 
-    def unpublished?(payload)
+    def unpublished?
       payload['attributes']['published'] == false
     end
 
-    def soft_deleted?(payload)
+    def soft_deleted?
       payload['soft_deleted'] == true
     end
 
