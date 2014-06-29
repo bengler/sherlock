@@ -46,7 +46,8 @@ module Sherlock
     def process
       river = Pebblebed::River.new
       queue = river.queue subscription
-      queue.subscribe(ack: true) do |message|
+      queue.subscribe(block: true) do |delivery_info, metadata, payload|
+        message = {:payload => payload}
         begin
           consider message
         rescue Pebblebed::HttpError => e

@@ -2,7 +2,7 @@ source 'https://rubygems.org/'
 
 gem 'sinatra'
 gem 'rack-contrib', :git => 'https://github.com/rack/rack-contrib'
-gem 'pebblebed'
+gem 'pebblebed', '>=0.2.1'
 gem 'pebbles-uid'
 gem 'pebbles-cors', :git => 'https://github.com/bengler/pebbles-cors'
 gem 'petroglyph'
@@ -22,5 +22,5 @@ end
 
 group :production do
   gem 'airbrake', '~> 3.1.4', :require => false
-  gem 'unicorn', '~> 4.1.1'
+  gem 'unicorn'
 end
