@@ -65,7 +65,6 @@ module Sherlock
         index = index_name(realm)
         begin
           Pebblebed::Http.put("#{root_url}/#{index}", config)
-          LOGGER.info "Created index #{index}"
         rescue Pebblebed::HttpError => e
           if LOGGER.respond_to?:exception
             LOGGER.exception(e)
