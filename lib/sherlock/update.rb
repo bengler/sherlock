@@ -13,6 +13,8 @@ module Sherlock
 
 
     def build_index_records(payload)
+      LOGGER.info("Build index: #{payload}")
+
       Sherlock::Parsers::Generic.build_records(payload['uid'], payload['attributes'])
     end
 
