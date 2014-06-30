@@ -12,7 +12,7 @@ describe Sherlock::UpdateListener do
           'document' => {'app' => 'hot'},
           'paths' => ['hell.pitchfork'],
           'id' => 'post.card:hell.pitchfork$1',
-          'updated_at' => '2014-06-30 10:46:51 +02:00'
+          'updated_at' => '2014-06-30T10:46:51+02:00'
         }
       }
     }
