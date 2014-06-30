@@ -23,8 +23,12 @@ module Sherlock
             # now try again
             index(record)
           else
-            LOGGER.error "Error while indexing #{record['uid']}"
-            raise e
+            if LOGGER.respond_to?:exception
+              LOGGER.exception(e)
+            else
+              LOGGER.error(e.inspect)
+              LOGGER.error(e.backtrace.join("\n"))
+            end
           end
         end
       end
@@ -46,8 +50,12 @@ module Sherlock
           return true
         rescue Pebblebed::HttpError => e
           unless e.message =~ /IndexMissingException/
-            LOGGER.error "Error while deleting index #{index}"
-            raise e
+            if LOGGER.respond_to?:exception
+              LOGGER.exception(e)
+            else
+              LOGGER.error(e.inspect)
+              LOGGER.error(e.backtrace.join("\n"))
+            end
           end
         end
         return false
@@ -59,8 +67,12 @@ module Sherlock
           Pebblebed::Http.put("#{root_url}/#{index}", config)
           LOGGER.info "Created index #{index}"
         rescue Pebblebed::HttpError => e
-          LOGGER.error "Unexpected error while creating index #{index}"
-          raise e
+          if LOGGER.respond_to?:exception
+            LOGGER.exception(e)
+          else
+            LOGGER.error(e.inspect)
+            LOGGER.error(e.backtrace.join("\n"))
+          end
         end
       end
 
@@ -99,8 +111,12 @@ module Sherlock
           if e.message =~ /IndexMissingException/
             LOGGER.warn "Attempt to query non-existing index: #{index} (mostly harmless)"
           else
-            LOGGER.error "Unexpected error during query at index: #{index} with options: #{options}"
-            LOGGER.error e
+            if LOGGER.respond_to?:exception
+              LOGGER.exception(e)
+            else
+              LOGGER.error(e.inspect)
+              LOGGER.error(e.backtrace.join("\n"))
+            end
           end
         end
         result
