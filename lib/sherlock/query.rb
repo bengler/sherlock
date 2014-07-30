@@ -253,12 +253,12 @@ module Sherlock
         attributes = sort_attribute.split(",").map{|attr| attr.strip}
         h = {:sort => []}
         attributes.each_with_index do |attr, i|
-          h[:sort] << { attr => {'order' => order[i] || order[0]} }
+          h[:sort] << { attr => {'order' => (order[i] || order[0]), 'ignore_unmapped' => true} }
         end
         h[:sort] << '_score'
         h
-      else        
-        {:sort => [{ sort_attribute => {'order' => order.first} }, '_score']}
+      else
+        {:sort => [{ sort_attribute => {'order' => order.first, 'ignore_unmapped' => true} }, '_score']}
       end
     end
 
