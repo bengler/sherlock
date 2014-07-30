@@ -16,6 +16,11 @@ describe Sherlock::Query do
     end
   end
 
+  specify "escapes query with special characters" do
+    q = JSON.parse(Sherlock::Query.new(:q => 'foo/:bar').to_json)
+    q["query"]["bool"]["must"][0]["query_string"]["query"].should eq "foo\\/\\:bar"
+  end
+
   specify "simple query with wildcard uid" do
     verify :format => :json do
       Sherlock::Query.new({:q => 'torrid', :uid => '*:*'}).to_json

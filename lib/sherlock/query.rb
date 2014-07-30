@@ -99,7 +99,7 @@ module Sherlock
 
     def query_string
       { :query_string => {
-          :query => search_term.downcase,
+          :query => sanitize_string_for_elasticsearch_string_query(search_term.downcase),
           :default_operator => 'AND'
         }
       }
@@ -282,6 +282,27 @@ module Sherlock
 
     def to_json
       to_hash.to_json
+    end
+
+    def sanitize_string_for_elasticsearch_string_query(str)
+      # See http://stackoverflow.com/questions/16205341/symbols-in-query-string-for-elasticsearch
+
+      # Escape special characters
+      escaped_characters = Regexp.escape('\\+-&|!(){}[]^~*?:\/')
+      str = str.gsub(/([#{escaped_characters}])/, '\\\\\1')
+
+      # AND, OR and NOT are used by lucene as logical operators. We need
+      # to escape them
+      ['AND', 'OR', 'NOT'].each do |word|
+        escaped_word = word.split('').map {|char| "\\#{char}" }.join('')
+        str = str.gsub(/\s*\b(#{word.upcase})\b\s*/, " #{escaped_word} ")
+      end
+
+      # Escape odd quotes
+      quote_count = str.count '"'
+      str = str.gsub(/(.*)"(.*)/, '\1\"\2') if quote_count % 2 == 1
+
+      str
     end
 
   end
