@@ -58,15 +58,23 @@ class SherlockV1 < Sinatra::Base
   # @optional [String] deleted How to treat the deleted attribute. Accepts 'include' or 'only'. Default is to not include these records. Getting a deleted record requires access to its path.
   # @status 200 JSON
   get '/search/:realm/?:uid?' do |realm, uid|
-    halt 403, "Sherlock couldn't parse the UID \"#{uid}\"." unless valid_uid_query? uid
+    content_type 'application/json'
+
+    halt 403, {:error => 'invalid_uid', :message => "Sherlock couldn't parse the UID \"#{uid}\"."} unless valid_uid_query? uid
+
     ['offset', 'limit'].each do |param|
-      halt 400, "#{param} must be an integer" if params[param] && !is_integer?(params[param])
+      halt 400, {:error => 'require_integer', :message => "#{param} must be an integer"} if params[param] && !is_integer?(params[param])
     end
 
     query_path = uid ? Pebbles::Uid.query(uid).path : nil
     query = Sherlock::Query.new(params, accessible_paths(query_path))
 
-    result = Sherlock::Elasticsearch.query(realm, query)
+    begin
+      result = Sherlock::Elasticsearch.query(realm, query)
+    rescue Sherlock::Elasticsearch::QueryError => e
+      halt 400, {:error => e.label, :message => e.message}.to_json
+    end
+
     result = Sherlock::ResultCensor.consider(result, god_mode?, current_identity_id)
 
     presenter = Sherlock::HitsPresenter.new(result, {:limit => query.limit, :offset => query.offset})
