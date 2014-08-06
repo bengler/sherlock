@@ -15,6 +15,7 @@ describe Sherlock::Elasticsearch do
     {
       'uid' => 'post.card:hell.pitchfork$1',
       'document.app' => 'hot',
+      'document.updated_at' => '2014-08-06T10:46:31+0200',
       'paths' => ['hell.pitchfork'],
       'id' => 'post.card:hell.pitchfork$1',
       'klass_0_' => 'post',
@@ -25,7 +26,7 @@ describe Sherlock::Elasticsearch do
       'realm' => 'hell',
       'pristine' => {
         'uid' => 'post.card:hell.pitchfork$1',
-        'document' => {'app' => 'hot'},
+        'document' => {'app' => 'hot', 'updated_at' => '2014-08-06 10:46:31 +0200'},
         'paths' => ['hell.pitchfork'],
         'id' => 'post.card:hell.pitchfork$1'
       },
@@ -78,11 +79,26 @@ describe Sherlock::Elasticsearch do
     result['hits']['total'].should eq 0
   end
 
-  it "deletes the whole index and swallows index missing errors" do
-    Sherlock::Elasticsearch.delete_index(realm)
-    sleep 1.4
-    query = Sherlock::Query.new(:q => "hot")
-    lambda { Sherlock::Elasticsearch.query(realm, query) }.should_not raise_error(Pebblebed::HttpError)
+  it "raises the correct error on querying a non-existing index" do
+    query = Sherlock::Query.new(:q => 'hot')
+    non_existing_realm = 'unknown_realmzor'
+    begin
+      Sherlock::Elasticsearch.query(non_existing_realm, query)
+    rescue Sherlock::Elasticsearch::QueryError => e
+      e.error.should eq 'index_missing'
+      e.message.should include non_existing_realm
+    end
+  end
+
+  it "raises the correct error on a malformed query" do
+    query = Sherlock::Query.new(:fields => {'document.updated_at' => '\\34'})
+    begin
+      Sherlock::Elasticsearch.query(realm, query)
+    rescue Sherlock::Elasticsearch::QueryError => e
+      e.error.should eq 'search_parse_exception'
+      e.message.should include 'Please check that your query is well formed'
+      e.message.should include 'IllegalArgumentException[Invalid format'
+    end
   end
 
 end

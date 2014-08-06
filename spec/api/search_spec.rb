@@ -54,10 +54,10 @@ describe 'API v1 search' do
       result['hits'].first['hit']['uid'].should eq record['uid']
     end
 
-    it 'delivers empty result set for non-existing index' do
+    it 'raises an error on query at non-existing index' do
       get "/search/#{realm}", :q => "hot"
       result = JSON.parse(last_response.body)
-      result['hits'].should eq []
+      result['error'].should eq 'index_missing'
     end
 
     it "honors limit and offset" do
