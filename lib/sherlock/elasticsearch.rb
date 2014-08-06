@@ -110,8 +110,12 @@ module Sherlock
           if e.message =~ /IndexMissingException/
             LOGGER.warn "Attempt to query non-existing index: #{index} (mostly harmless)"
           else
-            LOGGER.error(e.inspect)
-            LOGGER.error(e.backtrace.join("\n"))
+            if LOGGER.respond_to?:exception
+              LOGGER.exception(e)
+            else
+              LOGGER.error(e.inspect)
+              LOGGER.error(e.backtrace.join("\n"))
+            end
           end
         end
         result
