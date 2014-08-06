@@ -4,6 +4,15 @@ module Sherlock
 
   class Elasticsearch
 
+    class QueryError < StandardError
+      attr_reader :error, :message
+      def initialize(options)
+        @error = options[:error]
+        @message = options[:message]
+      end
+    end
+
+
     class << self
       def root_url
         "http://localhost:9200"
@@ -108,7 +117,17 @@ module Sherlock
           result = JSON.parse(response.body)
         rescue Pebblebed::HttpError => e
           if e.message =~ /IndexMissingException/
-            LOGGER.warn "Attempt to query non-existing index: #{index} (mostly harmless)"
+            LOGGER.warn "Attempt to query non-existing index: #{url}"
+            raise QueryError.new(
+              :error => 'index_missing',
+              :message => "Index missing. Attempt to query non-existing index #{index}"
+            )
+          elsif e.message =~ /SearchParseException/
+            LOGGER.warn "SearchParseException at #{url} with #{options.inspect}"
+            raise QueryError.new(
+              :error => 'search_parse_exception',
+              :message => "SearchParseException. Please check that your query is well formed. Full error message: #{e.message}"
+            )
           else
             if LOGGER.respond_to?:exception
               LOGGER.exception(e)
@@ -125,8 +144,11 @@ module Sherlock
       def matching_records(uid_string)
         uid = Pebbles::Uid.new(uid_string)
         query = Sherlock::Query.new({:uid => uid.cache_key}, [uid.realm])
-        matching = Sherlock::Elasticsearch.query(uid.realm, query)
-        return [] unless matching
+        matching = begin
+          Sherlock::Elasticsearch.query(uid.realm, query)
+        rescue Sherlock::Elasticsearch::QueryError => e
+          return [] if e.error == 'index_missing'
+        end
         matching['hits']['hits'].map{|result| result['_id']}.compact
       end
 
