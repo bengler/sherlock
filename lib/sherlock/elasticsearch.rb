@@ -5,9 +5,9 @@ module Sherlock
   class Elasticsearch
 
     class QueryError < StandardError
-      attr_reader :error, :message
+      attr_reader :label, :message
       def initialize(options)
-        @error = options[:error]
+        @label = options[:label]
         @message = options[:message]
       end
     end
@@ -119,13 +119,13 @@ module Sherlock
           if e.message =~ /IndexMissingException/
             LOGGER.warn "Attempt to query non-existing index: #{url}"
             raise QueryError.new(
-              :error => 'index_missing',
+              :label => 'index_missing',
               :message => "Index missing. Attempt to query non-existing index #{index}"
             )
           elsif e.message =~ /SearchParseException/
             LOGGER.warn "SearchParseException at #{url} with #{options.inspect}"
             raise QueryError.new(
-              :error => 'search_parse_exception',
+              :label => 'search_parse_exception',
               :message => "SearchParseException. Please check that your query is well formed. Full error message: #{e.message}"
             )
           else
@@ -147,7 +147,7 @@ module Sherlock
         matching = begin
           Sherlock::Elasticsearch.query(uid.realm, query)
         rescue Sherlock::Elasticsearch::QueryError => e
-          return [] if e.error == 'index_missing'
+          return [] if e.label == 'index_missing'
         end
         matching['hits']['hits'].map{|result| result['_id']}.compact
       end

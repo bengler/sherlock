@@ -85,7 +85,7 @@ describe Sherlock::Elasticsearch do
     begin
       Sherlock::Elasticsearch.query(non_existing_realm, query)
     rescue Sherlock::Elasticsearch::QueryError => e
-      e.error.should eq 'index_missing'
+      e.label.should eq 'index_missing'
       e.message.should include non_existing_realm
     end
   end
@@ -95,7 +95,7 @@ describe Sherlock::Elasticsearch do
     begin
       Sherlock::Elasticsearch.query(realm, query)
     rescue Sherlock::Elasticsearch::QueryError => e
-      e.error.should eq 'search_parse_exception'
+      e.label.should eq 'search_parse_exception'
       e.message.should include 'Please check that your query is well formed'
       e.message.should include 'IllegalArgumentException[Invalid format'
     end

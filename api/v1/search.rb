@@ -72,7 +72,7 @@ class SherlockV1 < Sinatra::Base
     begin
       result = Sherlock::Elasticsearch.query(realm, query)
     rescue Sherlock::Elasticsearch::QueryError => e
-      halt 400, {:error => e.error, :message => e.message}.to_json
+      halt 400, {:error => e.label, :message => e.message}.to_json
     end
 
     result = Sherlock::ResultCensor.consider(result, god_mode?, current_identity_id)
