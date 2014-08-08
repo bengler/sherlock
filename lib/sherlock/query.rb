@@ -287,8 +287,8 @@ module Sherlock
     def sanitize_string_for_elasticsearch_string_query(str)
       # See http://stackoverflow.com/questions/16205341/symbols-in-query-string-for-elasticsearch
 
-      # Escape special characters (except '*' which is used for wildcard searches)
-      escaped_characters = Regexp.escape('\\+-&|!(){}[]^~?:\/')
+      # Escape special characters (except '~*' which is used for wildcard searches)
+      escaped_characters = Regexp.escape('\\+-&|!(){}[]^?:\/')
       str = str.gsub(/([#{escaped_characters}])/, '\\\\\1')
 
       # AND, OR and NOT are used by lucene as logical operators. We need
