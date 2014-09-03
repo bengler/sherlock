@@ -113,23 +113,16 @@ describe Sherlock::Elasticsearch do
   it "raises the correct error on querying a non-existing index" do
     query = Sherlock::Query.new(:q => 'hot')
     non_existing_realm = 'unknown_realmzor'
-    begin
+    expect {
       Sherlock::Elasticsearch.query(non_existing_realm, query)
-    rescue Sherlock::Elasticsearch::QueryError => e
-      e.label.should eq 'index_missing'
-      e.message.should include non_existing_realm
-    end
+    }.to raise_error Sherlock::Elasticsearch::QueryError
   end
 
   it "raises the correct error on a malformed query" do
     query = Sherlock::Query.new(:fields => {'document.updated_at' => '\\34'})
-    begin
+    expect {
       Sherlock::Elasticsearch.query(realm, query)
-    rescue Sherlock::Elasticsearch::QueryError => e
-      e.label.should eq 'search_parse_exception'
-      e.message.should include 'Please check that your query is well formed'
-      e.message.should include 'IllegalArgumentException[Invalid format'
-    end
+    }.to raise_error Sherlock::Elasticsearch::QueryError
   end
 
 
@@ -143,26 +136,20 @@ describe Sherlock::Elasticsearch do
         'version' => 999,
         'restricted' => false
       }
-      begin
+      expect {
         Sherlock::Elasticsearch.matching_records(old_record)
-      rescue Sherlock::Elasticsearch::OldRecordError => e
-        e.label.should eq 'old_record'
-        e.message.should include 'Old record'
-      end
+      }.to raise_error Sherlock::Elasticsearch::OldRecordError
     end
 
     it "raises an error if version field is missing and updated_at is older" do
       Sherlock::Elasticsearch.unindex record['uid']
-      sleep 1.4
       Sherlock::Elasticsearch.index unversioned_record
-      old_unversioned_record = unversioned_record
+      sleep 1.4
+      old_unversioned_record = {}.merge(unversioned_record)
       old_unversioned_record['updated_at'] = '2013-01-01T12:00:00+0200'
-      begin
+      expect {
         Sherlock::Elasticsearch.matching_records(old_unversioned_record)
-      rescue Sherlock::Elasticsearch::OldRecordError => e
-        e.label.should eq 'old_record'
-        e.message.should include 'Old record'
-      end
+      }.to raise_error Sherlock::Elasticsearch::OldRecordError
     end
 
   end
