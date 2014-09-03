@@ -59,7 +59,7 @@ module Sherlock
     def consider(message)
       payload_hash = JSON.parse(message[:payload])
 
-      matching_uids = Sherlock::Elasticsearch.matching_records(payload_hash['uid'])
+      matching_uids = Sherlock::Elasticsearch.matching_records(payload_hash['attributes'])
 
       tasks = Sherlock::Update.new(message).tasks(matching_uids)
       tasks.each do |task|

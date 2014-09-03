@@ -14,6 +14,32 @@ describe Sherlock::Elasticsearch do
   let(:record) {
     {
       'uid' => 'post.card:hell.pitchfork$1',
+      'updated_at' => '2014-08-06T10:46:31+0200',
+      'document.app' => 'hot',
+      'document.updated_at' => '2014-08-06T10:46:31+0200',
+      'paths' => ['hell.pitchfork'],
+      'id' => 'post.card:hell.pitchfork$1',
+      'klass_0_' => 'post',
+      'klass_1_' => 'card',
+      'label_0_' => 'hell',
+      'label_1_' => 'pitchfork',
+      'oid_' => '1',
+      'realm' => 'hell',
+      'version' => 1000,
+      'pristine' => {
+        'uid' => 'post.card:hell.pitchfork$1',
+        'document' => {'app' => 'hot', 'updated_at' => '2014-08-06T10:46:31+0200'},
+        'version' => 1000,
+        'paths' => ['hell.pitchfork'],
+        'id' => 'post.card:hell.pitchfork$1'
+      },
+      'restricted' => false}
+  }
+
+  let(:unversioned_record) {
+    {
+      'uid' => 'post.card:hell.pitchfork$1',
+      'updated_at' => '2014-08-06T10:46:31+0200',
       'document.app' => 'hot',
       'document.updated_at' => '2014-08-06T10:46:31+0200',
       'paths' => ['hell.pitchfork'],
@@ -26,7 +52,7 @@ describe Sherlock::Elasticsearch do
       'realm' => 'hell',
       'pristine' => {
         'uid' => 'post.card:hell.pitchfork$1',
-        'document' => {'app' => 'hot', 'updated_at' => '2014-08-06 10:46:31 +0200'},
+        'document' => {'app' => 'hot', 'updated_at' => '2014-08-06T10:46:31+0200'},
         'paths' => ['hell.pitchfork'],
         'id' => 'post.card:hell.pitchfork$1'
       },
@@ -41,6 +67,11 @@ describe Sherlock::Elasticsearch do
 
   after(:each) do
     Sherlock::Elasticsearch.delete_index(realm)
+  end
+
+
+  it 'has the correct ES instance url' do
+    Sherlock::Elasticsearch.root_url.should eq 'http://localhost:9200'
   end
 
 
@@ -100,5 +131,42 @@ describe Sherlock::Elasticsearch do
       e.message.should include 'IllegalArgumentException[Invalid format'
     end
   end
+
+
+  context 'indexing old versions' do
+
+    it "raises an error if version is older" do
+      old_record = {
+        'document' => {'app' => 'lukewarm'},
+        'realm' => realm,
+        'uid' => uid,
+        'version' => 999,
+        'restricted' => false
+      }
+      begin
+        Sherlock::Elasticsearch.matching_records(old_record)
+      rescue Sherlock::Elasticsearch::OldRecordError => e
+        e.label.should eq 'old_record'
+        e.message.should include 'Old record'
+      end
+    end
+
+    it "raises an error if version field is missing and updated_at is older" do
+      Sherlock::Elasticsearch.unindex record['uid']
+      sleep 1.4
+      Sherlock::Elasticsearch.index unversioned_record
+      old_unversioned_record = unversioned_record
+      old_unversioned_record['updated_at'] = '2013-01-01T12:00:00+0200'
+      begin
+        Sherlock::Elasticsearch.matching_records(old_unversioned_record)
+      rescue Sherlock::Elasticsearch::OldRecordError => e
+        e.label.should eq 'old_record'
+        e.message.should include 'Old record'
+      end
+    end
+
+  end
+
+
 
 end

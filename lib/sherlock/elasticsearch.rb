@@ -12,11 +12,36 @@ module Sherlock
       end
     end
 
+    class OldRecordError < StandardError
+      attr_reader :label, :message
+      def initialize(options)
+        @label = options[:label]
+        @message = options[:message]
+      end
+    end
+
 
     class << self
+
       def root_url
         "http://localhost:9200"
       end
+
+      def index_config
+        { :settings => {
+            :analysis => {
+              :analyzer => {
+                :default => {
+                  :type => "custom",
+                  :filter => ["lowercase"],
+                  :tokenizer => "whitespace"
+                }
+              }
+            }
+          }
+        }
+      end
+
 
       def index(record)
         begin
@@ -141,30 +166,35 @@ module Sherlock
       end
 
       # Returns an array of all records in elasticsearch with the same species:realm.*$oid
-      def matching_records(uid_string)
+      # Throws an OldRecordError if incoming record is older than the one indexed
+      def matching_records(incoming_record)
+        uid_string = incoming_record['uid']
         uid = Pebbles::Uid.new(uid_string)
+
         query = Sherlock::Query.new({:uid => uid.cache_key}, [uid.realm])
         matching = begin
           Sherlock::Elasticsearch.query(uid.realm, query)
         rescue Sherlock::Elasticsearch::QueryError => e
           return [] if e.label == 'index_missing'
         end
-        matching['hits']['hits'].map{|result| result['_id']}.compact
+        matching['hits']['hits'].each do |existing_record|
+          raise OldRecordError.new(
+            :label => 'old_record',
+            :message => "Old record. Attempt to index old madness."
+          ) if incoming_record_older?(incoming_record, existing_record['_source'])
+          existing_record['_id']
+        end.compact
       end
 
-      def index_config
-        { :settings => {
-            :analysis => {
-              :analyzer => {
-                :default => {
-                  :type => "custom",
-                  :filter => ["lowercase"],
-                  :tokenizer => "whitespace"
-                }
-              }
-            }
-          }
-        }
+
+      def incoming_record_older?(incoming, existing)
+        if incoming['version'] && existing['version']
+          return incoming['version'] < existing['version']
+        end
+        if incoming['updated_at'] && existing['updated_at']
+          return Time.parse(incoming['updated_at']) < Time.parse(existing['updated_at'])
+        end
+        false # no way to tell, let it pass
       end
 
     end
