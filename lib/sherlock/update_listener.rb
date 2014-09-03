@@ -56,12 +56,12 @@ module Sherlock
       end
     end
 
+
     def consider(message)
       payload_hash = JSON.parse(message[:payload])
-
       matching_uids = begin
         Sherlock::Elasticsearch.matching_records(payload_hash['attributes'])
-      rescue Sherlock::Elasticsearch::OldRecordError => e
+      rescue Sherlock::Elasticsearch::OldRecordError
         # payload represents an old record, dont touch it
         return
       end
