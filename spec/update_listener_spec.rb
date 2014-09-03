@@ -2,7 +2,16 @@ require 'spec_helper'
 
 describe Sherlock::UpdateListener do
 
+  subject {
+    Sherlock::UpdateListener.new
+  }
+
   context 'indexing' do
+
+    after(:each) do
+      Sherlock::Elasticsearch.delete_index('hell')
+    end
+
 
     let(:payload) {
       { 'event' => 'update',
@@ -20,7 +29,31 @@ describe Sherlock::UpdateListener do
     it "works" do
       message = Hash[:payload, payload.to_json]
       Sherlock::Elasticsearch.should_receive(:index)
-      Sherlock::UpdateListener.new.consider message
+      subject.consider message
+    end
+
+    it "wont index an older record" do
+      versioned_payload = {}.merge(payload)
+      versioned_payload['attributes']['version'] = 1000
+      Sherlock::Elasticsearch.should_receive(:index).and_call_original
+      subject.consider(Hash[:payload, versioned_payload.to_json])
+      sleep 1.4
+      old_versioned_payload = {}.merge(payload)
+      old_versioned_payload['attributes']['version'] = 999
+      Sherlock::Elasticsearch.should_not_receive(:index)
+      subject.consider(Hash[:payload, old_versioned_payload.to_json])
+    end
+
+    it "will index an newer record" do
+      versioned_payload = {}.merge(payload)
+      versioned_payload['attributes']['version'] = 1000
+      Sherlock::Elasticsearch.should_receive(:index).and_call_original
+      subject.consider(Hash[:payload, versioned_payload.to_json])
+
+      new_versioned_payload = {}.merge(payload)
+      new_versioned_payload['attributes']['version'] = 1001
+      Sherlock::Elasticsearch.should_receive(:index)
+      subject.consider(Hash[:payload, new_versioned_payload.to_json])
     end
 
   end
@@ -43,7 +76,7 @@ describe Sherlock::UpdateListener do
     it 'works' do
       message = Hash[:payload, payload.to_json]
       Sherlock::Elasticsearch.should_receive(:unindex).with('post.card:hell.pitchfork$1')
-      Sherlock::UpdateListener.new.consider message
+      subject.consider message
     end
 
   end
@@ -68,7 +101,7 @@ describe Sherlock::UpdateListener do
       expected = {"uid"=>"post.card:hell.pitchfork$1", "document.app"=>"hot", "paths"=>["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$1", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "pristine"=>{"uid"=>"post.card:hell.pitchfork$1", "document"=>{"app"=>"hot"}, "paths"=>["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$1"}, "restricted"=>false}
       Sherlock::Elasticsearch.should_not_receive(:unindex).with('post.card:hell.pitchfork$1')
       Sherlock::Elasticsearch.should_receive(:index).with(expected)
-      Sherlock::UpdateListener.new.consider message
+      subject.consider message
     end
 
     it 'does not index non-soft_deleted records' do
@@ -76,12 +109,12 @@ describe Sherlock::UpdateListener do
       p['soft_deleted'] = false
       message = Hash[:payload, p.to_json]
       Sherlock::Elasticsearch.should_receive(:unindex).with('post.card:hell.pitchfork$1')
-      Sherlock::UpdateListener.new.consider message
+      subject.consider message
 
       p.delete('soft_deleted')
       message = Hash[:payload, p.to_json]
       Sherlock::Elasticsearch.should_receive(:unindex).with('post.card:hell.pitchfork$1')
-      Sherlock::UpdateListener.new.consider message
+      subject.consider message
     end
 
   end
@@ -105,7 +138,7 @@ describe Sherlock::UpdateListener do
       message = Hash[:payload, payload.to_json]
       expected = {"uid"=>"post.card:hell.pitchfork$1", "document.app"=>"hot", "protected.price"=>"expensive", "paths"=>["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$1", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "pristine"=>{"uid"=>"post.card:hell.pitchfork$1", "document"=>{"app"=>"hot"}, "protected"=>{"price"=>"expensive"}, "paths"=>["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$1"}, "restricted"=>false}
       Sherlock::Elasticsearch.should_receive(:index).with(expected)
-      Sherlock::UpdateListener.new.consider message
+      subject.consider message
     end
 
   end
@@ -148,12 +181,12 @@ describe Sherlock::UpdateListener do
       message1 = Hash[:payload, payload.to_json]
       expected1 = {"uid"=>"post.card:hell.pitchfork$1", "document.app"=>"hot", "protected.price"=>"expensive", "paths"=>["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$1", "updated_at"=>"2014-06-30T10:33:04+02:00", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "pristine"=>{"uid"=>"post.card:hell.pitchfork$1", "document"=>{"app"=>"hot"}, "protected"=>{"price"=>"expensive"}, "paths"=>["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$1", "updated_at"=>"2014-06-30T10:33:04+02:00"}, "restricted"=>false}
       Sherlock::Elasticsearch.should_receive(:index).with(expected1)
-      Sherlock::UpdateListener.new.consider message1
+      subject.consider message1
 
       message2 = Hash[:payload, updated_payload.to_json]
       expected2 = {"uid"=>"post.card:hell.pitchfork$1", "document.app"=>"hot", "protected.price"=>"expensive", "paths"=>["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$1", "updated_at"=>"2014-06-30T10:46:51+02:00", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "pristine"=>{"uid"=>"post.card:hell.pitchfork$1", "document"=>{"app"=>"hot"}, "protected"=>{"price"=>"expensive"}, "paths"=>["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$1", "updated_at"=>"2014-06-30T10:46:51+02:00"}, "restricted"=>false}
       Sherlock::Elasticsearch.should_receive(:index).with(expected2)
-      Sherlock::UpdateListener.new.consider message2
+      subject.consider message2
     end
 
   end
