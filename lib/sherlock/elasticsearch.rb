@@ -180,7 +180,7 @@ module Sherlock
         matching['hits']['hits'].map do |existing_record|
           raise OldRecordError.new(
             :label => 'old_record',
-            :message => "Old record. Attempt to index old madness."
+            :message => "Old record. Either version or updated_at field is older than the existing record, wont index."
           ) if incoming_record_older?(incoming_record, existing_record['_source'])
           existing_record['_id']
         end.compact
