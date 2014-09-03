@@ -177,7 +177,7 @@ module Sherlock
         rescue Sherlock::Elasticsearch::QueryError => e
           return [] if e.label == 'index_missing'
         end
-        matching['hits']['hits'].each do |existing_record|
+        matching['hits']['hits'].map do |existing_record|
           raise OldRecordError.new(
             :label => 'old_record',
             :message => "Old record. Attempt to index old madness."
