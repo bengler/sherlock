@@ -181,18 +181,19 @@ module Sherlock
           raise OldRecordError.new(
             :label => 'old_record',
             :message => "Old record. Either version or updated_at field is older than the existing record, wont index."
-          ) if incoming_record_older?(incoming_record, existing_record['_source'])
+          ) unless incoming_record_newer?(incoming_record, existing_record['_source'])
           existing_record['_id']
         end.compact
       end
 
 
-      def incoming_record_older?(incoming, existing)
+      def incoming_record_newer?(incoming, existing)
         if incoming['version'] && existing['version']
-          return incoming['version'] < existing['version']
+          return incoming['version'] > existing['version']
         end
         if incoming['updated_at'] && existing['updated_at']
-          return Time.parse(incoming['updated_at']) < Time.parse(existing['updated_at'])
+          # no choice but to allow records with identical updated_at
+          return Time.parse(incoming['updated_at']) >= Time.parse(existing['updated_at'])
         end
         false # no way to tell, let it pass
       end
