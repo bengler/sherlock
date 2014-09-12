@@ -195,7 +195,7 @@ module Sherlock
           # no choice but to allow records with identical updated_at
           return Time.parse(incoming['updated_at']) >= Time.parse(existing['updated_at'])
         end
-        false # no way to tell, let it pass
+        true # no way to tell, let it pass
       end
 
     end
