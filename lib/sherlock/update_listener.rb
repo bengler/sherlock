@@ -12,9 +12,8 @@ module Sherlock
 
     def consider(payload)
       LOGGER.info("Consider #{payload.inspect}")
-      payload['attributes']['uid'] = payload['uid']
       matching_uids = begin
-        Sherlock::Elasticsearch.matching_records(payload['attributes'])
+        Sherlock::Elasticsearch.matching_records({'uid' => payload['uid']}.merge(payload['attributes']))
       rescue Sherlock::Elasticsearch::OldRecordError
         # payload represents an older record, dont touch it
         return
