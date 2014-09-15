@@ -11,7 +11,7 @@ module Sherlock
     end
 
     def consider(payload)
-      LOGGER.info("Consider #{payload['uid']}")
+      LOGGER.info("Consider #{payload.inspect}")
       matching_uids = begin
         Sherlock::Elasticsearch.matching_records(payload['attributes'])
       rescue Sherlock::Elasticsearch::OldRecordError
