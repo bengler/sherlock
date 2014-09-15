@@ -56,14 +56,12 @@ describe Sherlock::Update do
   }
 
   it "creates an array of tasks from payload" do
-    message = Hash[:payload, payload.to_json]
-    tasks = Sherlock::Update.new(message).tasks
+    tasks = Sherlock::Update.new(payload).tasks
     tasks.first['action'].should eq 'index'
   end
 
   it "builds one index record for every path entry in payload" do
-    message = Hash[:payload, multipath_payload.to_json]
-    tasks = Sherlock::Update.new(message).tasks
+    tasks = Sherlock::Update.new(multipath_payload).tasks
     tasks.count.should eq 2
     tasks.first['action'].should eq 'index'
     tasks.first['record']['uid'].should eq 'post.card:hell.trademarks.pitchfork$1'
@@ -71,14 +69,12 @@ describe Sherlock::Update do
   end
 
   it "creates unindex tasks for delete events" do
-    message = Hash[:payload, delete_payload.to_json]
-    tasks = Sherlock::Update.new(message).tasks
+    tasks = Sherlock::Update.new(delete_payload).tasks
     tasks.first['action'].should eq 'unindex'
   end
 
   it "creates index tasks for delete events where the record is soft_deleted" do
-    message = Hash[:payload, soft_delete_payload.to_json]
-    tasks = Sherlock::Update.new(message).tasks
+    tasks = Sherlock::Update.new(soft_delete_payload).tasks
     tasks.first['action'].should eq 'index'
   end
 

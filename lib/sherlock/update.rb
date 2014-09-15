@@ -7,8 +7,8 @@ module Sherlock
 
     attr_reader :payload
 
-    def initialize(message)
-      @payload = JSON.parse message[:payload]
+    def initialize(payload)
+      @payload = payload
     end
 
 
