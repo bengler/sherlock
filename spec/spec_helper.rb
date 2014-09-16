@@ -24,4 +24,3 @@ RSpec.configure do |c|
     example.run
   end
 end
-

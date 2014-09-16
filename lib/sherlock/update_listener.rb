@@ -1,80 +1,31 @@
-require_relative '../../config/environment'
-require 'pebblebed'
+#!/usr/bin/env ruby
+require './config/environment.rb'
 
 module Sherlock
 
   class UpdateListener
 
-    attr_reader :interval, :subscription
-
-    def initialize(options = {})
-      options = default_options.merge(options)
-      @interval = options[:interval]
-      @subscription = {:name => options[:name], :path => options[:path], :klass => options[:klass]}
+    def call(message)
+      consider message.payload
+      nil
     end
 
-    def default_options
-      {:name => 'sherlock.index',
-       :path => '**',
-       :klass => 'post.*|unit|organization|group|capacity|associate|affiliation',
-       :event => 'create|update|exists|delete',
-       :interval => 1}
-    end
-
-    def start
-      @thread = Thread.new do
-        loop do
-          begin
-            process
-          rescue Pebblebed::HttpError, Pebblebed::HttpNotFoundError, StandardError => e
-            if false #LOGGER.respond_to?:exception
-              LOGGER.exception(e)
-            else
-              LOGGER.error(e.inspect)
-              LOGGER.error(e.backtrace.join("\n"))
-            end
-          end
-        end
-      end
-    end
-
-    def stop
-      @thread.kill if @thread
-      @thread = nil
-    end
-
-    def process
-      river = Pebblebed::River.new
-      queue = river.queue subscription
-      queue.subscribe(block: true) do |delivery_info, metadata, payload|
-        message = {:payload => payload}
-        begin
-          consider message
-        rescue Pebblebed::HttpError => e
-          LOGGER.error(e.inspect)
-        end
-      end
-    end
-
-
-    def consider(message)
-      payload_hash = JSON.parse(message[:payload])
+    def consider(payload)
+      LOGGER.info("Consider #{payload['uid']}")
       matching_uids = begin
-        Sherlock::Elasticsearch.matching_records(payload_hash['attributes'])
+        Sherlock::Elasticsearch.matching_records({'uid' => payload['uid']}.merge(payload['attributes']))
       rescue Sherlock::Elasticsearch::OldRecordError
-        # payload represents an old record, dont touch it
+        # payload represents an older record, dont touch it
         return
       end
 
-      tasks = Sherlock::Update.new(message).tasks(matching_uids)
+      tasks = Sherlock::Update.new(payload).tasks(matching_uids)
       tasks.each do |task|
         case task['action']
         when 'index'
           Sherlock::Elasticsearch.index task['record']
         when 'unindex'
           Sherlock::Elasticsearch.unindex task['record']['uid']
-        else
-          LOGGER.error "Sherlock questions the relevancy of task #{task['action']}."
         end
       end
     end

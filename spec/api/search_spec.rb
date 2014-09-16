@@ -651,9 +651,7 @@ describe 'API v1 search' do
       }
 
       it 'works' do
-        createMessage = Hash[:payload, createPayload.to_json]
         expectedCreate = {"uid"=>uid, "document.app"=>"fridayisspandexday", "protected.price"=>"expensive", "paths"=>["hell.pitchfork"], "id"=>uid, "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "pristine"=>{"uid"=>uid, "document"=>{"app"=>"fridayisspandexday"}, "protected"=>{"price"=>"expensive"}, "paths"=>["hell.pitchfork"], "id"=>uid}, "restricted"=>false}
-        updateMessage = Hash[:payload, updatePayload.to_json]
         expectedUpdate = {"uid"=>uid, "document.app"=>"fridayisspandexday", "protected.price"=>"expensive", "protected.status"=>"all good", "paths"=>["hell.pitchfork"], "id"=>uid, "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"99", "realm"=>"hell", "pristine"=>{"uid"=>uid, "document"=>{"app"=>"fridayisspandexday"}, "protected"=>{"price"=>"expensive", "status"=>"all good"}, "paths"=>["hell.pitchfork"], "id"=>uid}, "restricted"=>false}
 
         pass = 1
@@ -664,8 +662,8 @@ describe 'API v1 search' do
         end.and_call_original
 
         10.times do
-          Sherlock::UpdateListener.new.consider createMessage
-          Sherlock::UpdateListener.new.consider updateMessage
+          Sherlock::UpdateListener.new.consider createPayload
+          Sherlock::UpdateListener.new.consider updatePayload
         end
         sleep 2.5
 
