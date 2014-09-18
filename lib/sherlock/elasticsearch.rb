@@ -189,6 +189,7 @@ module Sherlock
 
       def incoming_record_newer?(incoming, existing)
         if incoming['version'] && existing['version']
+          return true if existing['version'] > 1000000 # TODO: remove this after reindex
           return incoming['version'] > existing['version']
         end
         if incoming['updated_at'] && existing['updated_at']
