@@ -21,6 +21,9 @@ module Sherlock
 
       begin
       tasks = Sherlock::Update.new(payload).tasks(matching_uids)
+    rescue ArgumentError => e
+      raise e unless /\.\.side3/.match e.message
+    end
       tasks.each do |task|
         case task['action']
         when 'index'
@@ -28,9 +31,6 @@ module Sherlock
         when 'unindex'
           Sherlock::Elasticsearch.unindex task['record']['uid']
         end
-      end
-      rescue ArgumentError => e
-        raise e unless /\.\.side3/.match e.message
       end
     end
 
