@@ -19,7 +19,11 @@ module Sherlock
         return
       end
 
+      begin
       tasks = Sherlock::Update.new(payload).tasks(matching_uids)
+    rescue ArgumentError => e
+      raise e unless /\.\.side3/.match e.message
+    end
       tasks.each do |task|
         case task['action']
         when 'index'
