@@ -109,6 +109,24 @@ module Sherlock
         end
       end
 
+
+      # Outputs index mapping for debugging purposes
+      def mapping(realm, type = nil)
+        index = index_name(realm)
+        action = type ? "#{type}/_mapping" : '_mapping'
+        url = "#{root_url}/#{index}/#{action}?pretty"
+        begin
+          puts url
+          r = Pebblebed::Http.get(url, {})
+          puts r.body
+        rescue Pebblebed::HttpError => e
+          unless e.message =~ /IndexMissingException/
+            puts "missing index #{index}"
+          end
+        end
+      end
+
+
       def server_status(realm = nil)
         url = "#{root_url}"
         url << "/#{index_name(realm)}" if realm
