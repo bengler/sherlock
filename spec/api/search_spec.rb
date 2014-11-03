@@ -103,26 +103,58 @@ describe 'API v1 search' do
 
     context "ranged query" do
 
-      let(:record) {
-        uid = 'post.card:hell.flames.devil$1'
-        Sherlock::Parsers::Generic.new(uid, {'happens_on' => (Date.today-5).to_s, 'document' => 'past', 'uid' => uid, :restricted => false}).to_hash
-      }
-      let(:another_record) {
-        uid = 'post.card:hell.flames.pitchfork$2'
-        Sherlock::Parsers::Generic.new(uid, {'happens_on' => (Date.today+5).to_s, 'document' => 'future', 'uid' => uid, :restricted => false}).to_hash
-      }
+      context "date comparison" do
 
-      it "works" do
-        Sherlock::Elasticsearch.index record
-        Sherlock::Elasticsearch.index another_record
-        sleep 2.0
-        get "/search/#{realm}", {:max => {'happens_on' => Date.today.to_s}}
-        result = JSON.parse(last_response.body)
+        let(:record) {
+          uid = 'post.card:hell.flames.devil$1'
+          Sherlock::Parsers::Generic.new(uid, {'happens_on' => (Date.today-5).to_s, 'document' => 'past', 'uid' => uid, :restricted => false}).to_hash
+        }
+        let(:another_record) {
+          uid = 'post.card:hell.flames.pitchfork$2'
+          Sherlock::Parsers::Generic.new(uid, {'happens_on' => (Date.today+5).to_s, 'document' => 'future', 'uid' => uid, :restricted => false}).to_hash
+        }
 
-        result['hits'].map do |hit|
-          hit['hit']['document']
-        end.should eq ['past']
+        it "works" do
+          Sherlock::Elasticsearch.index record
+          Sherlock::Elasticsearch.index another_record
+          sleep 2.0
+          get "/search/#{realm}", {:max => {'happens_on' => Date.today.to_s}}
+          result = JSON.parse(last_response.body)
+
+          result['hits'].map do |hit|
+            hit['hit']['document']
+          end.should eq ['past']
+        end
+
       end
+
+
+      context "time comparison" do
+
+        let(:close_future_record) {
+          uid = 'post.card:hell.flames.devil$1'
+          Sherlock::Parsers::Generic.new(uid, {'start_at' => (Time.now()+2.days).iso8601(3), 'document' => 'close future', 'uid' => uid, :restricted => false}).to_hash
+        }
+        let(:far_future_record) {
+          uid = 'post.card:hell.flames.pitchfork$2'
+          Sherlock::Parsers::Generic.new(uid, {'start_at' => (Time.now()+30.days).iso8601(3), 'document' => 'far future', 'uid' => uid, :restricted => false}).to_hash
+        }
+
+        it "works" do
+          Sherlock::Elasticsearch.index close_future_record
+          Sherlock::Elasticsearch.index far_future_record
+          sleep 2.0
+
+          get "/search/#{realm}", {:min => {'start_at' => (Time.now()+3.days).iso8601(3)}}
+          result = JSON.parse(last_response.body)
+
+          result['hits'].map do |hit|
+            hit['hit']['document']
+          end.should eq ['far future']
+        end
+
+      end
+
     end
 
 
