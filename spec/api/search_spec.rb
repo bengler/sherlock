@@ -5,6 +5,7 @@ require 'rack/test'
 
 class TestSherlockV1 < SherlockV1; end
 
+
 describe 'API v1 search' do
 
   include Rack::Test::Methods
@@ -705,6 +706,59 @@ describe 'API v1 search' do
         result['hits'].first['hit']['protected']['status'].should eq 'all good'
       end
 
+    end
+
+  end
+
+
+  describe "caching results" do
+
+    let(:uid) {
+      'post.card:hell.flames.blaff$555'
+    }
+    let(:original_content) {
+      'stuff'
+    }
+    let(:updated_content) {
+      'nuff stuff'
+    }
+    let(:record_hash) {
+      {'document' => original_content, 'uid' => uid, :restricted => false}
+    }
+
+    before :each do
+      Sherlock::Access.stub(:accessible_paths).and_return []
+
+      rec = Sherlock::Parsers::Generic.new(uid, record_hash).to_hash
+      Sherlock::Elasticsearch.index rec
+      sleep 2.0
+      user!
+      # do query to load the cache
+      get '/search/hell/post.card:*', :q => 'stuff'
+
+      # update the record
+      record_hash['document'] = updated_content
+      rec = Sherlock::Parsers::Generic.new(uid, record_hash).to_hash
+      Sherlock::Elasticsearch.index rec
+    end
+
+    context "logged in user always gets new stuff" do
+      it "works" do
+        sleep 2.0
+        get '/search/hell/post.card:*', :q => 'stuff'
+        result = JSON.parse(last_response.body)
+        result['hits'].first['hit']['document'].should eq updated_content
+      end
+    end
+
+    context "non-logged in user gets cached stuff" do
+      it "works" do
+        sleep 2.0
+        guest!
+        get '/search/hell/post.card:*', :q => 'stuff'
+        result = JSON.parse(last_response.body)
+        result['hits'].first['hit']['document'].should eq original_content
+      end
     end
 
   end
