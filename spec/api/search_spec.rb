@@ -742,10 +742,20 @@ describe 'API v1 search' do
       Sherlock::Elasticsearch.index rec
     end
 
-    context "logged in user always gets new stuff" do
+    context "logged in user always gets updated stuff" do
       it "works" do
         sleep 2.0
         get '/search/hell/post.card:*', :q => 'stuff'
+        result = JSON.parse(last_response.body)
+        result['hits'].first['hit']['document'].should eq updated_content
+      end
+    end
+
+    context "non-logged in user gets updated stuff if nocache flag is set" do
+      it "works" do
+        sleep 2.0
+        guest!
+        get '/search/hell/post.card:*', {:q => 'stuff', :nocache => true}
         result = JSON.parse(last_response.body)
         result['hits'].first['hit']['document'].should eq updated_content
       end

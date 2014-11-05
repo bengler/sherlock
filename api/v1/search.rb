@@ -80,6 +80,7 @@ class SherlockV1 < Sinatra::Base
   # @optional [String] max[name_of_attribute] Maximum accepted value for a ranged query.
   # @optional [String] fields[name_of_attribute] Require a named attribute to have a specific value. Use "null" to indicate a missing value. Use 'value1|value2' to indicate 'or'.
   # @optional [String] deleted How to treat the deleted attribute. Accepts 'include' or 'only'. Default is to not include these records. Getting a deleted record requires access to its path.
+  # @optional [Boolean] nocache Bypass cache for guest users. Default is false.
   # @status 200 JSON
   get '/search/:realm/?:uid?' do |realm, uid|
     content_type 'application/json'
@@ -91,7 +92,7 @@ class SherlockV1 < Sinatra::Base
     end
 
     cache_key = request.url
-    if current_identity_id
+    if current_identity_id || (params['nocache'] == 'true')
       json_result = perform_query(realm, uid)
       $memcached.set(cache_key, json_result, ANON_QUERY_TTL)
     else
