@@ -94,7 +94,6 @@ class SherlockV1 < Sinatra::Base
     cache_key = request.url
     if current_identity_id || (params['nocache'] == 'true')
       json_result = perform_query(realm, uid)
-      $memcached.set(cache_key, json_result, ANON_QUERY_TTL)
     else
       json_result = $memcached.fetch(request.url, ANON_QUERY_TTL) do
         perform_query(realm, uid)

@@ -732,8 +732,9 @@ describe 'API v1 search' do
       rec = Sherlock::Parsers::Generic.new(uid, record_hash).to_hash
       Sherlock::Elasticsearch.index rec
       sleep 2.0
-      user!
-      # do query to load the cache
+
+      guest!
+      # do query as guest to prime the cache
       get '/search/hell/post.card:*', :q => 'stuff'
 
       # update the record
@@ -745,6 +746,7 @@ describe 'API v1 search' do
     context "logged in user always gets updated stuff" do
       it "works" do
         sleep 2.0
+        user!
         get '/search/hell/post.card:*', :q => 'stuff'
         result = JSON.parse(last_response.body)
         result['hits'].first['hit']['document'].should eq updated_content
