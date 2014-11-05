@@ -1,6 +1,8 @@
 
 class SherlockV1 < Sinatra::Base
 
+  ANON_QUERY_TTL = 180
+
   configure :development do
     register Sinatra::Reloader
   end
@@ -31,6 +33,28 @@ class SherlockV1 < Sinatra::Base
       Sherlock::Access.accessible_paths(pebbles, current_identity_id, query_path)
     end
 
+
+    def perform_query(realm, uid)
+      query_path = uid ? Pebbles::Uid.query(uid).path : nil
+      query = Sherlock::Query.new(params, accessible_paths(query_path))
+
+      begin
+        result = Sherlock::Elasticsearch.query(realm, query)
+      rescue Sherlock::Elasticsearch::QueryError => e
+        halt 400, {:error => e.label, :message => e.message}.to_json
+      end
+
+      result = Sherlock::ResultCensor.consider(result, god_mode?, current_identity_id)
+
+      presenter = Sherlock::HitsPresenter.new(result, {:limit => query.limit, :offset => query.offset})
+      locals = {
+        :hits => presenter.hits,
+        :pagination => presenter.pagination,
+        :total => presenter.total
+      }
+      pg(:hits, :locals => locals)
+    end
+
   end
 
   # @apidoc
@@ -56,6 +80,7 @@ class SherlockV1 < Sinatra::Base
   # @optional [String] max[name_of_attribute] Maximum accepted value for a ranged query.
   # @optional [String] fields[name_of_attribute] Require a named attribute to have a specific value. Use "null" to indicate a missing value. Use 'value1|value2' to indicate 'or'.
   # @optional [String] deleted How to treat the deleted attribute. Accepts 'include' or 'only'. Default is to not include these records. Getting a deleted record requires access to its path.
+  # @optional [Boolean] nocache Bypass cache for guest users. Default is false.
   # @status 200 JSON
   get '/search/:realm/?:uid?' do |realm, uid|
     content_type 'application/json'
@@ -66,19 +91,15 @@ class SherlockV1 < Sinatra::Base
       halt 400, {:error => 'require_integer', :message => "#{param} must be an integer"} if params[param] && !is_integer?(params[param])
     end
 
-    query_path = uid ? Pebbles::Uid.query(uid).path : nil
-    query = Sherlock::Query.new(params, accessible_paths(query_path))
-
-    begin
-      result = Sherlock::Elasticsearch.query(realm, query)
-    rescue Sherlock::Elasticsearch::QueryError => e
-      halt 400, {:error => e.label, :message => e.message}.to_json
+    cache_key = request.url
+    if current_identity_id || (params['nocache'] == 'true')
+      json_result = perform_query(realm, uid)
+    else
+      json_result = $memcached.fetch(request.url, ANON_QUERY_TTL) do
+        perform_query(realm, uid)
+      end
     end
-
-    result = Sherlock::ResultCensor.consider(result, god_mode?, current_identity_id)
-
-    presenter = Sherlock::HitsPresenter.new(result, {:limit => query.limit, :offset => query.offset})
-    pg :hits, :locals => {:hits => presenter.hits, :pagination => presenter.pagination, :total => presenter.total}
+    [200, json_result]
   end
 
 
