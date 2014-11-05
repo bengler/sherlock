@@ -1,6 +1,8 @@
 
 class SherlockV1 < Sinatra::Base
 
+  ANON_QUERY_TTL = 60
+
   configure :development do
     register Sinatra::Reloader
   end
@@ -29,6 +31,28 @@ class SherlockV1 < Sinatra::Base
       # Gods can see everything in their realm
       return [current_identity.realm] if god_mode?
       Sherlock::Access.accessible_paths(pebbles, current_identity_id, query_path)
+    end
+
+
+    def perform_query(realm, uid)
+      query_path = uid ? Pebbles::Uid.query(uid).path : nil
+      query = Sherlock::Query.new(params, accessible_paths(query_path))
+
+      begin
+        result = Sherlock::Elasticsearch.query(realm, query)
+      rescue Sherlock::Elasticsearch::QueryError => e
+        halt 400, {:error => e.label, :message => e.message}.to_json
+      end
+
+      result = Sherlock::ResultCensor.consider(result, god_mode?, current_identity_id)
+
+      presenter = Sherlock::HitsPresenter.new(result, {:limit => query.limit, :offset => query.offset})
+      locals = {
+        :hits => presenter.hits,
+        :pagination => presenter.pagination,
+        :total => presenter.total
+      }
+      pg(:hits, :locals => locals)
     end
 
   end
@@ -66,19 +90,16 @@ class SherlockV1 < Sinatra::Base
       halt 400, {:error => 'require_integer', :message => "#{param} must be an integer"} if params[param] && !is_integer?(params[param])
     end
 
-    query_path = uid ? Pebbles::Uid.query(uid).path : nil
-    query = Sherlock::Query.new(params, accessible_paths(query_path))
-
-    begin
-      result = Sherlock::Elasticsearch.query(realm, query)
-    rescue Sherlock::Elasticsearch::QueryError => e
-      halt 400, {:error => e.label, :message => e.message}.to_json
+    cache_key = request.url
+    if current_identity_id
+      json_result = perform_query(realm, uid)
+      $memcached.set(cache_key, json_result, ANON_QUERY_TTL)
+    else
+      json_result = $memcached.fetch(request.url, ANON_QUERY_TTL) do
+        perform_query(realm, uid)
+      end
     end
-
-    result = Sherlock::ResultCensor.consider(result, god_mode?, current_identity_id)
-
-    presenter = Sherlock::HitsPresenter.new(result, {:limit => query.limit, :offset => query.offset})
-    pg :hits, :locals => {:hits => presenter.hits, :pagination => presenter.pagination, :total => presenter.total}
+    [200, json_result]
   end
 
 
