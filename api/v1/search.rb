@@ -1,7 +1,7 @@
 
 class SherlockV1 < Sinatra::Base
 
-  ANON_QUERY_TTL = 60
+  ANON_QUERY_TTL = 180
 
   configure :development do
     register Sinatra::Reloader
