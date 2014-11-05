@@ -114,7 +114,7 @@ module Sherlock
       def mapping(realm, type = nil)
         index = index_name(realm)
         action = type ? "#{type}/_mapping" : '_mapping'
-        url = "#{root_url}/#{index}/#{action}?pretty"
+        url = "#{root_url}/#{index}/#{action}"
         begin
           puts url
           r = Pebblebed::Http.get(url, {})
