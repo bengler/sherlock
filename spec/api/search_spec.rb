@@ -35,6 +35,11 @@ describe 'API v1 search' do
     Sherlock::Parsers::Generic.new(uid, {'document' => 'warm', 'uid' => uid, :restricted => false}).to_hash
   }
 
+  let(:yet_another_record) {
+    uid = 'post.card:hell.flames.pitchfork$4'
+    Sherlock::Parsers::Generic.new(uid, {'document' => "i'm tuffer than the rest", 'uid' => uid, :restricted => false}).to_hash
+  }
+
   after(:each) do
     Sherlock::Elasticsearch.delete_index(realm)
   end
@@ -78,6 +83,17 @@ describe 'API v1 search' do
       get "/search/#{realm}", :q => "hot", :limit => 'a'
       last_response.status.should eq 400
     end
+
+    it "finds stuff with wildcard" do
+      Sherlock::Elasticsearch.index yet_another_record
+      sleep 2.0
+      get "/search/#{realm}", :q => "*uffe*"
+      result = JSON.parse(last_response.body)
+      result['hits'].map do |hit|
+        hit['hit']['document']
+      end.should eq ["i'm tuffer than the rest"]
+    end
+
 
     context "deprecated ranged query" do
 
