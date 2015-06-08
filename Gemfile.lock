@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/bengler/pebbles-cors
-  revision: 869d6b6540577b8f598dac9263b82c783513243c
+  revision: 4653b7cbc35bd3bfdd3e73dcabb040586c746e74
   specs:
     pebbles-cors (0.2.2)
       dalli
@@ -9,7 +9,7 @@ GIT
 
 GIT
   remote: https://github.com/rack/rack-contrib
-  revision: 6ff3ca2b2d988911ca52a2712f6a7da5e064aa27
+  revision: 34062096a468b5d9adac87692599d4974ea69f15
   specs:
     rack-contrib (1.2.0)
       rack (>= 0.9.1)
@@ -17,66 +17,52 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.0.3)
-      i18n (~> 0.6, >= 0.6.4)
-      minitest (~> 4.2)
-      multi_json (~> 1.3)
-      thread_safe (~> 0.1)
-      tzinfo (~> 0.3.37)
-    airbrake (3.1.4)
+    activesupport (4.2.1)
+      i18n (~> 0.7)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.3, >= 0.3.4)
+      tzinfo (~> 1.1)
+    airbrake (3.1.17)
       builder
-      girl_friday
+      multi_json
     amq-protocol (1.9.2)
-    approvals (0.0.6)
-      nokogiri
-      thor
-    arrayfields (4.7.4)
-    atomic (1.1.14)
-    backports (2.6.4)
-    builder (3.0.0)
-    bunny (1.3.1)
+    approvals (0.0.20)
+      nokogiri (~> 1.6)
+      thor (~> 0.18)
+    arrayfields (4.9.2)
+    backports (3.6.4)
+    builder (3.2.2)
+    bunny (1.7.0)
       amq-protocol (>= 1.9.2)
-    chronic (0.7.0)
-    connection_pool (0.9.2)
-    curb (0.8.5)
-    dalli (2.7.2)
+    chronic (0.10.2)
+    curb (0.8.8)
+    dalli (2.7.4)
     deepstruct (0.0.7)
     diff-lcs (1.2.5)
-    eventmachine (0.12.10)
-    fattr (2.2.1)
-    feedzirra (0.0.24)
-      activesupport (>= 2.3.8)
-      builder (>= 2.1.2)
-      curb (>= 0.2.3)
-      loofah (>= 0.3.1)
-      nokogiri (> 0.0.0)
-      sax-machine (>= 0.0.12)
+    eventmachine (1.0.7)
+    fattr (2.2.2)
     futurevalue (0.0.2)
-    girl_friday (0.10.0)
-      connection_pool (~> 0.9.0)
-    i18n (0.6.9)
-    kgio (2.9.2)
-    loofah (1.2.1)
-      nokogiri (>= 1.4.4)
+    i18n (0.7.0)
+    json (1.8.3)
+    kgio (2.9.3)
     main (5.0.1)
       arrayfields (>= 4.7.4)
       chronic (>= 0.6.2)
       fattr (>= 2.2.0)
       map (>= 5.1.0)
-    map (6.2.0)
+    map (6.5.5)
     memcache_mock (0.0.14)
-    mercenary (0.3.4)
-    mini_portile (0.5.2)
-    minitest (4.7.5)
-    multi_json (1.8.4)
-    nokogiri (1.6.1)
-      mini_portile (~> 0.5.0)
+    mercenary (0.3.5)
+    mini_portile (0.6.2)
+    minitest (5.7.0)
+    multi_json (1.11.0)
+    nokogiri (1.6.6.2)
+      mini_portile (~> 0.6.0)
     pathbuilder (0.0.2)
-    pebble_path (0.0.2)
-      pebblebed (>= 0.0.15)
-    pebblebed (0.2.1)
+    pebblebed (0.3.3)
       activesupport
-      bunny (~> 1.3.1)
+      bunny
       curb (>= 0.8.4)
       deepstruct (>= 0.0.4)
       futurevalue
@@ -84,20 +70,22 @@ GEM
       pathbuilder
       queryparams
       yajl-ruby
-    pebbles-river (0.1.5)
+    pebbles-path (0.0.3)
+      pebbles-uid (>= 0.0.6)
+    pebbles-river (0.2.4)
       activesupport (>= 3.0)
-      bunny (~> 1.3.1)
+      bunny (~> 1.7.0)
       mercenary (~> 0.3.3)
-      pebblebed (>= 0.2.1)
+      pebblebed (>= 0.3.0)
       servolux (~> 0.10)
-    pebbles-uid (0.0.9)
-    petroglyph (0.0.3)
+    pebbles-uid (0.0.22)
+    petroglyph (0.0.7)
       tilt
     queryparams (0.0.3)
-    rack (1.5.2)
+    rack (1.6.1)
     rack-protection (1.5.3)
       rack
-    rack-test (0.6.1)
+    rack-test (0.6.3)
       rack (>= 1.0)
     raindrops (0.13.0)
     rspec (2.14.1)
@@ -108,29 +96,27 @@ GEM
     rspec-expectations (2.14.5)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.14.6)
-    sax-machine (0.1.0)
-      nokogiri (> 0.0.0)
     servolux (0.10.0)
     simplecov (0.6.4)
       multi_json (~> 1.0)
       simplecov-html (~> 0.5.3)
     simplecov-html (0.5.3)
-    sinatra (1.3.4)
+    sinatra (1.3.6)
       rack (~> 1.4)
       rack-protection (~> 1.3)
       tilt (~> 1.3, >= 1.3.3)
-    sinatra-contrib (1.3.1)
+    sinatra-contrib (1.3.2)
       backports (>= 2.0)
       eventmachine
       rack-protection
       rack-test
       sinatra (~> 1.3.0)
       tilt (~> 1.3)
-    thor (0.16.0)
-    thread_safe (0.1.3)
-      atomic
-    tilt (1.3.3)
-    tzinfo (0.3.38)
+    thor (0.18.1)
+    thread_safe (0.3.5)
+    tilt (1.4.1)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
     unicorn (4.8.3)
       kgio (~> 2.6)
       rack
@@ -142,21 +128,25 @@ PLATFORMS
 
 DEPENDENCIES
   airbrake (~> 3.1.4)
-  approvals
-  feedzirra
+  approvals (~> 0.0.16)
+  backports (~> 3.6.4)
+  curb (~> 0.8.8)
   main (~> 5.0.1)
-  memcache_mock
-  pebble_path
+  memcache_mock (~> 0.0.14)
   pebblebed (>= 0.2.1)
   pebbles-cors!
-  pebbles-river
-  pebbles-uid
-  petroglyph
+  pebbles-path (~> 0.0.3)
+  pebbles-river (~> 0.2.4)
+  pebbles-uid (~> 0.0.22)
+  petroglyph (~> 0.0.3)
   rack-contrib!
-  rspec
-  servolux
-  simplecov
-  sinatra
-  sinatra-contrib
-  thor
-  unicorn
+  rspec (~> 2.14.1)
+  servolux (~> 0.10.0)
+  simplecov (~> 0.6.4)
+  sinatra (~> 1.3.4)
+  sinatra-contrib (~> 1.3.1)
+  thor (~> 0.18.0)
+  unicorn (~> 4.8.3)
+
+BUNDLED WITH
+   1.10.3
