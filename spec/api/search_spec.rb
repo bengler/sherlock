@@ -1,7 +1,8 @@
 # encoding: utf-8
-require "spec_helper"
+require 'spec_helper'
 require 'api/v1'
 require 'rack/test'
+require 'active_support/all'
 
 class TestSherlockV1 < SherlockV1; end
 
