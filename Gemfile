@@ -1,12 +1,12 @@
 source 'https://rubygems.org/'
 
-gem 'sinatra', '~> 1.3.4'
+gem 'sinatra', '~> 1.4.6'
 gem 'rack-contrib', :git => 'https://github.com/rack/rack-contrib'
-gem 'pebblebed', '>=0.2.1'
+gem 'pebblebed', '~> 0.3.3'
 gem 'pebbles-uid', '~> 0.0.22'
 gem 'pebbles-river', '~> 0.2.4'
 gem 'pebbles-cors', :git => 'https://github.com/bengler/pebbles-cors'
-gem 'petroglyph', '~> 0.0.3'
+gem 'petroglyph', '~> 0.0.7'
 gem 'main', '~> 5.0.1'
 gem 'pebbles-path', '~> 0.0.3'
 gem 'servolux', '~> 0.10.0'
@@ -18,7 +18,7 @@ group :development, :test do
   gem 'rspec', '~> 2.14.1'
   gem 'approvals', '~> 0.0.16'
   gem 'simplecov', '~> 0.6.4'
-  gem 'sinatra-contrib', '~> 1.3.1'
+  gem 'sinatra-contrib', :git => 'https://github.com/sinatra/sinatra-contrib'
   gem 'memcache_mock', '~> 0.0.14'
 end
 
