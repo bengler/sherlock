@@ -46,7 +46,9 @@ module Sherlock
       def index(record)
         begin
           if record['tags_vector']
-            record['tags_vector'] = record['tags_vector'].split("' '").map{|t| t.gsub("'", '')}
+            if record['tags_vector'].is_a? String
+              record['tags_vector'] = record['tags_vector'].split("' '").map{|t| t.gsub("'", '')}
+            end
             record['pristine']['tags_vector'] = record['tags_vector']
           end
           url = url(record['uid'])
