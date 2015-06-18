@@ -149,9 +149,7 @@ module Sherlock
         action = type ? "#{type}/_mapping" : '_mapping'
         url = "#{root_url}/#{index}/#{action}"
         begin
-          puts url
           result = Pebblebed::Http.get(url, {}).body
-          puts result
           return JSON.parse(result)
         rescue Pebblebed::HttpError => e
           unless e.message =~ /IndexMissingException/
