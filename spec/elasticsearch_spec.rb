@@ -154,6 +154,33 @@ describe Sherlock::Elasticsearch do
 
   end
 
+end
 
+describe "realm index creation" do
+
+  after(:each) do
+    Sherlock::Elasticsearch.delete_index('snargh')
+  end
+
+  let(:record) {
+    {'document' => 'kartoffel', 'realm' => 'snargh', 'uid' => 'post.test_one:snargh.it$99'}
+  }
+
+
+  it "creates a realm index on first pass" do
+    Sherlock::Elasticsearch.should_receive(:create_index).once.and_call_original #.with({})
+    Sherlock::Elasticsearch.index record
+  end
+
+
+  it "loads the predefined mappings" do # from ./config/predefined_es_mapping.json
+    Sherlock::Elasticsearch.should_receive(:predefined_mappings_for).once.with('snargh').and_call_original
+    Sherlock::Elasticsearch.index record
+    mappings = Sherlock::Elasticsearch.mapping('snargh')['sherlock_test_snargh']['mappings']
+    mappings['post.test_one']['properties']['uid']['type'].should eq 'string'
+    mappings['post.test_one']['properties']['uid']['index'].should eq nil
+    mappings['post.test_two']['properties']['uid']['type'].should eq 'string'
+    mappings['post.test_two']['properties']['uid']['index'].should eq 'not_analyzed'
+  end
 
 end

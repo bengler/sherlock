@@ -31,28 +31,30 @@ describe Sherlock::UpdateListener do
       subject.consider payload
     end
 
-    it "wont index an older record" do
-      versioned_payload = {}.merge(payload)
-      versioned_payload['attributes']['version'] = 1000
-      Sherlock::Elasticsearch.should_receive(:index).and_call_original
-      subject.consider(versioned_payload)
-      sleep 1.4
-      old_versioned_payload = {}.merge(payload)
-      old_versioned_payload['attributes']['version'] = 999
-      Sherlock::Elasticsearch.should_not_receive(:index)
-      subject.consider(old_versioned_payload)
-    end
 
-    it "will index an newer record" do
-      versioned_payload = {}.merge(payload)
-      versioned_payload['attributes']['version'] = 1000
-      Sherlock::Elasticsearch.should_receive(:index).and_call_original
-      subject.consider(versioned_payload)
+    describe 'document versions' do
 
-      new_versioned_payload = {}.merge(payload)
-      new_versioned_payload['attributes']['version'] = 1001
-      Sherlock::Elasticsearch.should_receive(:index)
-      subject.consider(new_versioned_payload)
+      before(:each) do
+        versioned_payload = {}.merge(payload)
+        versioned_payload['attributes']['version'] = 1000
+        subject.consider(versioned_payload)
+        sleep 1.4
+      end
+
+      it "wont index an older record" do
+        old_versioned_payload = {}.merge(payload)
+        old_versioned_payload['attributes']['version'] = 999
+        Sherlock::Elasticsearch.should_not_receive(:index)
+        subject.consider(old_versioned_payload)
+      end
+
+      it "will index a newer record" do
+        new_versioned_payload = {}.merge(payload)
+        new_versioned_payload['attributes']['version'] = 1001
+        Sherlock::Elasticsearch.should_receive(:index).once.with(hash_including("version"=>1001))
+        subject.consider(new_versioned_payload)
+      end
+
     end
 
   end
