@@ -168,7 +168,7 @@ describe "realm index creation" do
 
 
   it "creates a realm index on first pass" do
-    Sherlock::Elasticsearch.should_receive(:create_index).once.and_call_original #.with({})
+    Sherlock::Elasticsearch.should_receive(:create_index).once.and_call_original
     Sherlock::Elasticsearch.index record
   end
 

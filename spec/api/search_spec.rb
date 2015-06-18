@@ -704,7 +704,8 @@ describe 'API v1 search' do
         expectedCreate = {"uid"=>uid, "document.app"=>"fridayisspandexday", "protected.price"=>"expensive", "paths"=>["hell.pitchfork"], "id"=>uid, "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "pristine"=>{"uid"=>uid, "document"=>{"app"=>"fridayisspandexday"}, "protected"=>{"price"=>"expensive"}, "paths"=>["hell.pitchfork"], "id"=>uid}, "restricted"=>false}
         expectedUpdate = {"uid"=>uid, "document.app"=>"fridayisspandexday", "protected.price"=>"expensive", "protected.status"=>"all good", "paths"=>["hell.pitchfork"], "id"=>uid, "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"99", "realm"=>"hell", "pristine"=>{"uid"=>uid, "document"=>{"app"=>"fridayisspandexday"}, "protected"=>{"price"=>"expensive", "status"=>"all good"}, "paths"=>["hell.pitchfork"], "id"=>uid}, "restricted"=>false}
 
-        Sherlock::Elasticsearch.should_receive(:index).exactly(21).and_call_original # 20+1 becase index does not exist on first pass
+        # 20+1 becase index does not exist on first pass
+        Sherlock::Elasticsearch.should_receive(:index).exactly(21).and_call_original
 
         10.times do
           Sherlock::UpdateListener.new.consider createPayload
