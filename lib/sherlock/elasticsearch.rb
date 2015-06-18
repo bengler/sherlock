@@ -4,6 +4,7 @@ module Sherlock
 
   class Elasticsearch
 
+
     class QueryError < StandardError
       attr_reader :label, :message
       def initialize(options)
@@ -27,14 +28,35 @@ module Sherlock
         "http://localhost:9200"
       end
 
-      def index_config
-        { :settings => {
-            :analysis => {
-              :analyzer => {
-                :default => {
-                  :type => "custom",
-                  :filter => ["lowercase"],
-                  :tokenizer => "whitespace"
+
+      def url(uid_string)
+        uid = Pebbles::Uid.new(uid_string)
+        "#{root_url}/#{index_name(uid.realm)}/#{uid.species}/#{uid_string}"
+      end
+
+
+      def index_name(realm)
+        "sherlock_#{ENV['RACK_ENV']}_#{realm}"
+      end
+
+
+      def predefined_mappings_for(realm)
+        @@predefined_mappings ||= JSON.parse(File.read('./config/predefined_es_mappings.json'))
+        key = "sherlock_ENV_#{realm}"
+        return {} unless @@predefined_mappings[key]
+        @@predefined_mappings[key]['mappings'] || {}
+      end
+
+
+      def default_index_config
+        {
+          settings: {
+            analysis: {
+              analyzer: {
+                default: {
+                  type: 'custom',
+                  filter: ['lowercase'],
+                  tokenizer: 'whitespace'
                 }
               }
             }
@@ -55,7 +77,7 @@ module Sherlock
           Pebblebed::Http.put(url, record)
         rescue Pebblebed::HttpError => e
           if e.message =~ /IndexMissingException/
-            create_index(Pebbles::Uid.new(record['uid']).realm, index_config)
+            create_index(Pebbles::Uid.new(record['uid']).realm)
             # now try again
             index(record)
           else
@@ -97,10 +119,19 @@ module Sherlock
         return false
       end
 
-      def create_index(realm, config)
+
+      def create_index(realm)
         index = index_name(realm)
+        predefined_mappings = predefined_mappings_for(realm)
         begin
-          Pebblebed::Http.put("#{root_url}/#{index}", config)
+          Pebblebed::Http.put("#{root_url}/#{index}", default_index_config)
+          # Some use-cases require predefined mappings.
+          # E.g. we don't want a UID to be string-tokenized because this
+          # will cause dash to look like a whitespace and thus not return hits on a query
+          predefined_mappings.each_pair do |type, mapping|
+            es_mapping_url = "#{root_url}/#{index}/_mapping/#{type}"
+            Pebblebed::Http.put(es_mapping_url, {type => mapping})
+          end
         rescue Pebblebed::HttpError => e
           if LOGGER.respond_to?:exception
             LOGGER.exception(e)
@@ -119,8 +150,9 @@ module Sherlock
         url = "#{root_url}/#{index}/#{action}"
         begin
           puts url
-          r = Pebblebed::Http.get(url, {})
-          puts r.body
+          result = Pebblebed::Http.get(url, {}).body
+          puts result
+          return JSON.parse(result)
         rescue Pebblebed::HttpError => e
           unless e.message =~ /IndexMissingException/
             puts "missing index #{index}"
@@ -143,14 +175,6 @@ module Sherlock
         result
       end
 
-      def url(uid_string)
-        uid = Pebbles::Uid.new(uid_string)
-        "#{root_url}/#{index_name(uid.realm)}/#{uid.species}/#{uid_string}"
-      end
-
-      def index_name(realm)
-        "sherlock_#{ENV['RACK_ENV']}_#{realm}"
-      end
 
       def query(realm, query_obj) # TODO: I want to do query_obj.to_json berfore passing it in
         options = Hash[:source => query_obj.to_json]
