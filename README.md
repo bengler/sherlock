@@ -70,6 +70,14 @@ You can now do queries such as:
 	http://sherlock.dev/api/sherlock/v1/search/my_index/*:*
 	http://sherlock.dev/api/sherlock/v1/search/development/post.greeting:*?limit=100
 
+
+## Predefined mappings
+
+Some use-cases require predefined mappings. E.g. we don't want a UID to be string-tokenized because this will cause dash to look like a whitespace and thus not return hits on a query.
+
+If you need to predefine how ES analyzes a particular part of you data, do so by appending your stuff to `config/predefined_es_mappings.json`.
+
+
 ## Other handy stuff
 
 Drop all indexes
@@ -100,4 +108,3 @@ Type mapping of fields in an index
 [3]: http://elasticsearch.org	"Elasticsearch"
 
 [4]: https://github.com/bengler/grove	"Grove"
-
