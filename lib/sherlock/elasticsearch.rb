@@ -47,6 +47,12 @@ module Sherlock
         @@predefined_mappings[key]['mappings'] || {}
       end
 
+      def predefined_settings_for(realm)
+        @@predefined_settings ||= JSON.parse(File.read('./config/predefined_es_settings.json'))
+        key = "sherlock_ENV_#{realm}"
+        return nil unless @@predefined_settings[key]
+        @@predefined_settings[key]
+      end
 
       def default_index_config
         {
@@ -123,8 +129,9 @@ module Sherlock
       def create_index(realm)
         index = index_name(realm)
         predefined_mappings = predefined_mappings_for(realm)
+        predefined_settings = predefined_settings_for(realm)
         begin
-          Pebblebed::Http.put("#{root_url}/#{index}", default_index_config)
+          Pebblebed::Http.put("#{root_url}/#{index}", predefined_settings || default_index_config)
           # Some use-cases require predefined mappings.
           # E.g. we don't want a UID to be string-tokenized because this
           # will cause dash to look like a whitespace and thus not return hits on a query
