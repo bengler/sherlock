@@ -3,6 +3,7 @@ require 'spec_helper'
 require 'api/v1'
 require 'rack/test'
 require 'active_support/all'
+require 'uri'
 
 class TestSherlockV1 < SherlockV1; end
 
@@ -58,6 +59,24 @@ describe 'API v1 search' do
       result['hits'].map do |hit|
         hit['hit']['document']
       end.should eq ["hot", "hot stuff"]
+      result['hits'].first['hit']['uid'].should eq record['uid']
+    end
+
+    it 'finds existing records by oid' do
+      Sherlock::Elasticsearch.index record
+      Sherlock::Elasticsearch.index another_record
+      Sherlock::Elasticsearch.index excluded_record
+      sleep 2.0
+      oids = [record, another_record].map {|r| r['uid'].split('$').last}
+
+      endpoint = "/search/#{realm}/*:hell.*$#{oids.join('|')}"
+      endpoint = URI.escape endpoint
+
+      get endpoint
+      result = JSON.parse(last_response.body)
+      result['hits'].map do |hit|
+        hit['hit']['uid'].split('$').last
+      end.should eq oids
       result['hits'].first['hit']['uid'].should eq record['uid']
     end
 

@@ -82,7 +82,10 @@ module Sherlock
       {:must => queries}
     end
 
+    # typically *:apdm.oa|rb.* returns
+    # {:or=>[{:term=>{"label_1_"=>"oa"}}, {:term=>{"label_1_"=>"rb"}}]}
     def path_or_query
+      return nil if uid_query.list?
       filter = {}
       uid_query.to_hash.map do |key, value|
         if value.is_a?(Array)
@@ -106,48 +109,52 @@ module Sherlock
     end
 
     def uid_field_queries
-      result = uid_query.to_hash.map do |key, value|
-        {:term => {key.to_s => value}} unless value.is_a?(Array)
+      if uid_query.list? # e.g. *:apdm.rb.*$1643364|1637855
+        oids = uid_query.terms.map { |term| Pebbles::Uid.query(term).oid }.compact
+        return [{:terms => {'oid_' => oids}}]
+      else
+        # e.g. *:apdm.rb.*
+        result = uid_query.to_hash.map do |key, value|
+          {:term => {key.to_s => value}} unless value.is_a?(Array)
+        end
+        result.compact
       end
-      result.compact
     end
 
     def tags_queries
-      if @tags_query
-        results = {}
-        results[:and] = []
-        results[:or] = []
-        results[:not] = []
-        if @tags_query.include?(",")
-          terms = @tags_query.split(",").map{|tag| tag.strip}
-          results[:and] << terms.map{|t| {"term" => {"tags_vector" => t}}}
-        else
-          ands = @tags_query.split('&')
-          ands.each do |a|
-            if a.strip[0] != "!"
-              if a.index("|")
-                a.split("|").each do |o|
-                  o = o.gsub("(", "").strip
-                    o = o.gsub(")", "").strip
-                  results[:or] << {
-                    "term" => { "tags_vector" => o.strip}
-                  }
-                end
-              else
-                results[:and] << {
-                  "term" => { "tags_vector" => a.strip}
+      return nil unless @tags_query
+      results = {}
+      results[:and] = []
+      results[:or] = []
+      results[:not] = []
+      if @tags_query.include?(",")
+        terms = @tags_query.split(",").map{|tag| tag.strip}
+        results[:and] << terms.map{|t| {"term" => {"tags_vector" => t}}}
+      else
+        ands = @tags_query.split('&')
+        ands.each do |a|
+          if a.strip[0] != "!"
+            if a.index("|")
+              a.split("|").each do |o|
+                o = o.gsub("(", "").strip
+                  o = o.gsub(")", "").strip
+                results[:or] << {
+                  "term" => { "tags_vector" => o.strip}
                 }
               end
             else
               results[:and] << {
-                "not" => { "term" => { "tags_vector" => a.gsub("!", "").strip} }
+                "term" => { "tags_vector" => a.strip}
               }
             end
+          else
+            results[:and] << {
+              "not" => { "term" => { "tags_vector" => a.gsub("!", "").strip} }
+            }
           end
         end
-        return results
       end
-      nil
+      results
     end
 
     # query on specific field value
@@ -280,6 +287,7 @@ module Sherlock
       result
     end
 
+    # called by Sherlock::Elasticsearch.query
     def to_json
       to_hash.to_json
     end
