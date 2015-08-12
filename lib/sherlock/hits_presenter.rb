@@ -6,12 +6,12 @@ module Sherlock
 
     attr_reader :hits, :pagination, :total
 
-    def initialize(search_result, pagination_options)
+    def initialize(search_result, pagination_options, include_score = true)
       if search_result
         @hits = search_result['hits']['hits'].map do |hit|
-          DeepStruct.wrap(
-            hit['_source']['pristine'].merge({'score' => hit['_score']}).merge({'uid' => hit['_id']})
-          )
+          hit_hash = hit['_source']['pristine'].merge({'uid' => hit['_id']})
+          hit_hash = hit_hash.merge({'score' => hit['_score']}) if include_score
+          DeepStruct.wrap(hit_hash)
         end
         @total = search_result['hits']['total']
       else
