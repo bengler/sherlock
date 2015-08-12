@@ -45,8 +45,10 @@ class SherlockV1 < Sinatra::Base
       end
 
       result = Sherlock::ResultCensor.consider(result, god_mode?, current_identity_id)
+      pagination_options = {:limit => query.limit, :offset => query.offset}
+      include_score = (params[:return_fields] && params[:return_fields].split(',').include?('score'))
 
-      presenter = Sherlock::HitsPresenter.new(result, {:limit => query.limit, :offset => query.offset})
+      presenter = Sherlock::HitsPresenter.new(result, pagination_options, include_score)
       locals = {
         :hits => presenter.hits,
         :pagination => presenter.pagination,
