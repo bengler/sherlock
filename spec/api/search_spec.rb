@@ -808,7 +808,7 @@ describe 'API v1 search' do
 
   end
 
-  describe 'returns only specific fields' do
+  describe 'returns only specified fields' do
 
     it 'works' do
       uid = 'post.card:hell.flames.devil$1'
@@ -823,6 +823,7 @@ describe 'API v1 search' do
       result['hits'].count.should eq 1
       result['hits'].first['hit']['uid'].should eq uid
       result['hits'].first['hit']['document'].should eq nil
+      result['hits'].first['hit']['score'].should eq nil
       result['hits'].first['hit']['restricted'].should eq false
     end
 
