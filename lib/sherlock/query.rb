@@ -4,7 +4,9 @@
 module Sherlock
   class Query
 
-    attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :min, :max, :deprecated_range, :fields, :accessible_paths, :uid_query, :tags_query, :deleted
+    REQUIRED_RETURN_FIELDS = ['id', 'created_at']
+
+    attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :min, :max, :deprecated_range, :fields, :accessible_paths, :uid_query, :tags_query, :deleted, :return_fields
     def initialize(options, accessible_paths = [])
       options.symbolize_keys!
       @search_term = options[:q]
@@ -21,6 +23,7 @@ module Sherlock
       @uid_query = Pebbles::Uid.query(uid, :species => 'klass', :path => 'label', :suffix => '')
       @tags_query = options[:tags]
       @deleted = options[:deleted]
+      @return_fields = options[:return_fields]
     end
 
 
@@ -33,6 +36,7 @@ module Sherlock
           }
         }
       )
+      result['_source'] = compile_return_fields if return_fields
 
       if tags_queries
         tags_queries.each do |rk,rv|
@@ -309,8 +313,15 @@ module Sherlock
       # Escape odd quotes
       quote_count = str.count '"'
       str = str.gsub(/(.*)"(.*)/, '\1\"\2') if quote_count % 2 == 1
-
       str
+    end
+
+
+    # ONLY these fields are returned from ES
+    def compile_return_fields
+      user_specified_return_fields = return_fields.split(',')
+      fields = (REQUIRED_RETURN_FIELDS + user_specified_return_fields).compact.uniq
+      fields.map {|f| "pristine.#{f}"}
     end
 
   end
