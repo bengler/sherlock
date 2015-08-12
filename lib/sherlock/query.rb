@@ -4,8 +4,6 @@
 module Sherlock
   class Query
 
-    REQUIRED_RETURN_FIELDS = ['id', 'created_at']
-
     attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :min, :max, :deprecated_range, :fields, :accessible_paths, :uid_query, :tags_query, :deleted, :return_fields
     def initialize(options, accessible_paths = [])
       options.symbolize_keys!
@@ -319,8 +317,7 @@ module Sherlock
 
     # ONLY these fields are returned from ES
     def compile_return_fields
-      user_specified_return_fields = return_fields.split(',')
-      fields = (REQUIRED_RETURN_FIELDS + user_specified_return_fields).compact.uniq
+      fields = return_fields.split(',').compact.uniq
       fields.map {|f| "pristine.#{f}"}
     end
 
