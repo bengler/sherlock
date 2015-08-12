@@ -4,9 +4,10 @@
 module Sherlock
   class Query
 
+    REQUIRED_RETURN_FIELDS = ['uid']
+
     attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :min, :max, :deprecated_range, :fields, :accessible_paths, :uid_query, :tags_query, :deleted, :return_fields
     def initialize(options, accessible_paths = [])
-      options.symbolize_keys!
       @search_term = options[:q]
       @limit = options.fetch(:limit) { 10 }
       @offset = options.fetch(:offset) { 0 }
@@ -317,8 +318,7 @@ module Sherlock
 
     # ONLY these fields are returned from ES
     def compile_return_fields
-      fields = return_fields.split(',').compact.uniq
-      fields.map {|f| "pristine.#{f}"}
+      (REQUIRED_RETURN_FIELDS + return_fields).uniq.map {|f| "pristine.#{f}"}
     end
 
   end
