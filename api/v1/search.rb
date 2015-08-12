@@ -36,8 +36,10 @@ class SherlockV1 < Sinatra::Base
 
     def perform_query(realm, uid)
       query_path = uid ? Pebbles::Uid.query(uid).path : nil
-      query = Sherlock::Query.new(params, accessible_paths(query_path))
+      params.symbolize_keys!
+      clean_up_return_fields!
 
+      query = Sherlock::Query.new(params, accessible_paths(query_path))
       begin
         result = Sherlock::Elasticsearch.query(realm, query)
       rescue Sherlock::Elasticsearch::QueryError => e
@@ -46,15 +48,25 @@ class SherlockV1 < Sinatra::Base
 
       result = Sherlock::ResultCensor.consider(result, god_mode?, current_identity_id)
       pagination_options = {:limit => query.limit, :offset => query.offset}
-      include_score = (params[:return_fields] && params[:return_fields].split(',').include?('score'))
 
-      presenter = Sherlock::HitsPresenter.new(result, pagination_options, include_score)
+      presenter = Sherlock::HitsPresenter.new(result, pagination_options, include_score?)
       locals = {
         :hits => presenter.hits,
         :pagination => presenter.pagination,
         :total => presenter.total
       }
       pg(:hits, :locals => locals)
+    end
+
+
+    def clean_up_return_fields!
+      return unless params[:return_fields]
+      params[:return_fields] = params[:return_fields].split(',').compact.uniq.map {|f| f.strip}
+    end
+
+    def include_score?
+      return true unless params[:return_fields]
+      params[:return_fields].include?('score')
     end
 
   end
