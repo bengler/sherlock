@@ -808,4 +808,25 @@ describe 'API v1 search' do
 
   end
 
+  describe 'returns only specific fields' do
+
+    it 'works' do
+      uid = 'post.card:hell.flames.devil$1'
+      record_hash = {'document' => 'hot', 'uid' => uid, :restricted => false}
+      Sherlock::Parsers::Generic.new(uid, record_hash).to_hash
+      Sherlock::Elasticsearch.index record
+      sleep 1.5
+
+      get "/search/#{realm}/#{uid}", :return_fields => 'restricted'
+      result = JSON.parse(last_response.body)
+
+      result['hits'].count.should eq 1
+      result['hits'].first['hit']['uid'].should eq uid
+      result['hits'].first['hit']['document'].should eq nil
+      result['hits'].first['hit']['restricted'].should eq false
+    end
+
+  end
+
+
 end
