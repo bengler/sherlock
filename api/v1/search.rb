@@ -35,10 +35,13 @@ class SherlockV1 < Sinatra::Base
 
 
     def perform_query(realm, uid)
-      query_path = uid ? Pebbles::Uid.query(uid).path : nil
+
+      uid_query = uid ? Pebbles::Uid.query(uid) : nil
+      query_path = uid_query ? uid_query.path : nil
+
       params.symbolize_keys!
       clean_up_return_fields!
-      ensure_correct_limit!
+      ensure_correct_limit!(uid_query)
 
       query = Sherlock::Query.new(params, accessible_paths(query_path))
       begin
@@ -48,6 +51,7 @@ class SherlockV1 < Sinatra::Base
       end
 
       result = Sherlock::ResultCensor.consider(result, god_mode?, current_identity_id)
+      result = ensure_correct_order(uid_query, result)
       pagination_options = {:limit => query.limit, :offset => query.offset}
 
       presenter = Sherlock::HitsPresenter.new(result, pagination_options, include_score?)
@@ -60,10 +64,8 @@ class SherlockV1 < Sinatra::Base
     end
 
     # override limit if query contains a list of IDs
-    def ensure_correct_limit!
-      return unless params[:uid]
-      uid_query = Pebbles::Uid.query(params[:uid])
-      return unless uid_query.list?
+    def ensure_correct_limit!(uid_query)
+      return unless uid_query && uid_query.list?
       params[:limit] = uid_query.terms.count
     end
 
@@ -75,6 +77,16 @@ class SherlockV1 < Sinatra::Base
     def include_score?
       return true unless params[:return_fields]
       params[:return_fields].include?('score')
+    end
+
+    # ES result order does not match the queried order. Fixing this right here.
+    def ensure_correct_order(uid_query, incoming_result)
+      return incoming_result unless uid_query && uid_query.list?
+      hits_by_id = Hash[incoming_result['hits']['hits'].map { |hit| [hit['_source']['pristine']['uid'].split('$').last, hit] }] # revamp results for fast retrieval
+      ordered_ids = uid_query.terms.map {|term| term.split('$').last} # wanted order
+      correctly_ordered_hits = ordered_ids.map { |id| hits_by_id[id] } # hits, ordered
+      incoming_result['hits']['hits'] = correctly_ordered_hits # write them back
+      incoming_result
     end
 
   end
