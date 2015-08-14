@@ -38,6 +38,7 @@ class SherlockV1 < Sinatra::Base
       query_path = uid ? Pebbles::Uid.query(uid).path : nil
       params.symbolize_keys!
       clean_up_return_fields!
+      ensure_correct_limit!
 
       query = Sherlock::Query.new(params, accessible_paths(query_path))
       begin
@@ -58,6 +59,13 @@ class SherlockV1 < Sinatra::Base
       pg(:hits, :locals => locals)
     end
 
+    # override limit if query contains a list of IDs
+    def ensure_correct_limit!
+      return unless params[:uid]
+      uid_query = Pebbles::Uid.query(params[:uid])
+      return unless uid_query.list?
+      params[:limit] = uid_query.terms.count
+    end
 
     def clean_up_return_fields!
       return unless params[:return_fields]
