@@ -78,6 +78,7 @@ describe 'API v1 search' do
         hit['hit']['uid'].split('$').last
       end.should eq oids
       result['hits'].first['hit']['uid'].should eq record['uid']
+      result['pagination']['limit'].should eq 2
     end
 
     it 'raises an error on query at non-existing index' do
