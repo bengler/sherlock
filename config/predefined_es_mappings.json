@@ -1,19 +1,4 @@
 {
-  "sherlock_ENV_snargh": {
-    "mappings": {
-      "post.test_two": {
-        "properties": {
-          "external_id": {
-            "type": "string"
-          },
-          "uid": {
-            "index": "not_analyzed",
-            "type": "string"
-          }
-        }
-      }
-    }
-  },
   "sherlock_ENV_apdm": {
     "mappings": {
       "post.artist": {
@@ -14908,6 +14893,376 @@
   },
   "sherlock_ENV_oma": {
     "mappings": {
+      "post.about_o_m_a": {
+        "properties": {
+          "canonical_path": {
+            "type": "string"
+          },
+          "conflicted": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "created_by": {
+            "type": "long"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "document.description": {
+            "type": "string"
+          },
+          "document.extended_description": {
+            "type": "string"
+          },
+          "document.label": {
+            "type": "string"
+          },
+          "document.title": {
+            "type": "string"
+          },
+          "document_updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "external_document_updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "external_id": {
+            "type": "string"
+          },
+          "id": {
+            "type": "long"
+          },
+          "klass": {
+            "type": "string"
+          },
+          "klass_0_": {
+            "type": "string"
+          },
+          "klass_1_": {
+            "type": "string"
+          },
+          "label_0_": {
+            "type": "string"
+          },
+          "label_1_": {
+            "type": "string"
+          },
+          "oid_": {
+            "type": "string"
+          },
+          "paths": {
+            "type": "string"
+          },
+          "pristine": {
+            "properties": {
+              "canonical_path": {
+                "type": "string"
+              },
+              "conflicted": {
+                "type": "boolean"
+              },
+              "created_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "created_by": {
+                "type": "long"
+              },
+              "deleted": {
+                "type": "boolean"
+              },
+              "document": {
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+                  "extended_description": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                }
+              },
+              "document_updated_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "external_document_updated_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "external_id": {
+                "type": "string"
+              },
+              "id": {
+                "type": "long"
+              },
+              "klass": {
+                "type": "string"
+              },
+              "paths": {
+                "type": "string"
+              },
+              "published": {
+                "type": "boolean"
+              },
+              "realm": {
+                "type": "string"
+              },
+              "restricted": {
+                "type": "boolean"
+              },
+              "uid": {
+                "type": "string"
+              },
+              "updated_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "version": {
+                "type": "long"
+              }
+            }
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "realm": {
+            "type": "string"
+          },
+          "restricted": {
+            "type": "boolean"
+          },
+          "uid": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "version": {
+            "type": "long"
+          }
+        }
+      },
+      "post.contact_o_m_a": {
+        "properties": {
+          "canonical_path": {
+            "type": "string"
+          },
+          "conflicted": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "created_by": {
+            "type": "long"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "document.contacts": {
+            "properties": {
+              "contact_person": {
+                "type": "string"
+              },
+              "department_name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "territory": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            }
+          },
+          "document.created_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "document.created_by": {
+            "type": "long"
+          },
+          "document.label": {
+            "type": "string"
+          },
+          "document.title": {
+            "type": "string"
+          },
+          "document.updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "document_updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "external_document_updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "external_id": {
+            "type": "string"
+          },
+          "id": {
+            "type": "long"
+          },
+          "klass": {
+            "type": "string"
+          },
+          "klass_0_": {
+            "type": "string"
+          },
+          "klass_1_": {
+            "type": "string"
+          },
+          "label_0_": {
+            "type": "string"
+          },
+          "label_1_": {
+            "type": "string"
+          },
+          "oid_": {
+            "type": "string"
+          },
+          "paths": {
+            "type": "string"
+          },
+          "pristine": {
+            "properties": {
+              "canonical_path": {
+                "type": "string"
+              },
+              "conflicted": {
+                "type": "boolean"
+              },
+              "created_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "created_by": {
+                "type": "long"
+              },
+              "deleted": {
+                "type": "boolean"
+              },
+              "document": {
+                "properties": {
+                  "contacts": {
+                    "properties": {
+                      "contact_person": {
+                        "type": "string"
+                      },
+                      "department_name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "territory": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "created_at": {
+                    "format": "dateOptionalTime",
+                    "type": "date"
+                  },
+                  "created_by": {
+                    "type": "long"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "updated_at": {
+                    "format": "dateOptionalTime",
+                    "type": "date"
+                  }
+                }
+              },
+              "document_updated_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "external_document_updated_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "external_id": {
+                "type": "string"
+              },
+              "id": {
+                "type": "long"
+              },
+              "klass": {
+                "type": "string"
+              },
+              "paths": {
+                "type": "string"
+              },
+              "published": {
+                "type": "boolean"
+              },
+              "realm": {
+                "type": "string"
+              },
+              "restricted": {
+                "type": "boolean"
+              },
+              "uid": {
+                "type": "string"
+              },
+              "updated_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "version": {
+                "type": "long"
+              }
+            }
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "realm": {
+            "type": "string"
+          },
+          "restricted": {
+            "type": "boolean"
+          },
+          "uid": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "version": {
+            "type": "long"
+          }
+        }
+      },
       "post.front_page_segment": {
         "properties": {
           "canonical_path": {
@@ -14939,88 +15294,6 @@
                   "body": {
                     "type": "string"
                   },
-                  "buildingSite": {
-                    "type": "string"
-                  },
-                  "clients": {
-                    "type": "string"
-                  },
-                  "coAuthors": {
-                    "properties": {
-                      "role": {
-                        "type": "string"
-                      },
-                      "roleCredits": {
-                        "properties": {
-                          "people": {
-                            "properties": {
-                              "name": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "title": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "title": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "collaborators": {
-                    "properties": {
-                      "people": {
-                        "properties": {
-                          "name": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "role": {
-                        "type": "string"
-                      },
-                      "roleCredits": {
-                        "properties": {
-                          "people": {
-                            "properties": {
-                              "name": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "title": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "title": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    }
-                  },
                   "commentCount": {
                     "type": "long"
                   },
@@ -15033,63 +15306,6 @@
                   },
                   "createdTime": {
                     "type": "string"
-                  },
-                  "credits": {
-                    "properties": {
-                      "partners": {
-                        "properties": {
-                          "name": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "phases": {
-                        "properties": {
-                          "roleCredits": {
-                            "properties": {
-                              "people": {
-                                "properties": {
-                                  "name": {
-                                    "type": "string"
-                                  },
-                                  "type": {
-                                    "type": "string"
-                                  }
-                                }
-                              },
-                              "title": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "team": {
-                            "properties": {
-                              "name": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "title": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    }
                   },
                   "date": {
                     "format": "dateOptionalTime",
@@ -15173,7 +15389,7 @@
                                 }
                               },
                               "rms": {
-                                "type": "long"
+                                "type": "double"
                               }
                             }
                           },
@@ -15250,38 +15466,12 @@
                       }
                     }
                   },
-                  "geoPlace": {
-                    "properties": {
-                      "city": {
-                        "type": "string"
-                      },
-                      "country": {
-                        "type": "string"
-                      },
-                      "latlon": {
-                        "properties": {
-                          "lat": {
-                            "type": "double"
-                          },
-                          "lon": {
-                            "type": "double"
-                          }
-                        }
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    }
-                  },
                   "happensOn": {
                     "format": "dateOptionalTime",
                     "type": "date"
                   },
-                  "hasTimeline": {
-                    "type": "boolean"
-                  },
                   "id": {
-                    "type": "string"
+                    "type": "long"
                   },
                   "imageData": {
                     "properties": {
@@ -15362,7 +15552,7 @@
                                 }
                               },
                               "rms": {
-                                "type": "long"
+                                "type": "double"
                               }
                             }
                           },
@@ -15445,12 +15635,6 @@
                       }
                     }
                   },
-                  "isCurrentlyPhysical": {
-                    "type": "boolean"
-                  },
-                  "isRelevantOnInstagram": {
-                    "type": "boolean"
-                  },
                   "key": {
                     "type": "string"
                   },
@@ -15475,25 +15659,6 @@
                   "link": {
                     "type": "string"
                   },
-                  "locationRadius": {
-                    "type": "long"
-                  },
-                  "mainImage": {
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "refType": {
-                        "type": "string"
-                      },
-                      "store": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    }
-                  },
                   "mediaUrl": {
                     "type": "string"
                   },
@@ -15510,84 +15675,11 @@
                       }
                     }
                   },
-                  "milestones": {
-                    "properties": {
-                      "approximateDate": {
-                        "properties": {
-                          "approximation": {
-                            "type": "string"
-                          },
-                          "date": {
-                            "format": "dateOptionalTime",
-                            "type": "date"
-                          },
-                          "type": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "label": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    }
-                  },
                   "omaRating": {
                     "type": "long"
                   },
                   "path": {
                     "type": "string"
-                  },
-                  "presentationImages": {
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "refType": {
-                        "type": "string"
-                      },
-                      "store": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "pressCoverage": {
-                    "properties": {
-                      "date": {
-                        "format": "dateOptionalTime",
-                        "type": "date"
-                      },
-                      "fid": {
-                        "type": "string"
-                      },
-                      "id": {
-                        "type": "long"
-                      },
-                      "priorityTime": {
-                        "format": "dateOptionalTime",
-                        "type": "date"
-                      },
-                      "project": {
-                        "type": "string"
-                      },
-                      "publisher": {
-                        "type": "string"
-                      },
-                      "title": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      },
-                      "url": {
-                        "type": "string"
-                      }
-                    }
                   },
                   "priorityTime": {
                     "format": "dateOptionalTime",
@@ -15596,19 +15688,12 @@
                   "project": {
                     "type": "string"
                   },
-                  "projectComplete": {
-                    "type": "boolean"
-                  },
                   "projectData": {
                     "properties": {
                       "title": {
                         "type": "string"
                       }
                     }
-                  },
-                  "publishAt": {
-                    "format": "dateOptionalTime",
-                    "type": "date"
                   },
                   "publishDate": {
                     "format": "dateOptionalTime",
@@ -15620,39 +15705,8 @@
                   "purchaseUrl": {
                     "type": "string"
                   },
-                  "references": {
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "store": {
-                        "type": "string"
-                      },
-                      "to": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "site": {
-                    "type": "string"
-                  },
-                  "sortOrder": {
-                    "type": "long"
-                  },
-                  "status": {
-                    "type": "string"
-                  },
-                  "tags": {
-                    "type": "string"
-                  },
                   "title": {
                     "type": "string"
-                  },
-                  "totalSquareMeters": {
-                    "type": "long"
                   },
                   "type": {
                     "type": "string"
@@ -15990,6 +16044,18 @@
                           },
                           "meta": {
                             "properties": {
+                              "altText": {
+                                "type": "string"
+                              },
+                              "caption": {
+                                "type": "string"
+                              },
+                              "credits": {
+                                "type": "string"
+                              },
+                              "license": {
+                                "type": "string"
+                              },
                               "type": {
                                 "type": "string"
                               }
@@ -16217,7 +16283,16 @@
                           },
                           "meta": {
                             "properties": {
+                              "altText": {
+                                "type": "string"
+                              },
                               "caption": {
+                                "type": "string"
+                              },
+                              "credits": {
+                                "type": "string"
+                              },
+                              "license": {
                                 "type": "string"
                               },
                               "type": {
@@ -16384,7 +16459,7 @@
                         "type": "string"
                       },
                       "id": {
-                        "type": "string"
+                        "type": "long"
                       },
                       "imageData": {
                         "properties": {
@@ -16573,7 +16648,16 @@
                       },
                       "meta": {
                         "properties": {
+                          "altText": {
+                            "type": "string"
+                          },
                           "caption": {
+                            "type": "string"
+                          },
+                          "credits": {
+                            "type": "string"
+                          },
+                          "license": {
                             "type": "string"
                           },
                           "type": {
@@ -16770,88 +16854,6 @@
                           "body": {
                             "type": "string"
                           },
-                          "buildingSite": {
-                            "type": "string"
-                          },
-                          "clients": {
-                            "type": "string"
-                          },
-                          "coAuthors": {
-                            "properties": {
-                              "role": {
-                                "type": "string"
-                              },
-                              "roleCredits": {
-                                "properties": {
-                                  "people": {
-                                    "properties": {
-                                      "name": {
-                                        "type": "string"
-                                      },
-                                      "type": {
-                                        "type": "string"
-                                      }
-                                    }
-                                  },
-                                  "title": {
-                                    "type": "string"
-                                  },
-                                  "type": {
-                                    "type": "string"
-                                  }
-                                }
-                              },
-                              "title": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "collaborators": {
-                            "properties": {
-                              "people": {
-                                "properties": {
-                                  "name": {
-                                    "type": "string"
-                                  },
-                                  "type": {
-                                    "type": "string"
-                                  }
-                                }
-                              },
-                              "role": {
-                                "type": "string"
-                              },
-                              "roleCredits": {
-                                "properties": {
-                                  "people": {
-                                    "properties": {
-                                      "name": {
-                                        "type": "string"
-                                      },
-                                      "type": {
-                                        "type": "string"
-                                      }
-                                    }
-                                  },
-                                  "title": {
-                                    "type": "string"
-                                  },
-                                  "type": {
-                                    "type": "string"
-                                  }
-                                }
-                              },
-                              "title": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              }
-                            }
-                          },
                           "commentCount": {
                             "type": "long"
                           },
@@ -16864,63 +16866,6 @@
                           },
                           "createdTime": {
                             "type": "string"
-                          },
-                          "credits": {
-                            "properties": {
-                              "partners": {
-                                "properties": {
-                                  "name": {
-                                    "type": "string"
-                                  },
-                                  "type": {
-                                    "type": "string"
-                                  }
-                                }
-                              },
-                              "phases": {
-                                "properties": {
-                                  "roleCredits": {
-                                    "properties": {
-                                      "people": {
-                                        "properties": {
-                                          "name": {
-                                            "type": "string"
-                                          },
-                                          "type": {
-                                            "type": "string"
-                                          }
-                                        }
-                                      },
-                                      "title": {
-                                        "type": "string"
-                                      },
-                                      "type": {
-                                        "type": "string"
-                                      }
-                                    }
-                                  },
-                                  "team": {
-                                    "properties": {
-                                      "name": {
-                                        "type": "string"
-                                      },
-                                      "type": {
-                                        "type": "string"
-                                      }
-                                    }
-                                  },
-                                  "title": {
-                                    "type": "string"
-                                  },
-                                  "type": {
-                                    "type": "string"
-                                  }
-                                }
-                              },
-                              "type": {
-                                "type": "string"
-                              }
-                            }
                           },
                           "date": {
                             "format": "dateOptionalTime",
@@ -17004,7 +16949,7 @@
                                         }
                                       },
                                       "rms": {
-                                        "type": "long"
+                                        "type": "double"
                                       }
                                     }
                                   },
@@ -17081,38 +17026,12 @@
                               }
                             }
                           },
-                          "geoPlace": {
-                            "properties": {
-                              "city": {
-                                "type": "string"
-                              },
-                              "country": {
-                                "type": "string"
-                              },
-                              "latlon": {
-                                "properties": {
-                                  "lat": {
-                                    "type": "double"
-                                  },
-                                  "lon": {
-                                    "type": "double"
-                                  }
-                                }
-                              },
-                              "type": {
-                                "type": "string"
-                              }
-                            }
-                          },
                           "happensOn": {
                             "format": "dateOptionalTime",
                             "type": "date"
                           },
-                          "hasTimeline": {
-                            "type": "boolean"
-                          },
                           "id": {
-                            "type": "string"
+                            "type": "long"
                           },
                           "imageData": {
                             "properties": {
@@ -17193,7 +17112,7 @@
                                         }
                                       },
                                       "rms": {
-                                        "type": "long"
+                                        "type": "double"
                                       }
                                     }
                                   },
@@ -17276,12 +17195,6 @@
                               }
                             }
                           },
-                          "isCurrentlyPhysical": {
-                            "type": "boolean"
-                          },
-                          "isRelevantOnInstagram": {
-                            "type": "boolean"
-                          },
                           "key": {
                             "type": "string"
                           },
@@ -17306,25 +17219,6 @@
                           "link": {
                             "type": "string"
                           },
-                          "locationRadius": {
-                            "type": "long"
-                          },
-                          "mainImage": {
-                            "properties": {
-                              "id": {
-                                "type": "string"
-                              },
-                              "refType": {
-                                "type": "string"
-                              },
-                              "store": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              }
-                            }
-                          },
                           "mediaUrl": {
                             "type": "string"
                           },
@@ -17341,84 +17235,11 @@
                               }
                             }
                           },
-                          "milestones": {
-                            "properties": {
-                              "approximateDate": {
-                                "properties": {
-                                  "approximation": {
-                                    "type": "string"
-                                  },
-                                  "date": {
-                                    "format": "dateOptionalTime",
-                                    "type": "date"
-                                  },
-                                  "type": {
-                                    "type": "string"
-                                  }
-                                }
-                              },
-                              "label": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              }
-                            }
-                          },
                           "omaRating": {
                             "type": "long"
                           },
                           "path": {
                             "type": "string"
-                          },
-                          "presentationImages": {
-                            "properties": {
-                              "id": {
-                                "type": "string"
-                              },
-                              "refType": {
-                                "type": "string"
-                              },
-                              "store": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "pressCoverage": {
-                            "properties": {
-                              "date": {
-                                "format": "dateOptionalTime",
-                                "type": "date"
-                              },
-                              "fid": {
-                                "type": "string"
-                              },
-                              "id": {
-                                "type": "long"
-                              },
-                              "priorityTime": {
-                                "format": "dateOptionalTime",
-                                "type": "date"
-                              },
-                              "project": {
-                                "type": "string"
-                              },
-                              "publisher": {
-                                "type": "string"
-                              },
-                              "title": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              },
-                              "url": {
-                                "type": "string"
-                              }
-                            }
                           },
                           "priorityTime": {
                             "format": "dateOptionalTime",
@@ -17427,19 +17248,12 @@
                           "project": {
                             "type": "string"
                           },
-                          "projectComplete": {
-                            "type": "boolean"
-                          },
                           "projectData": {
                             "properties": {
                               "title": {
                                 "type": "string"
                               }
                             }
-                          },
-                          "publishAt": {
-                            "format": "dateOptionalTime",
-                            "type": "date"
                           },
                           "publishDate": {
                             "format": "dateOptionalTime",
@@ -17451,39 +17265,8 @@
                           "purchaseUrl": {
                             "type": "string"
                           },
-                          "references": {
-                            "properties": {
-                              "id": {
-                                "type": "string"
-                              },
-                              "store": {
-                                "type": "string"
-                              },
-                              "to": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "site": {
-                            "type": "string"
-                          },
-                          "sortOrder": {
-                            "type": "long"
-                          },
-                          "status": {
-                            "type": "string"
-                          },
-                          "tags": {
-                            "type": "string"
-                          },
                           "title": {
                             "type": "string"
-                          },
-                          "totalSquareMeters": {
-                            "type": "long"
                           },
                           "type": {
                             "type": "string"
@@ -17821,6 +17604,18 @@
                                   },
                                   "meta": {
                                     "properties": {
+                                      "altText": {
+                                        "type": "string"
+                                      },
+                                      "caption": {
+                                        "type": "string"
+                                      },
+                                      "credits": {
+                                        "type": "string"
+                                      },
+                                      "license": {
+                                        "type": "string"
+                                      },
                                       "type": {
                                         "type": "string"
                                       }
@@ -18048,7 +17843,16 @@
                                   },
                                   "meta": {
                                     "properties": {
+                                      "altText": {
+                                        "type": "string"
+                                      },
                                       "caption": {
+                                        "type": "string"
+                                      },
+                                      "credits": {
+                                        "type": "string"
+                                      },
+                                      "license": {
                                         "type": "string"
                                       },
                                       "type": {
@@ -18215,7 +18019,7 @@
                                 "type": "string"
                               },
                               "id": {
-                                "type": "string"
+                                "type": "long"
                               },
                               "imageData": {
                                 "properties": {
@@ -18404,7 +18208,16 @@
                               },
                               "meta": {
                                 "properties": {
+                                  "altText": {
+                                    "type": "string"
+                                  },
                                   "caption": {
+                                    "type": "string"
+                                  },
+                                  "credits": {
+                                    "type": "string"
+                                  },
+                                  "license": {
                                     "type": "string"
                                   },
                                   "type": {
@@ -18625,7 +18438,7 @@
             "type": "long"
           },
           "document.analysis.edge.rms": {
-            "type": "double"
+            "type": "long"
           },
           "document.analysis.isMonochrome": {
             "type": "boolean"
@@ -18661,6 +18474,9 @@
             "type": "string"
           },
           "document.title": {
+            "type": "string"
+          },
+          "document.uid": {
             "type": "string"
           },
           "document.versions": {
@@ -18746,7 +18562,7 @@
                             }
                           },
                           "rms": {
-                            "type": "double"
+                            "type": "long"
                           }
                         }
                       },
@@ -18786,6 +18602,9 @@
                     "type": "string"
                   },
                   "title": {
+                    "type": "string"
+                  },
+                  "uid": {
                     "type": "string"
                   },
                   "versions": {
@@ -19082,6 +18901,12 @@
           "deleted": {
             "type": "boolean"
           },
+          "document.city": {
+            "type": "string"
+          },
+          "document.country": {
+            "type": "string"
+          },
           "document.created_at": {
             "format": "dateOptionalTime",
             "type": "date"
@@ -19095,15 +18920,108 @@
           "document.extended_description": {
             "type": "string"
           },
+          "document.happens_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "document.happens_at.0": {
+            "type": "string"
+          },
+          "document.happens_at.1": {
+            "type": "string"
+          },
+          "document.happens_at.10": {
+            "type": "string"
+          },
+          "document.happens_at.11": {
+            "type": "string"
+          },
+          "document.happens_at.12": {
+            "type": "string"
+          },
+          "document.happens_at.13": {
+            "type": "string"
+          },
+          "document.happens_at.14": {
+            "type": "string"
+          },
+          "document.happens_at.15": {
+            "type": "string"
+          },
+          "document.happens_at.16": {
+            "type": "string"
+          },
+          "document.happens_at.17": {
+            "type": "string"
+          },
+          "document.happens_at.18": {
+            "type": "string"
+          },
+          "document.happens_at.19": {
+            "type": "string"
+          },
+          "document.happens_at.2": {
+            "type": "string"
+          },
+          "document.happens_at.20": {
+            "type": "string"
+          },
+          "document.happens_at.21": {
+            "type": "string"
+          },
+          "document.happens_at.22": {
+            "type": "string"
+          },
+          "document.happens_at.23": {
+            "type": "string"
+          },
+          "document.happens_at.24": {
+            "type": "string"
+          },
+          "document.happens_at.3": {
+            "type": "string"
+          },
+          "document.happens_at.4": {
+            "type": "string"
+          },
+          "document.happens_at.5": {
+            "type": "string"
+          },
+          "document.happens_at.6": {
+            "type": "string"
+          },
+          "document.happens_at.7": {
+            "type": "string"
+          },
+          "document.happens_at.8": {
+            "type": "string"
+          },
+          "document.happens_at.9": {
+            "type": "string"
+          },
+          "document.happens_at.approximation": {
+            "type": "string"
+          },
+          "document.happens_at.date": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "document.host": {
+            "type": "string"
+          },
           "document.images": {
             "properties": {
               "id": {
                 "type": "string"
               },
-              "ref_type": {
-                "type": "string"
+              "meta": {
+                "properties": {
+                  "attribution": {
+                    "type": "string"
+                  }
+                }
               },
-              "store": {
+              "to": {
                 "type": "string"
               },
               "type": {
@@ -19114,14 +19032,21 @@
           "document.key": {
             "type": "string"
           },
+          "document.key_history": {
+            "type": "string"
+          },
           "document.label": {
             "type": "string"
           },
           "document.lecturers": {
-            "type": "string"
-          },
-          "document.legacy_url_slug": {
-            "type": "string"
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            }
           },
           "document.media_url": {
             "type": "string"
@@ -19188,6 +19113,18 @@
               },
               "document": {
                 "properties": {
+                  "canonical_path": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "conflicted": {
+                    "type": "boolean"
+                  },
+                  "country": {
+                    "type": "string"
+                  },
                   "created_at": {
                     "format": "dateOptionalTime",
                     "type": "date"
@@ -19195,10 +19132,156 @@
                   "created_by": {
                     "type": "long"
                   },
+                  "deleted": {
+                    "type": "boolean"
+                  },
                   "description": {
                     "type": "string"
                   },
+                  "document_updated_at": {
+                    "format": "dateOptionalTime",
+                    "type": "date"
+                  },
                   "extended_description": {
+                    "type": "string"
+                  },
+                  "external_document_updated_at": {
+                    "format": "dateOptionalTime",
+                    "type": "date"
+                  },
+                  "external_id": {
+                    "type": "string"
+                  },
+                  "happens_at": {
+                    "properties": {
+                      "0": {
+                        "type": "string"
+                      },
+                      "1": {
+                        "type": "string"
+                      },
+                      "10": {
+                        "type": "string"
+                      },
+                      "11": {
+                        "type": "string"
+                      },
+                      "12": {
+                        "type": "string"
+                      },
+                      "13": {
+                        "type": "string"
+                      },
+                      "14": {
+                        "type": "string"
+                      },
+                      "15": {
+                        "type": "string"
+                      },
+                      "16": {
+                        "type": "string"
+                      },
+                      "17": {
+                        "type": "string"
+                      },
+                      "18": {
+                        "type": "string"
+                      },
+                      "19": {
+                        "type": "string"
+                      },
+                      "2": {
+                        "type": "string"
+                      },
+                      "20": {
+                        "type": "string"
+                      },
+                      "21": {
+                        "type": "string"
+                      },
+                      "22": {
+                        "type": "string"
+                      },
+                      "23": {
+                        "type": "string"
+                      },
+                      "24": {
+                        "type": "string"
+                      },
+                      "3": {
+                        "type": "string"
+                      },
+                      "4": {
+                        "type": "string"
+                      },
+                      "5": {
+                        "type": "string"
+                      },
+                      "6": {
+                        "type": "string"
+                      },
+                      "7": {
+                        "type": "string"
+                      },
+                      "8": {
+                        "type": "string"
+                      },
+                      "9": {
+                        "type": "string"
+                      },
+                      "approximation": {
+                        "type": "string"
+                      },
+                      "date": {
+                        "format": "dateOptionalTime",
+                        "type": "date"
+                      },
+                      "happens_at": {
+                        "format": "dateOptionalTime",
+                        "type": "date"
+                      },
+                      "images": {
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "meta": {
+                            "properties": {
+                              "attribution": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "to": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "key": {
+                        "type": "string"
+                      },
+                      "key_history": {
+                        "type": "string"
+                      },
+                      "lecturers": {
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "media_url": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "host": {
                     "type": "string"
                   },
                   "images": {
@@ -19206,10 +19289,10 @@
                       "id": {
                         "type": "string"
                       },
-                      "ref_type": {
-                        "type": "string"
+                      "meta": {
+                        "type": "object"
                       },
-                      "store": {
+                      "to": {
                         "type": "string"
                       },
                       "type": {
@@ -19220,24 +19303,55 @@
                   "key": {
                     "type": "string"
                   },
+                  "key_history": {
+                    "type": "string"
+                  },
+                  "klass": {
+                    "type": "string"
+                  },
                   "label": {
                     "type": "string"
                   },
                   "lecturers": {
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "paths": {
                     "type": "string"
                   },
-                  "legacy_url_slug": {
+                  "protected": {
+                    "type": "object"
+                  },
+                  "published": {
+                    "type": "boolean"
+                  },
+                  "realm": {
                     "type": "string"
                   },
-                  "media_url": {
-                    "type": "string"
+                  "restricted": {
+                    "type": "boolean"
+                  },
+                  "sensitive": {
+                    "type": "object"
                   },
                   "title": {
+                    "type": "string"
+                  },
+                  "uid": {
                     "type": "string"
                   },
                   "updated_at": {
                     "format": "dateOptionalTime",
                     "type": "date"
+                  },
+                  "version": {
+                    "type": "long"
                   }
                 }
               },
@@ -19346,10 +19460,14 @@
               "id": {
                 "type": "string"
               },
-              "ref_type": {
-                "type": "string"
+              "meta": {
+                "properties": {
+                  "attribution": {
+                    "type": "string"
+                  }
+                }
               },
-              "store": {
+              "to": {
                 "type": "string"
               },
               "type": {
@@ -19360,34 +19478,18 @@
           "document.key": {
             "type": "string"
           },
+          "document.key_history": {
+            "type": "string"
+          },
           "document.label": {
             "type": "string"
           },
           "document.lede": {
             "type": "string"
           },
-          "document.legacy_url_slug": {
-            "type": "string"
-          },
           "document.publish_at": {
             "format": "dateOptionalTime",
             "type": "date"
-          },
-          "document.references": {
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "store": {
-                "type": "string"
-              },
-              "to": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string"
-              }
-            }
           },
           "document.title": {
             "type": "string"
@@ -19470,10 +19572,14 @@
                       "id": {
                         "type": "string"
                       },
-                      "ref_type": {
-                        "type": "string"
+                      "meta": {
+                        "properties": {
+                          "attribution": {
+                            "type": "string"
+                          }
+                        }
                       },
-                      "store": {
+                      "to": {
                         "type": "string"
                       },
                       "type": {
@@ -19484,34 +19590,18 @@
                   "key": {
                     "type": "string"
                   },
+                  "key_history": {
+                    "type": "string"
+                  },
                   "label": {
                     "type": "string"
                   },
                   "lede": {
                     "type": "string"
                   },
-                  "legacy_url_slug": {
-                    "type": "string"
-                  },
                   "publish_at": {
                     "format": "dateOptionalTime",
                     "type": "date"
-                  },
-                  "references": {
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "store": {
-                        "type": "string"
-                      },
-                      "to": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    }
                   },
                   "title": {
                     "type": "string"
@@ -19617,6 +19707,13 @@
           "document.building": {
             "type": "string"
           },
+          "document.created_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "document.created_by": {
+            "type": "long"
+          },
           "document.email": {
             "type": "string"
           },
@@ -19641,7 +19738,10 @@
           "document.key": {
             "type": "string"
           },
-          "document.legacy_url_slug": {
+          "document.key_history": {
+            "type": "string"
+          },
+          "document.label": {
             "type": "string"
           },
           "document.name": {
@@ -19653,8 +19753,15 @@
           "document.phone": {
             "type": "string"
           },
+          "document.pobox": {
+            "type": "long"
+          },
           "document.prefix": {
             "type": "string"
+          },
+          "document.updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
           },
           "document.zipcode": {
             "type": "string"
@@ -19723,6 +19830,13 @@
                   "building": {
                     "type": "string"
                   },
+                  "created_at": {
+                    "format": "dateOptionalTime",
+                    "type": "date"
+                  },
+                  "created_by": {
+                    "type": "long"
+                  },
                   "email": {
                     "type": "string"
                   },
@@ -19755,7 +19869,10 @@
                   "key": {
                     "type": "string"
                   },
-                  "legacy_url_slug": {
+                  "key_history": {
+                    "type": "string"
+                  },
+                  "label": {
                     "type": "string"
                   },
                   "name": {
@@ -19767,10 +19884,353 @@
                   "phone": {
                     "type": "string"
                   },
+                  "pobox": {
+                    "type": "long"
+                  },
                   "prefix": {
                     "type": "string"
                   },
+                  "updated_at": {
+                    "format": "dateOptionalTime",
+                    "type": "date"
+                  },
                   "zipcode": {
+                    "type": "string"
+                  }
+                }
+              },
+              "document_updated_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "external_document_updated_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "external_id": {
+                "type": "string"
+              },
+              "id": {
+                "type": "long"
+              },
+              "klass": {
+                "type": "string"
+              },
+              "paths": {
+                "type": "string"
+              },
+              "published": {
+                "type": "boolean"
+              },
+              "realm": {
+                "type": "string"
+              },
+              "restricted": {
+                "type": "boolean"
+              },
+              "uid": {
+                "type": "string"
+              },
+              "updated_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "version": {
+                "type": "long"
+              }
+            }
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "realm": {
+            "type": "string"
+          },
+          "restricted": {
+            "type": "boolean"
+          },
+          "uid": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "version": {
+            "type": "long"
+          }
+        }
+      },
+      "post.preoccupation": {
+        "properties": {
+          "canonical_path": {
+            "type": "string"
+          },
+          "conflicted": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "created_by": {
+            "type": "long"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "document.description": {
+            "type": "string"
+          },
+          "document.title": {
+            "type": "string"
+          },
+          "document_updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "external_document_updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "id": {
+            "type": "long"
+          },
+          "klass": {
+            "type": "string"
+          },
+          "klass_0_": {
+            "type": "string"
+          },
+          "klass_1_": {
+            "type": "string"
+          },
+          "label_0_": {
+            "type": "string"
+          },
+          "label_1_": {
+            "type": "string"
+          },
+          "oid_": {
+            "type": "string"
+          },
+          "paths": {
+            "type": "string"
+          },
+          "pristine": {
+            "properties": {
+              "canonical_path": {
+                "type": "string"
+              },
+              "conflicted": {
+                "type": "boolean"
+              },
+              "created_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "created_by": {
+                "type": "long"
+              },
+              "deleted": {
+                "type": "boolean"
+              },
+              "document": {
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                }
+              },
+              "document_updated_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "external_document_updated_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "id": {
+                "type": "long"
+              },
+              "klass": {
+                "type": "string"
+              },
+              "paths": {
+                "type": "string"
+              },
+              "published": {
+                "type": "boolean"
+              },
+              "realm": {
+                "type": "string"
+              },
+              "restricted": {
+                "type": "boolean"
+              },
+              "uid": {
+                "type": "string"
+              },
+              "updated_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "version": {
+                "type": "long"
+              }
+            }
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "realm": {
+            "type": "string"
+          },
+          "restricted": {
+            "type": "boolean"
+          },
+          "uid": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "version": {
+            "type": "long"
+          }
+        }
+      },
+      "post.press_coverage_item": {
+        "properties": {
+          "canonical_path": {
+            "type": "string"
+          },
+          "conflicted": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "created_by": {
+            "type": "long"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "document.date": {
+            "type": "string"
+          },
+          "document.mediaUrl": {
+            "type": "string"
+          },
+          "document.publisher": {
+            "type": "string"
+          },
+          "document.references": {
+            "properties": {
+              "id": {
+                "type": "long"
+              },
+              "to": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            }
+          },
+          "document.title": {
+            "type": "string"
+          },
+          "document.type": {
+            "type": "string"
+          },
+          "document_updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "external_document_updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "external_id": {
+            "type": "string"
+          },
+          "id": {
+            "type": "long"
+          },
+          "klass": {
+            "type": "string"
+          },
+          "klass_0_": {
+            "type": "string"
+          },
+          "klass_1_": {
+            "type": "string"
+          },
+          "label_0_": {
+            "type": "string"
+          },
+          "label_1_": {
+            "type": "string"
+          },
+          "oid_": {
+            "type": "string"
+          },
+          "paths": {
+            "type": "string"
+          },
+          "pristine": {
+            "properties": {
+              "canonical_path": {
+                "type": "string"
+              },
+              "conflicted": {
+                "type": "boolean"
+              },
+              "created_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "created_by": {
+                "type": "long"
+              },
+              "deleted": {
+                "type": "boolean"
+              },
+              "document": {
+                "properties": {
+                  "date": {
+                    "type": "string"
+                  },
+                  "mediaUrl": {
+                    "type": "string"
+                  },
+                  "publisher": {
+                    "type": "string"
+                  },
+                  "references": {
+                    "properties": {
+                      "id": {
+                        "type": "long"
+                      },
+                      "to": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "type": {
                     "type": "string"
                   }
                 }
@@ -19855,28 +20315,31 @@
           "deleted": {
             "type": "boolean"
           },
-          "document.name": {
+          "document.is_partner": {
+            "type": "boolean"
+          },
+          "document.key": {
             "type": "string"
           },
-          "document.partner": {
-            "type": "boolean"
+          "document.key_history": {
+            "type": "string"
+          },
+          "document.name": {
+            "type": "string"
           },
           "document.portrait.id": {
             "type": "string"
           },
-          "document.portrait.ref_type": {
-            "type": "string"
-          },
-          "document.portrait.store": {
+          "document.portrait.to": {
             "type": "string"
           },
           "document.portrait.type": {
             "type": "string"
           },
-          "document.short_bio": {
+          "document.role": {
             "type": "string"
           },
-          "document.slug": {
+          "document.short_bio": {
             "type": "string"
           },
           "document_updated_at": {
@@ -19934,21 +20397,27 @@
               },
               "document": {
                 "properties": {
-                  "name": {
+                  "is_partner": {
+                    "type": "boolean"
+                  },
+                  "key": {
                     "type": "string"
                   },
-                  "partner": {
-                    "type": "boolean"
+                  "key_history": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
                   },
                   "portrait": {
                     "properties": {
                       "id": {
                         "type": "string"
                       },
-                      "ref_type": {
-                        "type": "string"
+                      "meta": {
+                        "type": "object"
                       },
-                      "store": {
+                      "to": {
                         "type": "string"
                       },
                       "type": {
@@ -19956,10 +20425,10 @@
                       }
                     }
                   },
-                  "short_bio": {
+                  "role": {
                     "type": "string"
                   },
-                  "slug": {
+                  "short_bio": {
                     "type": "string"
                   }
                 }
@@ -20050,136 +20519,11 @@
           "deleted": {
             "type": "boolean"
           },
-          "document.archive_section": {
-            "properties": {
-              "approximate_date": {
-                "properties": {
-                  "date": {
-                    "format": "dateOptionalTime",
-                    "type": "date"
-                  }
-                }
-              },
-              "images": {
-                "properties": {
-                  "crop": {
-                    "properties": {
-                      "bottom": {
-                        "type": "long"
-                      },
-                      "left": {
-                        "type": "long"
-                      },
-                      "right": {
-                        "type": "long"
-                      },
-                      "top": {
-                        "type": "long"
-                      }
-                    }
-                  },
-                  "hotspot": {
-                    "properties": {
-                      "height": {
-                        "type": "long"
-                      },
-                      "width": {
-                        "type": "long"
-                      },
-                      "x": {
-                        "type": "double"
-                      },
-                      "y": {
-                        "type": "double"
-                      }
-                    }
-                  },
-                  "id": {
-                    "type": "string"
-                  },
-                  "meta": {
-                    "properties": {
-                      "alt_text": {
-                        "type": "string"
-                      },
-                      "caption": {
-                        "type": "string"
-                      },
-                      "credits": {
-                        "type": "string"
-                      },
-                      "license": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "to": {
-                    "type": "string"
-                  },
-                  "type": {
-                    "type": "string"
-                  }
-                }
-              },
-              "title": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string"
-              }
-            }
-          },
           "document.building_site": {
             "type": "string"
           },
           "document.clients": {
             "type": "string"
-          },
-          "document.co_authors": {
-            "properties": {
-              "people": {
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "type": {
-                    "type": "string"
-                  }
-                }
-              },
-              "role": {
-                "type": "string"
-              },
-              "role_credits": {
-                "properties": {
-                  "people": {
-                    "properties": {
-                      "name": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "title": {
-                    "type": "string"
-                  },
-                  "type": {
-                    "type": "string"
-                  }
-                }
-              },
-              "title": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string"
-              }
-            }
           },
           "document.collaborators": {
             "properties": {
@@ -20288,6 +20632,9 @@
             "type": "string"
           },
           "document.extended_description": {
+            "type": "string"
+          },
+          "document.featured_categories": {
             "type": "string"
           },
           "document.geo_place.city": {
@@ -20404,22 +20751,52 @@
           "document.key": {
             "type": "string"
           },
-          "document.label": {
+          "document.key_history": {
             "type": "string"
           },
-          "document.legacy_url_slug": {
+          "document.label": {
             "type": "string"
           },
           "document.location_radius": {
             "type": "long"
           },
+          "document.main_image.crop.bottom": {
+            "type": "long"
+          },
+          "document.main_image.crop.left": {
+            "type": "long"
+          },
+          "document.main_image.crop.right": {
+            "type": "long"
+          },
+          "document.main_image.crop.top": {
+            "type": "long"
+          },
+          "document.main_image.hotspot.height": {
+            "type": "double"
+          },
+          "document.main_image.hotspot.width": {
+            "type": "double"
+          },
+          "document.main_image.hotspot.x": {
+            "type": "double"
+          },
+          "document.main_image.hotspot.y": {
+            "type": "double"
+          },
           "document.main_image.id": {
+            "type": "string"
+          },
+          "document.main_image.meta.attribution": {
             "type": "string"
           },
           "document.main_image.ref_type": {
             "type": "string"
           },
           "document.main_image.store": {
+            "type": "string"
+          },
+          "document.main_image.to": {
             "type": "string"
           },
           "document.main_image.type": {
@@ -20449,6 +20826,9 @@
               }
             }
           },
+          "document.ongoing": {
+            "type": "boolean"
+          },
           "document.presentation_images": {
             "properties": {
               "crop": {
@@ -20470,10 +20850,10 @@
               "hotspot": {
                 "properties": {
                   "height": {
-                    "type": "long"
+                    "type": "double"
                   },
                   "width": {
-                    "type": "long"
+                    "type": "double"
                   },
                   "x": {
                     "type": "double"
@@ -20488,28 +20868,13 @@
               },
               "meta": {
                 "properties": {
-                  "alt_text": {
+                  "attribution": {
                     "type": "string"
                   },
                   "caption": {
                     "type": "string"
-                  },
-                  "credits": {
-                    "type": "string"
-                  },
-                  "license": {
-                    "type": "string"
-                  },
-                  "type": {
-                    "type": "string"
                   }
                 }
-              },
-              "ref_type": {
-                "type": "string"
-              },
-              "store": {
-                "type": "string"
               },
               "to": {
                 "type": "string"
@@ -20519,31 +20884,8 @@
               }
             }
           },
-          "document.press_coverage": {
-            "properties": {
-              "date": {
-                "format": "dateOptionalTime",
-                "type": "date"
-              },
-              "publisher": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              }
-            }
-          },
           "document.program": {
             "properties": {
-              "label": {
-                "type": "string"
-              },
               "square_meters": {
                 "type": "long"
               },
@@ -20555,15 +20897,9 @@
               }
             }
           },
-          "document.project_complete": {
-            "type": "boolean"
-          },
           "document.references": {
             "properties": {
               "id": {
-                "type": "string"
-              },
-              "store": {
                 "type": "string"
               },
               "to": {
@@ -20573,9 +20909,6 @@
                 "type": "string"
               }
             }
-          },
-          "document.site": {
-            "type": "string"
           },
           "document.sort_order": {
             "type": "long"
@@ -20648,136 +20981,11 @@
               },
               "document": {
                 "properties": {
-                  "archive_section": {
-                    "properties": {
-                      "approximate_date": {
-                        "properties": {
-                          "date": {
-                            "format": "dateOptionalTime",
-                            "type": "date"
-                          }
-                        }
-                      },
-                      "images": {
-                        "properties": {
-                          "crop": {
-                            "properties": {
-                              "bottom": {
-                                "type": "long"
-                              },
-                              "left": {
-                                "type": "long"
-                              },
-                              "right": {
-                                "type": "long"
-                              },
-                              "top": {
-                                "type": "long"
-                              }
-                            }
-                          },
-                          "hotspot": {
-                            "properties": {
-                              "height": {
-                                "type": "long"
-                              },
-                              "width": {
-                                "type": "long"
-                              },
-                              "x": {
-                                "type": "double"
-                              },
-                              "y": {
-                                "type": "double"
-                              }
-                            }
-                          },
-                          "id": {
-                            "type": "string"
-                          },
-                          "meta": {
-                            "properties": {
-                              "alt_text": {
-                                "type": "string"
-                              },
-                              "caption": {
-                                "type": "string"
-                              },
-                              "credits": {
-                                "type": "string"
-                              },
-                              "license": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "to": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "title": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    }
-                  },
                   "building_site": {
                     "type": "string"
                   },
                   "clients": {
                     "type": "string"
-                  },
-                  "co_authors": {
-                    "properties": {
-                      "people": {
-                        "properties": {
-                          "name": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "role": {
-                        "type": "string"
-                      },
-                      "role_credits": {
-                        "properties": {
-                          "people": {
-                            "properties": {
-                              "name": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "title": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "title": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    }
                   },
                   "collaborators": {
                     "properties": {
@@ -20890,6 +21098,9 @@
                     "type": "string"
                   },
                   "extended_description": {
+                    "type": "string"
+                  },
+                  "featured_categories": {
                     "type": "string"
                   },
                   "geo_place": {
@@ -21014,10 +21225,10 @@
                   "key": {
                     "type": "string"
                   },
-                  "label": {
+                  "key_history": {
                     "type": "string"
                   },
-                  "legacy_url_slug": {
+                  "label": {
                     "type": "string"
                   },
                   "location_radius": {
@@ -21025,13 +21236,55 @@
                   },
                   "main_image": {
                     "properties": {
+                      "crop": {
+                        "properties": {
+                          "bottom": {
+                            "type": "long"
+                          },
+                          "left": {
+                            "type": "long"
+                          },
+                          "right": {
+                            "type": "long"
+                          },
+                          "top": {
+                            "type": "long"
+                          }
+                        }
+                      },
+                      "hotspot": {
+                        "properties": {
+                          "height": {
+                            "type": "double"
+                          },
+                          "width": {
+                            "type": "double"
+                          },
+                          "x": {
+                            "type": "double"
+                          },
+                          "y": {
+                            "type": "double"
+                          }
+                        }
+                      },
                       "id": {
                         "type": "string"
+                      },
+                      "meta": {
+                        "properties": {
+                          "attribution": {
+                            "type": "string"
+                          }
+                        }
                       },
                       "ref_type": {
                         "type": "string"
                       },
                       "store": {
+                        "type": "string"
+                      },
+                      "to": {
                         "type": "string"
                       },
                       "type": {
@@ -21063,6 +21316,9 @@
                       }
                     }
                   },
+                  "ongoing": {
+                    "type": "boolean"
+                  },
                   "presentation_images": {
                     "properties": {
                       "crop": {
@@ -21084,10 +21340,10 @@
                       "hotspot": {
                         "properties": {
                           "height": {
-                            "type": "long"
+                            "type": "double"
                           },
                           "width": {
-                            "type": "long"
+                            "type": "double"
                           },
                           "x": {
                             "type": "double"
@@ -21102,28 +21358,13 @@
                       },
                       "meta": {
                         "properties": {
-                          "alt_text": {
+                          "attribution": {
                             "type": "string"
                           },
                           "caption": {
                             "type": "string"
-                          },
-                          "credits": {
-                            "type": "string"
-                          },
-                          "license": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
                           }
                         }
-                      },
-                      "ref_type": {
-                        "type": "string"
-                      },
-                      "store": {
-                        "type": "string"
                       },
                       "to": {
                         "type": "string"
@@ -21133,31 +21374,8 @@
                       }
                     }
                   },
-                  "press_coverage": {
-                    "properties": {
-                      "date": {
-                        "format": "dateOptionalTime",
-                        "type": "date"
-                      },
-                      "publisher": {
-                        "type": "string"
-                      },
-                      "title": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      },
-                      "url": {
-                        "type": "string"
-                      }
-                    }
-                  },
                   "program": {
                     "properties": {
-                      "label": {
-                        "type": "string"
-                      },
                       "square_meters": {
                         "type": "long"
                       },
@@ -21169,15 +21387,9 @@
                       }
                     }
                   },
-                  "project_complete": {
-                    "type": "boolean"
-                  },
                   "references": {
                     "properties": {
                       "id": {
-                        "type": "string"
-                      },
-                      "store": {
                         "type": "string"
                       },
                       "to": {
@@ -21187,9 +21399,6 @@
                         "type": "string"
                       }
                     }
-                  },
-                  "site": {
-                    "type": "string"
                   },
                   "sort_order": {
                     "type": "long"
@@ -21304,6 +21513,15 @@
           "document.author_line": {
             "type": "string"
           },
+          "document.back_cover_image.id": {
+            "type": "string"
+          },
+          "document.back_cover_image.to": {
+            "type": "string"
+          },
+          "document.back_cover_image.type": {
+            "type": "string"
+          },
           "document.created_at": {
             "format": "dateOptionalTime",
             "type": "date"
@@ -21314,23 +21532,99 @@
           "document.description": {
             "type": "string"
           },
+          "document.editions": {
+            "properties": {
+              "back_cover_image": {
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                }
+              },
+              "front_cover_image": {
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                }
+              },
+              "isbn": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              },
+              "merchant_url": {
+                "type": "string"
+              },
+              "meta": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "publisher": {
+                "type": "string"
+              },
+              "publisher_url": {
+                "type": "string"
+              },
+              "purchase_url": {
+                "type": "string"
+              },
+              "spine_image": {
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                }
+              },
+              "title": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "year": {
+                "type": "long"
+              }
+            }
+          },
           "document.excerpts": {
             "properties": {
+              "author_line": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
               "pdf": {
                 "properties": {
-                  "file": {
-                    "properties": {
-                      "baseurl": {
-                        "type": "string"
-                      },
-                      "original": {
-                        "type": "string"
-                      },
-                      "uid": {
-                        "type": "string"
-                      }
-                    }
-                  },
                   "file_name": {
                     "type": "string"
                   },
@@ -21339,7 +21633,26 @@
                   }
                 }
               },
+              "publication": {
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                }
+              },
               "title": {
+                "type": "string"
+              },
+              "to": {
+                "type": "string"
+              },
+              "type": {
                 "type": "string"
               }
             }
@@ -21347,15 +21660,28 @@
           "document.extended_description": {
             "type": "string"
           },
+          "document.front_cover_image.id": {
+            "type": "string"
+          },
+          "document.front_cover_image.to": {
+            "type": "string"
+          },
+          "document.front_cover_image.type": {
+            "type": "string"
+          },
           "document.images": {
             "properties": {
               "id": {
                 "type": "string"
               },
-              "ref_type": {
-                "type": "string"
+              "meta": {
+                "properties": {
+                  "attribution": {
+                    "type": "string"
+                  }
+                }
               },
-              "store": {
+              "to": {
                 "type": "string"
               },
               "type": {
@@ -21366,13 +21692,13 @@
           "document.key": {
             "type": "string"
           },
+          "document.key_history": {
+            "type": "string"
+          },
           "document.label": {
             "type": "string"
           },
           "document.language": {
-            "type": "string"
-          },
-          "document.legacy_url_slug": {
             "type": "string"
           },
           "document.meta": {
@@ -21391,7 +21717,61 @@
           "document.publisher": {
             "type": "string"
           },
+          "document.publisher_url": {
+            "type": "string"
+          },
           "document.purchase_url": {
+            "type": "string"
+          },
+          "document.references": {
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "to": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            }
+          },
+          "document.role_credits": {
+            "properties": {
+              "people": {
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                }
+              },
+              "role": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            }
+          },
+          "document.spine_image.id": {
+            "type": "string"
+          },
+          "document.spine_image.to": {
+            "type": "string"
+          },
+          "document.spine_image.type": {
+            "type": "string"
+          },
+          "document.stack_image.id": {
+            "type": "string"
+          },
+          "document.stack_image.to": {
+            "type": "string"
+          },
+          "document.stack_image.type": {
             "type": "string"
           },
           "document.title": {
@@ -21462,6 +21842,19 @@
                   "author_line": {
                     "type": "string"
                   },
+                  "back_cover_image": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "to": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    }
+                  },
                   "created_at": {
                     "format": "dateOptionalTime",
                     "type": "date"
@@ -21472,23 +21865,99 @@
                   "description": {
                     "type": "string"
                   },
+                  "editions": {
+                    "properties": {
+                      "back_cover_image": {
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "to": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "front_cover_image": {
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "to": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "isbn": {
+                        "type": "string"
+                      },
+                      "language": {
+                        "type": "string"
+                      },
+                      "merchant_url": {
+                        "type": "string"
+                      },
+                      "meta": {
+                        "properties": {
+                          "label": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "publisher": {
+                        "type": "string"
+                      },
+                      "publisher_url": {
+                        "type": "string"
+                      },
+                      "purchase_url": {
+                        "type": "string"
+                      },
+                      "spine_image": {
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "to": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "year": {
+                        "type": "long"
+                      }
+                    }
+                  },
                   "excerpts": {
                     "properties": {
+                      "author_line": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "type": "string"
+                      },
                       "pdf": {
                         "properties": {
-                          "file": {
-                            "properties": {
-                              "baseurl": {
-                                "type": "string"
-                              },
-                              "original": {
-                                "type": "string"
-                              },
-                              "uid": {
-                                "type": "string"
-                              }
-                            }
-                          },
                           "file_name": {
                             "type": "string"
                           },
@@ -21497,7 +21966,26 @@
                           }
                         }
                       },
+                      "publication": {
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "to": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        }
+                      },
                       "title": {
+                        "type": "string"
+                      },
+                      "to": {
+                        "type": "string"
+                      },
+                      "type": {
                         "type": "string"
                       }
                     }
@@ -21505,15 +21993,32 @@
                   "extended_description": {
                     "type": "string"
                   },
+                  "front_cover_image": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "to": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    }
+                  },
                   "images": {
                     "properties": {
                       "id": {
                         "type": "string"
                       },
-                      "ref_type": {
-                        "type": "string"
+                      "meta": {
+                        "properties": {
+                          "attribution": {
+                            "type": "string"
+                          }
+                        }
                       },
-                      "store": {
+                      "to": {
                         "type": "string"
                       },
                       "type": {
@@ -21524,13 +22029,13 @@
                   "key": {
                     "type": "string"
                   },
+                  "key_history": {
+                    "type": "string"
+                  },
                   "label": {
                     "type": "string"
                   },
                   "language": {
-                    "type": "string"
-                  },
-                  "legacy_url_slug": {
                     "type": "string"
                   },
                   "meta": {
@@ -21549,8 +22054,70 @@
                   "publisher": {
                     "type": "string"
                   },
+                  "publisher_url": {
+                    "type": "string"
+                  },
                   "purchase_url": {
                     "type": "string"
+                  },
+                  "references": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "to": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "role_credits": {
+                    "properties": {
+                      "people": {
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "role": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "spine_image": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "to": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "stack_image": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "to": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    }
                   },
                   "title": {
                     "type": "string"
@@ -21650,6 +22217,19 @@
           "deleted": {
             "type": "boolean"
           },
+          "document.author_line": {
+            "type": "string"
+          },
+          "document.created_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "document.created_by": {
+            "type": "long"
+          },
+          "document.order_index": {
+            "type": "long"
+          },
           "document.pdf.file.baseurl": {
             "type": "string"
           },
@@ -21665,8 +22245,21 @@
           "document.pdf.title": {
             "type": "string"
           },
+          "document.publication.id": {
+            "type": "string"
+          },
+          "document.publication.to": {
+            "type": "string"
+          },
+          "document.publication.type": {
+            "type": "string"
+          },
           "document.title": {
             "type": "string"
+          },
+          "document.updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
           },
           "document_updated_at": {
             "format": "dateOptionalTime",
@@ -21720,6 +22313,19 @@
               },
               "document": {
                 "properties": {
+                  "author_line": {
+                    "type": "string"
+                  },
+                  "created_at": {
+                    "format": "dateOptionalTime",
+                    "type": "date"
+                  },
+                  "created_by": {
+                    "type": "long"
+                  },
+                  "order_index": {
+                    "type": "long"
+                  },
                   "pdf": {
                     "properties": {
                       "file": {
@@ -21743,8 +22349,25 @@
                       }
                     }
                   },
+                  "publication": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "to": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    }
+                  },
                   "title": {
                     "type": "string"
+                  },
+                  "updated_at": {
+                    "format": "dateOptionalTime",
+                    "type": "date"
                   }
                 }
               },
@@ -21949,6 +22572,189 @@
             "type": "long"
           }
         }
+      },
+      "post.staff_listings": {
+        "properties": {
+          "canonical_path": {
+            "type": "string"
+          },
+          "conflicted": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "created_by": {
+            "type": "long"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "document.offices": {
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "people": {
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "position": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "document_updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "external_document_updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "external_id": {
+            "type": "string"
+          },
+          "id": {
+            "type": "long"
+          },
+          "klass": {
+            "type": "string"
+          },
+          "klass_0_": {
+            "type": "string"
+          },
+          "klass_1_": {
+            "type": "string"
+          },
+          "label_0_": {
+            "type": "string"
+          },
+          "label_1_": {
+            "type": "string"
+          },
+          "oid_": {
+            "type": "string"
+          },
+          "paths": {
+            "type": "string"
+          },
+          "pristine": {
+            "properties": {
+              "canonical_path": {
+                "type": "string"
+              },
+              "conflicted": {
+                "type": "boolean"
+              },
+              "created_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "created_by": {
+                "type": "long"
+              },
+              "deleted": {
+                "type": "boolean"
+              },
+              "document": {
+                "properties": {
+                  "offices": {
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "people": {
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "country": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "position": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "document_updated_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "external_document_updated_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "external_id": {
+                "type": "string"
+              },
+              "id": {
+                "type": "long"
+              },
+              "klass": {
+                "type": "string"
+              },
+              "paths": {
+                "type": "string"
+              },
+              "published": {
+                "type": "boolean"
+              },
+              "realm": {
+                "type": "string"
+              },
+              "restricted": {
+                "type": "boolean"
+              },
+              "uid": {
+                "type": "string"
+              },
+              "updated_at": {
+                "format": "dateOptionalTime",
+                "type": "date"
+              },
+              "version": {
+                "type": "long"
+              }
+            }
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "realm": {
+            "type": "string"
+          },
+          "restricted": {
+            "type": "boolean"
+          },
+          "uid": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "dateOptionalTime",
+            "type": "date"
+          },
+          "version": {
+            "type": "long"
+          }
+        }
       }
     }
   },
@@ -22069,6 +22875,21 @@
           "updated_at": {
             "format": "dateOptionalTime",
             "type": "date"
+          }
+        }
+      }
+    }
+  },
+  "sherlock_ENV_snargh": {
+    "mappings": {
+      "post.test_two": {
+        "properties": {
+          "external_id": {
+            "type": "string"
+          },
+          "uid": {
+            "index": "not_analyzed",
+            "type": "string"
           }
         }
       }

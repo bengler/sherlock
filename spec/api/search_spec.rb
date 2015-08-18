@@ -42,6 +42,57 @@ describe 'API v1 search' do
     Sherlock::Parsers::Generic.new(uid, {'document' => "i'm tuffer than the rest", 'uid' => uid, :restricted => false}).to_hash
   }
 
+  let(:nested_array_record) {
+    uid = 'post.card:hell.flames.devil$5'
+    data = {
+      'uid' => uid,
+      'document' => {
+        'references' => [
+          {
+            'type' => 'reference',
+            'to' => 'project',
+            'id' => 10,
+            'code' => 'onezero'
+          },
+          {
+            'type' => 'reference',
+            'to' => 'project',
+            'id' => 11,
+            'code' => 'oneone'
+          }
+        ]
+      },
+      :restricted => false
+    }
+    Sherlock::Parsers::Generic.new(uid, data).to_hash
+  }
+
+  let(:another_nested_array_record) {
+    uid = 'post.card:hell.flames.devil$6'
+    data = {
+      'uid' => uid,
+      'document' => {
+        'references' => [
+          {
+            'type' => 'reference',
+            'to' => 'project',
+            'id' => 12,
+            'code' => 'onetwo'
+          },
+          {
+            'type' => 'reference',
+            'to' => 'project',
+            'id' => 13,
+            'code' => 'onethree'
+          }
+        ]
+      },
+      :restricted => false
+    }
+    Sherlock::Parsers::Generic.new(uid, data).to_hash
+  }
+
+
   after(:each) do
     Sherlock::Elasticsearch.delete_index(realm)
   end
@@ -303,6 +354,21 @@ describe 'API v1 search' do
         get "/search/#{realm}/post.card:hell.*", {:"fields[id]" => 123}
         result = JSON.parse(last_response.body)
         result['hits'].count.should eq 0
+      end
+
+      it "finds records by contents in array" do
+        Sherlock::Elasticsearch.index nested_array_record
+        Sherlock::Elasticsearch.index another_nested_array_record
+        sleep 1.5
+
+        query_params = {
+          :"fields[document.references.id]" => '10'
+        }
+        get "/search/#{realm}/post.card:hell.*", query_params
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 1
+        expected = {"type"=>"reference", "to"=>"project", "id"=>10, "code"=>"onezero"}
+        result['hits'].first['hit']['document']['references'].first.should eq expected
       end
 
     end
