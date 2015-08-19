@@ -6,6 +6,7 @@ module Sherlock
   class UpdateListener
 
     def call(message)
+      LOGGER.error("call #{message}")
       consider message.payload
       nil
     end
