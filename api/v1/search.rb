@@ -35,11 +35,12 @@ class SherlockV1 < Sinatra::Base
 
 
     def perform_query(realm, uid)
+      params.symbolize_keys!
+      uid = clean_up_uid!
 
       uid_query = uid ? Pebbles::Uid.query(uid) : nil
       query_path = uid_query ? uid_query.path : nil
 
-      params.symbolize_keys!
       clean_up_return_fields!
       ensure_correct_limit!(uid_query)
 
@@ -72,6 +73,12 @@ class SherlockV1 < Sinatra::Base
     def clean_up_return_fields!
       return unless params[:return_fields]
       params[:return_fields] = params[:return_fields].split(',').compact.uniq.map {|f| f.strip}
+    end
+
+    def clean_up_uid!
+      return unless params[:uid]
+      # substitute two or more pipes next to each other with a single pipe
+      params[:uid] = params[:uid].gsub(/(\|)+/, '|')
     end
 
     def include_score?
