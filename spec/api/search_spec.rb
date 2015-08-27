@@ -132,6 +132,25 @@ describe 'API v1 search' do
       result['pagination']['limit'].should eq 2
     end
 
+    it 'fails silently if an oid is missing' do
+      Sherlock::Elasticsearch.index record
+      Sherlock::Elasticsearch.index another_record
+      Sherlock::Elasticsearch.index excluded_record
+      sleep 2.0
+      oids = [record, another_record].map {|r| r['uid'].split('$').last}
+
+      endpoint = "/search/#{realm}/*:hell.*$#{oids.join('||')}"
+      endpoint = URI.escape endpoint
+
+      get endpoint
+      result = JSON.parse(last_response.body)
+      result['hits'].map do |hit|
+        hit['hit']['uid'].split('$').last
+      end.should eq oids
+      result['hits'].first['hit']['uid'].should eq record['uid']
+      result['pagination']['limit'].should eq 2
+    end
+
     it 'raises an error on query at non-existing index' do
       get "/search/#{realm}", :q => "hot"
       result = JSON.parse(last_response.body)

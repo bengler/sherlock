@@ -8,7 +8,7 @@ module Sherlock
 
     def initialize(search_result, pagination_options, include_score = true)
       if search_result
-        @hits = search_result['hits']['hits'].map do |hit|
+        @hits = search_result['hits']['hits'].compact.map do |hit|
           hit_hash = hit['_source']['pristine'].merge({'uid' => hit['_id']})
           hit_hash = hit_hash.merge({'score' => hit['_score']}) if include_score
           DeepStruct.wrap(hit_hash)
