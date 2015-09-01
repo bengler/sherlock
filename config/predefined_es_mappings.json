@@ -18969,7 +18969,7 @@
           "document.images": {
             "properties": {
               "id": {
-                "type": "string"
+                "type": "long"
               },
               "meta": {
                 "properties": {
@@ -19002,6 +19002,22 @@
             "format": "dateOptionalTime",
             "type": "date"
           },
+          "document.references": {
+            "properties": {
+              "id": {
+                "type": "long"
+              },
+              "store": {
+                "type": "string"
+              },
+              "to": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            }
+          },
           "document.title": {
             "type": "string"
           },
@@ -19018,7 +19034,8 @@
             "type": "date"
           },
           "external_id": {
-            "type": "string"
+            "type": "string",
+            "index": "not_analyzed"
           },
           "id": {
             "type": "long"
@@ -19081,7 +19098,7 @@
                   "images": {
                     "properties": {
                       "id": {
-                        "type": "string"
+                        "type": "long"
                       },
                       "meta": {
                         "properties": {
@@ -19089,6 +19106,22 @@
                             "type": "string"
                           }
                         }
+                      },
+                      "to": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "references": {
+                    "properties": {
+                      "id": {
+                        "type": "long"
+                      },
+                      "store": {
+                        "type": "string"
                       },
                       "to": {
                         "type": "string"
@@ -19132,7 +19165,8 @@
                 "type": "date"
               },
               "external_id": {
-                "type": "string"
+                "type": "string",
+                "index": "not_analyzed"
               },
               "id": {
                 "type": "long"
