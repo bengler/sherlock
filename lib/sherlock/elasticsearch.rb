@@ -41,17 +41,16 @@ module Sherlock
 
 
       def predefined_mappings_for(realm)
-        @@predefined_mappings ||= JSON.parse(File.read('./config/predefined_es_mappings.json'))
-        key = "sherlock_ENV_#{realm}"
-        return {} unless @@predefined_mappings[key]
-        @@predefined_mappings[key]['mappings'] || {}
+        mappings_file_name = "./config/#{realm}/predefined_es_mappings.json"
+        return {} unless File.exist? mappings_file_name
+        predefined_mappings = JSON.parse(File.read(mappings_file_name))
+        predefined_mappings['mappings'] || {}
       end
 
       def predefined_settings_for(realm)
-        @@predefined_settings ||= JSON.parse(File.read('./config/predefined_es_settings.json'))
-        key = "sherlock_ENV_#{realm}"
-        return nil unless @@predefined_settings[key]
-        @@predefined_settings[key]
+        setting_file_name = "./config/#{realm}/predefined_es_settings.json"
+        return nil unless File.exist? setting_file_name
+        JSON.parse(File.read(setting_file_name))
       end
 
       def default_index_config
@@ -178,6 +177,21 @@ module Sherlock
           raise e
         end
         result
+      end
+
+
+      def index_mapping(realm, thing = nil)
+        url = "#{root_url}"
+        url << "/#{index_name(realm)}"
+        url << "/#{thing}" if thing
+        url << "/_mapping"
+        begin
+          return Pebblebed::Http.get(url, {}).body
+        rescue Pebblebed::HttpError => e
+          LOGGER.error "Unexpected error on GET #{url}"
+          raise e
+        end
+        {}
       end
 
 
