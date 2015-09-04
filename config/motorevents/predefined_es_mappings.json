@@ -1,0 +1,751 @@
+{
+  "mappings": {
+    "post.event": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.attending_count": {
+          "type": "long"
+        },
+        "document.body": {
+          "type": "string"
+        },
+        "document.can_invite": {
+          "type": "boolean"
+        },
+        "document.can_rsvp": {
+          "type": "boolean"
+        },
+        "document.category": {
+          "type": "string"
+        },
+        "document.end_time": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "document.external_id": {
+          "type": "string"
+        },
+        "document.extra.attending_count": {
+          "type": "long"
+        },
+        "document.extra.comment_count": {
+          "type": "long"
+        },
+        "document.extra.home_url": {
+          "type": "string"
+        },
+        "document.extra.location": {
+          "type": "string"
+        },
+        "document.extra.opening_hours": {
+          "type": "string"
+        },
+        "document.extra.organizer": {
+          "type": "string"
+        },
+        "document.extra.performing_count": {
+          "type": "long"
+        },
+        "document.extra.recommendations_count": {
+          "type": "long"
+        },
+        "document.extra.ticket_directions": {
+          "type": "string"
+        },
+        "document.extra.tickets": {
+          "type": "string"
+        },
+        "document.extra.url": {
+          "type": "string"
+        },
+        "document.extra.user_given_address": {
+          "type": "string"
+        },
+        "document.extra.view_count": {
+          "type": "string"
+        },
+        "document.id": {
+          "type": "long"
+        },
+        "document.image_full": {
+          "type": "string"
+        },
+        "document.image_thumb": {
+          "type": "string"
+        },
+        "document.occurrences.end_time": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "document.occurrences.start_time": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "document.owner_uid": {
+          "type": "string"
+        },
+        "document.permalink": {
+          "type": "string"
+        },
+        "document.privacy": {
+          "type": "string"
+        },
+        "document.provider": {
+          "type": "string"
+        },
+        "document.provider_eid": {
+          "type": "string"
+        },
+        "document.provider_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "document.remote_url": {
+          "type": "string"
+        },
+        "document.start_time": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "document.tags": {
+          "type": "string"
+        },
+        "document.title": {
+          "type": "string"
+        },
+        "document.updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "document.venue.address.municipality": {
+          "type": "string"
+        },
+        "document.venue.address.postal_code": {
+          "type": "string"
+        },
+        "document.venue.address.postal_place": {
+          "type": "string"
+        },
+        "document.venue.address.region": {
+          "type": "string"
+        },
+        "document.venue.address.street_letter": {
+          "type": "string"
+        },
+        "document.venue.address.street_name": {
+          "type": "string"
+        },
+        "document.venue.address.street_number": {
+          "type": "string"
+        },
+        "document.venue.id": {
+          "type": "long"
+        },
+        "document.venue.lat": {
+          "type": "double"
+        },
+        "document.venue.lon": {
+          "type": "double"
+        },
+        "document.venue.title": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document.attending_count": {
+          "type": "long"
+        },
+        "external_document.body": {
+          "type": "string"
+        },
+        "external_document.can_invite": {
+          "type": "boolean"
+        },
+        "external_document.can_rsvp": {
+          "type": "boolean"
+        },
+        "external_document.category": {
+          "type": "string"
+        },
+        "external_document.end_time": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document.extra.attending_count": {
+          "type": "long"
+        },
+        "external_document.extra.comment_count": {
+          "type": "long"
+        },
+        "external_document.extra.home_url": {
+          "type": "string"
+        },
+        "external_document.extra.location": {
+          "type": "string"
+        },
+        "external_document.extra.opening_hours": {
+          "type": "string"
+        },
+        "external_document.extra.organizer": {
+          "type": "string"
+        },
+        "external_document.extra.performing_count": {
+          "type": "long"
+        },
+        "external_document.extra.recommendations_count": {
+          "type": "long"
+        },
+        "external_document.extra.ticket_directions": {
+          "type": "string"
+        },
+        "external_document.extra.tickets": {
+          "type": "string"
+        },
+        "external_document.extra.url": {
+          "type": "string"
+        },
+        "external_document.extra.user_given_address": {
+          "type": "string"
+        },
+        "external_document.extra.view_count": {
+          "type": "string"
+        },
+        "external_document.id": {
+          "type": "long"
+        },
+        "external_document.image_full": {
+          "type": "string"
+        },
+        "external_document.image_thumb": {
+          "type": "string"
+        },
+        "external_document.owner_uid": {
+          "type": "string"
+        },
+        "external_document.permalink": {
+          "type": "string"
+        },
+        "external_document.privacy": {
+          "type": "string"
+        },
+        "external_document.provider": {
+          "type": "string"
+        },
+        "external_document.provider_eid": {
+          "type": "string"
+        },
+        "external_document.provider_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document.remote_url": {
+          "type": "string"
+        },
+        "external_document.start_time": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document.tags": {
+          "type": "string"
+        },
+        "external_document.title": {
+          "type": "string"
+        },
+        "external_document.updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document.venue.address.municipality": {
+          "type": "string"
+        },
+        "external_document.venue.address.postal_code": {
+          "type": "string"
+        },
+        "external_document.venue.address.postal_place": {
+          "type": "string"
+        },
+        "external_document.venue.address.region": {
+          "type": "string"
+        },
+        "external_document.venue.address.street_letter": {
+          "type": "string"
+        },
+        "external_document.venue.address.street_name": {
+          "type": "string"
+        },
+        "external_document.venue.address.street_number": {
+          "type": "string"
+        },
+        "external_document.venue.id": {
+          "type": "long"
+        },
+        "external_document.venue.lat": {
+          "type": "double"
+        },
+        "external_document.venue.lon": {
+          "type": "double"
+        },
+        "external_document.venue.title": {
+          "type": "string"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "label_3_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "attending_count": {
+                  "type": "long"
+                },
+                "body": {
+                  "type": "string"
+                },
+                "can_invite": {
+                  "type": "boolean"
+                },
+                "can_rsvp": {
+                  "type": "boolean"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "end_time": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "external_id": {
+                  "type": "string"
+                },
+                "extra": {
+                  "properties": {
+                    "attending_count": {
+                      "type": "long"
+                    },
+                    "comment_count": {
+                      "type": "long"
+                    },
+                    "home_url": {
+                      "type": "string"
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "opening_hours": {
+                      "type": "string"
+                    },
+                    "organizer": {
+                      "type": "string"
+                    },
+                    "performing_count": {
+                      "type": "long"
+                    },
+                    "recommendations_count": {
+                      "type": "long"
+                    },
+                    "ticket_directions": {
+                      "type": "string"
+                    },
+                    "tickets": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "user_given_address": {
+                      "type": "string"
+                    },
+                    "view_count": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "id": {
+                  "type": "long"
+                },
+                "image_full": {
+                  "type": "string"
+                },
+                "image_thumb": {
+                  "type": "string"
+                },
+                "occurrences": {
+                  "properties": {
+                    "end_time": {
+                      "format": "dateOptionalTime",
+                      "type": "date"
+                    },
+                    "start_time": {
+                      "format": "dateOptionalTime",
+                      "type": "date"
+                    }
+                  }
+                },
+                "owner_uid": {
+                  "type": "string"
+                },
+                "permalink": {
+                  "type": "string"
+                },
+                "privacy": {
+                  "type": "string"
+                },
+                "provider": {
+                  "type": "string"
+                },
+                "provider_eid": {
+                  "type": "string"
+                },
+                "provider_updated_at": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "remote_url": {
+                  "type": "string"
+                },
+                "start_time": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "tags": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "venue": {
+                  "properties": {
+                    "address": {
+                      "properties": {
+                        "municipality": {
+                          "type": "string"
+                        },
+                        "postal_code": {
+                          "type": "string"
+                        },
+                        "postal_place": {
+                          "type": "string"
+                        },
+                        "region": {
+                          "type": "string"
+                        },
+                        "street_letter": {
+                          "type": "string"
+                        },
+                        "street_name": {
+                          "type": "string"
+                        },
+                        "street_number": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "long"
+                    },
+                    "lat": {
+                      "type": "double"
+                    },
+                    "lon": {
+                      "type": "double"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document": {
+              "properties": {
+                "attending_count": {
+                  "type": "long"
+                },
+                "body": {
+                  "type": "string"
+                },
+                "can_invite": {
+                  "type": "boolean"
+                },
+                "can_rsvp": {
+                  "type": "boolean"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "end_time": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "extra": {
+                  "properties": {
+                    "attending_count": {
+                      "type": "long"
+                    },
+                    "comment_count": {
+                      "type": "long"
+                    },
+                    "home_url": {
+                      "type": "string"
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "opening_hours": {
+                      "type": "string"
+                    },
+                    "organizer": {
+                      "type": "string"
+                    },
+                    "performing_count": {
+                      "type": "long"
+                    },
+                    "recommendations_count": {
+                      "type": "long"
+                    },
+                    "ticket_directions": {
+                      "type": "string"
+                    },
+                    "tickets": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "user_given_address": {
+                      "type": "string"
+                    },
+                    "view_count": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "id": {
+                  "type": "long"
+                },
+                "image_full": {
+                  "type": "string"
+                },
+                "image_thumb": {
+                  "type": "string"
+                },
+                "owner_uid": {
+                  "type": "string"
+                },
+                "permalink": {
+                  "type": "string"
+                },
+                "privacy": {
+                  "type": "string"
+                },
+                "provider": {
+                  "type": "string"
+                },
+                "provider_eid": {
+                  "type": "string"
+                },
+                "provider_updated_at": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "remote_url": {
+                  "type": "string"
+                },
+                "start_time": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "tags": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "venue": {
+                  "properties": {
+                    "address": {
+                      "properties": {
+                        "municipality": {
+                          "type": "string"
+                        },
+                        "postal_code": {
+                          "type": "string"
+                        },
+                        "postal_place": {
+                          "type": "string"
+                        },
+                        "region": {
+                          "type": "string"
+                        },
+                        "street_letter": {
+                          "type": "string"
+                        },
+                        "street_name": {
+                          "type": "string"
+                        },
+                        "street_number": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "long"
+                    },
+                    "lat": {
+                      "type": "double"
+                    },
+                    "lon": {
+                      "type": "double"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_id": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "tags_vector": {
+              "type": "string"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "tags_vector": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    }
+  }
+}

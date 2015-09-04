@@ -1,0 +1,15 @@
+{
+  "mappings": {
+    "post.test_two": {
+      "properties": {
+        "external_id": {
+          "type": "string"
+        },
+        "uid": {
+          "index": "not_analyzed",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

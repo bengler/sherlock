@@ -1,0 +1,147 @@
+{
+  "mappings": {
+    "post.event": {
+      "properties": {
+        "body": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "deleted_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "end_time": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "lat": {
+          "type": "double"
+        },
+        "lon": {
+          "type": "double"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "body": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "deleted_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "end_time": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "id": {
+              "type": "long"
+            },
+            "lat": {
+              "type": "double"
+            },
+            "lon": {
+              "type": "double"
+            },
+            "privacy": {
+              "type": "string"
+            },
+            "provider": {
+              "type": "string"
+            },
+            "provider_eid": {
+              "type": "string"
+            },
+            "provider_owner_uid": {
+              "type": "string"
+            },
+            "provider_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "start_time": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "tags": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            }
+          }
+        },
+        "privacy": {
+          "type": "string"
+        },
+        "provider": {
+          "type": "string"
+        },
+        "provider_eid": {
+          "type": "string"
+        },
+        "provider_owner_uid": {
+          "type": "string"
+        },
+        "provider_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "start_time": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "tags": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        }
+      }
+    }
+  }
+}

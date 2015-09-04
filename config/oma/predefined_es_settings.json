@@ -1,0 +1,15 @@
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "default": {
+          "type": "custom",
+          "filter": [
+            "icu_folding"
+          ],
+          "tokenizer": "whitespace"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,6083 @@
+{
+  "mappings": {
+    "affiliation": {
+      "properties": {
+        "associate": {
+          "type": "string"
+        },
+        "data.joined_on": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "data.member_kind_title": {
+          "type": "string"
+        },
+        "data.membership_expires_on": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "data.payment_method": {
+          "type": "string"
+        },
+        "data.status": {
+          "type": "string"
+        },
+        "data.unit_level_1": {
+          "type": "string"
+        },
+        "data.unit_level_2": {
+          "type": "string"
+        },
+        "data.unit_level_3": {
+          "type": "string"
+        },
+        "data.unit_level_4": {
+          "type": "string"
+        },
+        "data.updated_at": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "organization": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "associate": {
+              "type": "string"
+            },
+            "data": {
+              "properties": {
+                "joined_on": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "member_kind_title": {
+                  "type": "string"
+                },
+                "membership_expires_on": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "payment_method": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "unit_level_1": {
+                  "type": "string"
+                },
+                "unit_level_2": {
+                  "type": "string"
+                },
+                "unit_level_3": {
+                  "type": "string"
+                },
+                "unit_level_4": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "type": "string"
+                }
+              }
+            },
+            "id": {
+              "type": "long"
+            },
+            "kind": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "organization": {
+              "type": "string"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            }
+          }
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "type": "string"
+        }
+      }
+    },
+    "associate": {
+      "properties": {
+        "capacities": {
+          "type": "string"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "data.address": {
+          "type": "string"
+        },
+        "data.address_line2": {
+          "type": "string"
+        },
+        "data.address_line3": {
+          "type": "string"
+        },
+        "data.born_on": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "data.cap_res_sms": {
+          "type": "string"
+        },
+        "data.country": {
+          "type": "string"
+        },
+        "data.email_address": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "data.gender": {
+          "type": "string"
+        },
+        "data.mobil_number": {
+          "type": "string"
+        },
+        "data.mobile_number": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "data.note": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "data.person_kind": {
+          "type": "string"
+        },
+        "data.phone_number": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "data.postal_code": {
+          "type": "string"
+        },
+        "data.postkode_email": {
+          "type": "string"
+        },
+        "data.status": {
+          "type": "string"
+        },
+        "data.token": {
+          "type": "string"
+        },
+        "data.updated_at": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "full_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "identity": {
+          "type": "long"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "label_0_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_1_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_2_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_3_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_4_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_5_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_6_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_7_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_8_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_9_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "capacities": {
+              "type": "string"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "data": {
+              "properties": {
+                "address": {
+                  "type": "string"
+                },
+                "address_line2": {
+                  "type": "string"
+                },
+                "address_line3": {
+                  "type": "string"
+                },
+                "born_on": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "cap_res_sms": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                },
+                "email_address": {
+                  "type": "string"
+                },
+                "gender": {
+                  "type": "string"
+                },
+                "mobil_number": {
+                  "type": "string"
+                },
+                "mobile_number": {
+                  "type": "string"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "person_kind": {
+                  "type": "string"
+                },
+                "phone_number": {
+                  "type": "string"
+                },
+                "postal_code": {
+                  "type": "string"
+                },
+                "postkode_email": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "token": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "type": "string"
+                }
+              }
+            },
+            "first_name": {
+              "type": "string"
+            },
+            "full_name": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "identity": {
+              "type": "long"
+            },
+            "label": {
+              "type": "string"
+            },
+            "last_name": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "tags": {
+              "type": "string"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            }
+          }
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "tags": {
+          "type": "string"
+        },
+        "uid": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        }
+      }
+    },
+    "capacity": {
+      "properties": {
+        "associate_id": {
+          "type": "long"
+        },
+        "associate_uid": {
+          "type": "string"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "data.activate_on": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "data.deactivate_on": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "data.joined_on": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "data.member_kind_title": {
+          "type": "string"
+        },
+        "data.membership_expires_on": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "data.payment_method": {
+          "type": "string"
+        },
+        "data.priority": {
+          "type": "string"
+        },
+        "data.status": {
+          "type": "string"
+        },
+        "data.unit_level_1": {
+          "type": "string"
+        },
+        "data.unit_level_2": {
+          "type": "string"
+        },
+        "data.unit_level_3": {
+          "type": "string"
+        },
+        "data.unit_level_4": {
+          "type": "string"
+        },
+        "data.updated_at": {
+          "type": "string"
+        },
+        "group": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "label_3_": {
+          "type": "string"
+        },
+        "label_4_": {
+          "type": "string"
+        },
+        "label_5_": {
+          "type": "string"
+        },
+        "label_6_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "associate_id": {
+              "type": "long"
+            },
+            "associate_uid": {
+              "type": "string"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "data": {
+              "properties": {
+                "activate_on": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "deactivate_on": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "joined_on": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "member_kind_title": {
+                  "type": "string"
+                },
+                "membership_expires_on": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "payment_method": {
+                  "type": "string"
+                },
+                "priority": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "unit_level_1": {
+                  "type": "string"
+                },
+                "unit_level_2": {
+                  "type": "string"
+                },
+                "unit_level_3": {
+                  "type": "string"
+                },
+                "unit_level_4": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "type": "string"
+                }
+              }
+            },
+            "group": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "label": {
+              "type": "string"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "role": {
+              "type": "string"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            }
+          }
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "role": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        }
+      }
+    },
+    "group": {
+      "properties": {
+        "data.activate_on": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "data.deactivate_on": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "data.unit_level_1": {
+          "type": "string"
+        },
+        "data.unit_level_2": {
+          "type": "string"
+        },
+        "data.unit_level_3": {
+          "type": "string"
+        },
+        "data.unit_level_4": {
+          "type": "string"
+        },
+        "data.updated_at": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "label_3_": {
+          "type": "string"
+        },
+        "label_4_": {
+          "type": "string"
+        },
+        "label_5_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "organization": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "data": {
+              "properties": {
+                "activate_on": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "deactivate_on": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "unit_level_1": {
+                  "type": "string"
+                },
+                "unit_level_2": {
+                  "type": "string"
+                },
+                "unit_level_3": {
+                  "type": "string"
+                },
+                "unit_level_4": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "type": "string"
+                }
+              }
+            },
+            "id": {
+              "type": "long"
+            },
+            "kind": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "organization": {
+              "type": "string"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "title": {
+              "type": "string"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "unit": {
+              "type": "string"
+            }
+          }
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        }
+      }
+    },
+    "organization": {
+      "properties": {
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "data.address": {
+          "type": "string"
+        },
+        "data.postal_code": {
+          "type": "string"
+        },
+        "data.unit_level_1": {
+          "type": "string"
+        },
+        "data.updated_at": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "data": {
+              "properties": {
+                "address": {
+                  "type": "string"
+                },
+                "postal_code": {
+                  "type": "string"
+                },
+                "unit_level_1": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "type": "string"
+                }
+              }
+            },
+            "label": {
+              "type": "string"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "title": {
+              "type": "string"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            }
+          }
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        }
+      }
+    },
+    "post.article": {
+      "properties": {
+        "canonical_path": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.attachments": {
+          "properties": {
+            "file": {
+              "properties": {
+                "baseurl": {
+                  "type": "string"
+                },
+                "original": {
+                  "type": "string"
+                },
+                "uid": {
+                  "type": "string"
+                }
+              }
+            },
+            "file_name": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            }
+          }
+        },
+        "document.body": {
+          "type": "string"
+        },
+        "document.category": {
+          "type": "string"
+        },
+        "document.external_id": {
+          "type": "string"
+        },
+        "document.image.uid": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "document.lead": {
+          "type": "string"
+        },
+        "document.title": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_id": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_1_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_2_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_3_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_4_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_5_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_6_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_7_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_8_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_9_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "attachments": {
+                  "properties": {
+                    "file": {
+                      "properties": {
+                        "baseurl": {
+                          "type": "string"
+                        },
+                        "original": {
+                          "type": "string"
+                        },
+                        "uid": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "file_name": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "body": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "external_id": {
+                  "type": "string"
+                },
+                "image": {
+                  "properties": {
+                    "uid": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "lead": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_id": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.conversation": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.numberoftalks": {
+          "type": "string"
+        },
+        "document.status": {
+          "type": "string"
+        },
+        "document.talker": {
+          "type": "string"
+        },
+        "document.where": {
+          "type": "string"
+        },
+        "document.who": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "label_3_": {
+          "type": "string"
+        },
+        "label_4_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "numberoftalks": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "talker": {
+                  "type": "string"
+                },
+                "where": {
+                  "type": "string"
+                },
+                "who": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.event": {
+      "properties": {
+        "canonical_path": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.body": {
+          "type": "string"
+        },
+        "document.event_time.end_time": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "document.event_time.start_time": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "document.external_id": {
+          "type": "string"
+        },
+        "document.home_url": {
+          "type": "string"
+        },
+        "document.image.uid": {
+          "type": "string"
+        },
+        "document.multiday": {
+          "type": "boolean"
+        },
+        "document.ticket_url": {
+          "type": "string"
+        },
+        "document.title": {
+          "type": "string"
+        },
+        "document.venue_address": {
+          "type": "string"
+        },
+        "document.venue_body": {
+          "type": "string"
+        },
+        "document.venue_location.lat": {
+          "type": "double"
+        },
+        "document.venue_location.lon": {
+          "type": "double"
+        },
+        "document.venue_title": {
+          "type": "string"
+        },
+        "document.venue_tittel": {
+          "type": "string"
+        },
+        "document.wholeday": {
+          "type": "boolean"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_id": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_1_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_2_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_3_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_4_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_5_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_6_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_7_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_8_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_9_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "body": {
+                  "type": "string"
+                },
+                "event_time": {
+                  "properties": {
+                    "end_time": {
+                      "format": "dateOptionalTime",
+                      "type": "date"
+                    },
+                    "start_time": {
+                      "format": "dateOptionalTime",
+                      "type": "date"
+                    }
+                  }
+                },
+                "external_id": {
+                  "type": "string"
+                },
+                "home_url": {
+                  "type": "string"
+                },
+                "image": {
+                  "properties": {
+                    "uid": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "multiday": {
+                  "type": "boolean"
+                },
+                "ticket_url": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "venue_address": {
+                  "type": "string"
+                },
+                "venue_body": {
+                  "type": "string"
+                },
+                "venue_location": {
+                  "properties": {
+                    "lat": {
+                      "type": "double"
+                    },
+                    "lon": {
+                      "type": "double"
+                    }
+                  }
+                },
+                "venue_title": {
+                  "type": "string"
+                },
+                "venue_tittel": {
+                  "type": "string"
+                },
+                "wholeday": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_id": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.frontpage": {
+      "properties": {
+        "canonical_path": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.candidates_body": {
+          "type": "string"
+        },
+        "document.candidates_image.uid": {
+          "type": "string"
+        },
+        "document.candidates_title": {
+          "type": "string"
+        },
+        "document.facebook": {
+          "type": "string"
+        },
+        "document.google_analytics_key": {
+          "type": "string"
+        },
+        "document.locale": {
+          "type": "string"
+        },
+        "document.news_item": {
+          "type": "string"
+        },
+        "document.priority_item_body_one": {
+          "type": "string"
+        },
+        "document.priority_item_title_one": {
+          "type": "string"
+        },
+        "document.title": {
+          "type": "string"
+        },
+        "document.twitter": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_id": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_1_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_2_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_3_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_4_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_5_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_6_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_7_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_8_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_9_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "candidates_body": {
+                  "type": "string"
+                },
+                "candidates_image": {
+                  "properties": {
+                    "uid": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "candidates_title": {
+                  "type": "string"
+                },
+                "facebook": {
+                  "type": "string"
+                },
+                "google_analytics_key": {
+                  "type": "string"
+                },
+                "locale": {
+                  "type": "string"
+                },
+                "news_item": {
+                  "type": "string"
+                },
+                "priority_item_body_one": {
+                  "type": "string"
+                },
+                "priority_item_title_one": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "twitter": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_id": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.hermes_message": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.batch_label": {
+          "type": "string"
+        },
+        "document.html": {
+          "type": "string"
+        },
+        "document.kind": {
+          "type": "string"
+        },
+        "document.receipt_url": {
+          "type": "string"
+        },
+        "document.recipient_email": {
+          "type": "string"
+        },
+        "document.recipient_number": {
+          "type": "string"
+        },
+        "document.sender_email": {
+          "type": "string"
+        },
+        "document.sender_number": {
+          "type": "string"
+        },
+        "document.subject": {
+          "type": "string"
+        },
+        "document.text": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "label_3_": {
+          "type": "string"
+        },
+        "label_4_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "batch_label": {
+                  "type": "string"
+                },
+                "html": {
+                  "type": "string"
+                },
+                "kind": {
+                  "type": "string"
+                },
+                "receipt_url": {
+                  "type": "string"
+                },
+                "recipient_email": {
+                  "type": "string"
+                },
+                "recipient_number": {
+                  "type": "string"
+                },
+                "sender_email": {
+                  "type": "string"
+                },
+                "sender_number": {
+                  "type": "string"
+                },
+                "subject": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_id": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "protected": {
+              "type": "object"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "sensitive": {
+              "type": "object"
+            },
+            "tags_vector": {
+              "type": "string"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "tags_vector": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.image": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.alt_text": {
+          "type": "string"
+        },
+        "document.attribution": {
+          "type": "string"
+        },
+        "document.body": {
+          "type": "string"
+        },
+        "document.caption": {
+          "type": "string"
+        },
+        "document.crop.bottom": {
+          "type": "long"
+        },
+        "document.crop.left": {
+          "type": "long"
+        },
+        "document.crop.right": {
+          "type": "long"
+        },
+        "document.crop.top": {
+          "type": "long"
+        },
+        "document.hotspot.height": {
+          "type": "double"
+        },
+        "document.hotspot.size": {
+          "type": "double"
+        },
+        "document.hotspot.width": {
+          "type": "double"
+        },
+        "document.hotspot.x": {
+          "type": "double"
+        },
+        "document.hotspot.y": {
+          "type": "double"
+        },
+        "document.image.aspect_ratio": {
+          "type": "double"
+        },
+        "document.image.baseurl": {
+          "type": "string"
+        },
+        "document.image.original": {
+          "type": "string"
+        },
+        "document.image.uid": {
+          "type": "string"
+        },
+        "document.image.versions": {
+          "properties": {
+            "square": {
+              "type": "boolean"
+            },
+            "url": {
+              "type": "string"
+            },
+            "width": {
+              "type": "long"
+            }
+          }
+        },
+        "document.license": {
+          "type": "string"
+        },
+        "document.title": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "label_3_": {
+          "type": "string"
+        },
+        "label_4_": {
+          "type": "string"
+        },
+        "label_5_": {
+          "type": "string"
+        },
+        "label_6_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "alt_text": {
+                  "type": "string"
+                },
+                "attribution": {
+                  "type": "string"
+                },
+                "body": {
+                  "type": "string"
+                },
+                "caption": {
+                  "type": "string"
+                },
+                "crop": {
+                  "properties": {
+                    "bottom": {
+                      "type": "long"
+                    },
+                    "left": {
+                      "type": "long"
+                    },
+                    "right": {
+                      "type": "long"
+                    },
+                    "top": {
+                      "type": "long"
+                    }
+                  }
+                },
+                "hotspot": {
+                  "properties": {
+                    "height": {
+                      "type": "double"
+                    },
+                    "size": {
+                      "type": "double"
+                    },
+                    "width": {
+                      "type": "double"
+                    },
+                    "x": {
+                      "type": "double"
+                    },
+                    "y": {
+                      "type": "double"
+                    }
+                  }
+                },
+                "image": {
+                  "properties": {
+                    "aspect_ratio": {
+                      "type": "double"
+                    },
+                    "baseurl": {
+                      "type": "string"
+                    },
+                    "original": {
+                      "type": "string"
+                    },
+                    "uid": {
+                      "type": "string"
+                    },
+                    "versions": {
+                      "properties": {
+                        "square": {
+                          "type": "boolean"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "width": {
+                          "type": "long"
+                        }
+                      }
+                    }
+                  }
+                },
+                "license": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.issue": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.address": {
+          "type": "string"
+        },
+        "document.approximate_age": {
+          "type": "long"
+        },
+        "document.assigned_identity": {
+          "type": "long"
+        },
+        "document.associate_uid": {
+          "type": "string"
+        },
+        "document.body": {
+          "type": "string"
+        },
+        "document.capacity_uid": {
+          "type": "string"
+        },
+        "document.closed_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "document.email": {
+          "type": "string"
+        },
+        "document.gender": {
+          "type": "string"
+        },
+        "document.membership_created_on": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "document.membership_expires_on": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "document.mobile_number": {
+          "type": "string"
+        },
+        "document.name": {
+          "type": "string"
+        },
+        "document.phone_number": {
+          "type": "string"
+        },
+        "document.psid": {
+          "type": "string"
+        },
+        "document.reason": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "label_3_": {
+          "type": "string"
+        },
+        "label_4_": {
+          "type": "string"
+        },
+        "label_5_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "address": {
+                  "type": "string"
+                },
+                "approximate_age": {
+                  "type": "long"
+                },
+                "assigned_identity": {
+                  "type": "long"
+                },
+                "associate_uid": {
+                  "type": "string"
+                },
+                "body": {
+                  "type": "string"
+                },
+                "capacity_uid": {
+                  "type": "string"
+                },
+                "closed_at": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "gender": {
+                  "type": "string"
+                },
+                "membership_created_on": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "membership_expires_on": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "mobile_number": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "phone_number": {
+                  "type": "string"
+                },
+                "psid": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_id": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "tags_vector": {
+              "type": "string"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "tags_vector": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.issue_update": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.body": {
+          "type": "string"
+        },
+        "document.delta.address": {
+          "type": "string"
+        },
+        "document.delta.email": {
+          "type": "string"
+        },
+        "document.delta.mobile_number": {
+          "type": "string"
+        },
+        "document.delta.name": {
+          "type": "string"
+        },
+        "document.delta.notes": {
+          "type": "string"
+        },
+        "document.delta.phone_number": {
+          "type": "string"
+        },
+        "document.delta.result": {
+          "type": "string"
+        },
+        "document.fullDelta.address": {
+          "type": "string"
+        },
+        "document.fullDelta.email": {
+          "type": "string"
+        },
+        "document.fullDelta.mobile_number": {
+          "type": "string"
+        },
+        "document.fullDelta.name": {
+          "type": "string"
+        },
+        "document.fullDelta.notes": {
+          "type": "string"
+        },
+        "document.fullDelta.phone_number": {
+          "type": "string"
+        },
+        "document.fullDelta.result": {
+          "type": "string"
+        },
+        "document.state": {
+          "type": "string"
+        },
+        "document.try_assign_identity": {
+          "type": "long"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "label_3_": {
+          "type": "string"
+        },
+        "label_4_": {
+          "type": "string"
+        },
+        "label_5_": {
+          "type": "string"
+        },
+        "label_6_": {
+          "type": "string"
+        },
+        "label_7_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "body": {
+                  "type": "string"
+                },
+                "delta": {
+                  "properties": {
+                    "address": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "mobile_number": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "notes": {
+                      "type": "string"
+                    },
+                    "phone_number": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "fullDelta": {
+                  "properties": {
+                    "address": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "mobile_number": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "notes": {
+                      "type": "string"
+                    },
+                    "phone_number": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "state": {
+                  "type": "string"
+                },
+                "try_assign_identity": {
+                  "type": "long"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "tags_vector": {
+              "type": "string"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "tags_vector": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.manuscript": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.body": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "body": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_id": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.news_item": {
+      "properties": {
+        "canonical_path": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.attachments": {
+          "properties": {
+            "file": {
+              "properties": {
+                "baseurl": {
+                  "type": "string"
+                },
+                "original": {
+                  "type": "string"
+                },
+                "uid": {
+                  "type": "string"
+                }
+              }
+            },
+            "file_name": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            }
+          }
+        },
+        "document.body": {
+          "type": "string"
+        },
+        "document.external_id": {
+          "type": "string"
+        },
+        "document.image.uid": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "document.lead": {
+          "type": "string"
+        },
+        "document.title": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_id": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_1_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_2_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_3_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_4_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_5_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_6_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_7_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_8_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_9_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "attachments": {
+                  "properties": {
+                    "file": {
+                      "properties": {
+                        "baseurl": {
+                          "type": "string"
+                        },
+                        "original": {
+                          "type": "string"
+                        },
+                        "uid": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "file_name": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "body": {
+                  "type": "string"
+                },
+                "external_id": {
+                  "type": "string"
+                },
+                "image": {
+                  "properties": {
+                    "uid": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "lead": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_id": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "protected": {
+              "type": "object"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "sensitive": {
+              "type": "object"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.operation": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.addresses.address_count": {
+          "type": "long"
+        },
+        "document.addresses.door_count": {
+          "type": "long"
+        },
+        "document.addresses.street_count": {
+          "type": "long"
+        },
+        "document.addresses.streets": {
+          "properties": {
+            "address_count": {
+              "type": "long"
+            },
+            "addresses": {
+              "properties": {
+                "door_count": {
+                  "type": "long"
+                },
+                "geo": {
+                  "properties": {
+                    "geometry": {
+                      "properties": {
+                        "coordinates": {
+                          "type": "double"
+                        },
+                        "type": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "properties": {
+                      "type": "object"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "number": {
+                  "type": "string"
+                },
+                "route_id": {
+                  "type": "string"
+                }
+              }
+            },
+            "door_count": {
+              "type": "long"
+            },
+            "street_name": {
+              "type": "string"
+            }
+          }
+        },
+        "document.description": {
+          "type": "string"
+        },
+        "document.end_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "document.manuscript": {
+          "type": "string"
+        },
+        "document.routes": {
+          "type": "string"
+        },
+        "document.script": {
+          "type": "string"
+        },
+        "document.start_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "document.title": {
+          "type": "string"
+        },
+        "document.wrangler_email": {
+          "type": "string"
+        },
+        "document.wrangler_mobile": {
+          "type": "string"
+        },
+        "document.wrangler_name": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "label_3_": {
+          "type": "string"
+        },
+        "label_4_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "addresses": {
+                  "properties": {
+                    "address_count": {
+                      "type": "long"
+                    },
+                    "door_count": {
+                      "type": "long"
+                    },
+                    "street_count": {
+                      "type": "long"
+                    },
+                    "streets": {
+                      "properties": {
+                        "address_count": {
+                          "type": "long"
+                        },
+                        "addresses": {
+                          "properties": {
+                            "door_count": {
+                              "type": "long"
+                            },
+                            "geo": {
+                              "properties": {
+                                "geometry": {
+                                  "properties": {
+                                    "coordinates": {
+                                      "type": "double"
+                                    },
+                                    "type": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "properties": {
+                                  "type": "object"
+                                },
+                                "type": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "number": {
+                              "type": "string"
+                            },
+                            "route_id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "door_count": {
+                          "type": "long"
+                        },
+                        "street_name": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": {
+                  "type": "string"
+                },
+                "end_at": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "manuscript": {
+                  "type": "string"
+                },
+                "routes": {
+                  "type": "string"
+                },
+                "script": {
+                  "type": "string"
+                },
+                "start_at": {
+                  "format": "dateOptionalTime",
+                  "type": "date"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "wrangler_email": {
+                  "type": "string"
+                },
+                "wrangler_mobile": {
+                  "type": "string"
+                },
+                "wrangler_name": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "protected": {
+              "type": "object"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "sensitive": {
+              "type": "object"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.participation": {
+      "properties": {
+        "external_id": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_0_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_1_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_2_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_3_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_4_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_5_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_6_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_7_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_8_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_9_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "sensitive.email": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "sensitive.mobile": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "uid": {
+          "index": "not_analyzed",
+          "type": "string"
+        }
+      }
+    },
+    "post.participation_target": {
+      "properties": {
+        "document.target_uid": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "external_id": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_0_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_1_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_2_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_3_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_4_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_5_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_6_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_7_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_8_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_9_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "uid": {
+          "index": "not_analyzed",
+          "type": "string"
+        }
+      }
+    },
+    "post.person": {
+      "properties": {
+        "canonical_path": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.associate": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "document.bio": {
+          "type": "string"
+        },
+        "document.email_public": {
+          "type": "boolean"
+        },
+        "document.external_id": {
+          "type": "string"
+        },
+        "document.facebook": {
+          "type": "string"
+        },
+        "document.first_name": {
+          "type": "string"
+        },
+        "document.identity": {
+          "type": "long"
+        },
+        "document.image.uid": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "document.last_name": {
+          "type": "string"
+        },
+        "document.name": {
+          "type": "string"
+        },
+        "document.phone_public": {
+          "type": "boolean"
+        },
+        "document.profile_public": {
+          "type": "boolean"
+        },
+        "document.roles.fylkestinget": {
+          "properties": {
+            "candidate": {
+              "type": "boolean"
+            },
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "priority": {
+              "type": "string"
+            }
+          }
+        },
+        "document.roles.fylkestinget.candidate": {
+          "type": "boolean"
+        },
+        "document.roles.fylkestinget.id": {
+          "type": "string"
+        },
+        "document.roles.fylkestinget.name": {
+          "type": "string"
+        },
+        "document.roles.fylkestinget.priority": {
+          "type": "string"
+        },
+        "document.roles.kommunestyret": {
+          "properties": {
+            "candidate": {
+              "type": "boolean"
+            },
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "priority": {
+              "type": "string"
+            }
+          }
+        },
+        "document.roles.kommunestyret.candidate": {
+          "type": "boolean"
+        },
+        "document.roles.kommunestyret.id": {
+          "type": "string"
+        },
+        "document.roles.kommunestyret.name": {
+          "type": "string"
+        },
+        "document.roles.kommunestyret.priority": {
+          "type": "string"
+        },
+        "document.roles.partikontoret": {
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "priority": {
+              "type": "string"
+            }
+          }
+        },
+        "document.roles.partikontoret.id": {
+          "type": "string"
+        },
+        "document.roles.partikontoret.name": {
+          "type": "string"
+        },
+        "document.roles.partikontoret.priority": {
+          "type": "string"
+        },
+        "document.roles.stortingsrepresentanter": {
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "priority": {
+              "type": "string"
+            }
+          }
+        },
+        "document.roles.stortingsrepresentanter.id": {
+          "type": "string"
+        },
+        "document.roles.stortingsrepresentanter.name": {
+          "type": "string"
+        },
+        "document.roles.stortingsrepresentanter.priority": {
+          "type": "string"
+        },
+        "document.roles.styre": {
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "priority": {
+              "type": "string"
+            }
+          }
+        },
+        "document.roles.styre.id": {
+          "type": "string"
+        },
+        "document.roles.styre.name": {
+          "type": "string"
+        },
+        "document.roles.styre.priority": {
+          "type": "string"
+        },
+        "document.twitter": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_id": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_1_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_2_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_3_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_4_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_5_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_6_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_7_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_8_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_9_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "associate": {
+                  "type": "string"
+                },
+                "bio": {
+                  "type": "string"
+                },
+                "email_public": {
+                  "type": "boolean"
+                },
+                "external_id": {
+                  "type": "string"
+                },
+                "facebook": {
+                  "type": "string"
+                },
+                "first_name": {
+                  "type": "string"
+                },
+                "identity": {
+                  "type": "long"
+                },
+                "image": {
+                  "properties": {
+                    "uid": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "last_name": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "phone_public": {
+                  "type": "boolean"
+                },
+                "profile_public": {
+                  "type": "boolean"
+                },
+                "roles": {
+                  "properties": {
+                    "fylkestinget": {
+                      "properties": {
+                        "candidate": {
+                          "type": "boolean"
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "priority": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "kommunestyret": {
+                      "properties": {
+                        "candidate": {
+                          "type": "boolean"
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "priority": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "partikontoret": {
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "priority": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "stortingsrepresentanter": {
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "priority": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "styre": {
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "priority": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "twitter": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_id": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "protected": {
+              "type": "object"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "sensitive": {
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                }
+              }
+            },
+            "tags_vector": {
+              "type": "string"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "sensitive.email": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "sensitive.phone": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "tags_vector": {
+          "type": "string"
+        },
+        "uid": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.programme": {
+      "properties": {
+        "canonical_path": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.body": {
+          "type": "string"
+        },
+        "document.description": {
+          "type": "string"
+        },
+        "document.file.file.baseurl": {
+          "type": "string"
+        },
+        "document.file.file.original": {
+          "type": "string"
+        },
+        "document.file.file.uid": {
+          "type": "string"
+        },
+        "document.file.file_name": {
+          "type": "string"
+        },
+        "document.file.title": {
+          "type": "string"
+        },
+        "document.image.uid": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "document.title": {
+          "type": "string"
+        },
+        "document.year": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_id": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_1_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_2_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_3_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_4_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_5_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_6_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_7_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_8_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_9_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "body": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "file": {
+                  "properties": {
+                    "file": {
+                      "properties": {
+                        "baseurl": {
+                          "type": "string"
+                        },
+                        "original": {
+                          "type": "string"
+                        },
+                        "uid": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "file_name": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "image": {
+                  "properties": {
+                    "uid": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "title": {
+                  "type": "string"
+                },
+                "year": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.settings-candidates": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.candidates_body": {
+          "type": "string"
+        },
+        "document.candidates_image.uid": {
+          "type": "string"
+        },
+        "document.candidates_title": {
+          "type": "string"
+        },
+        "document.title": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "label_3_": {
+          "type": "string"
+        },
+        "label_4_": {
+          "type": "string"
+        },
+        "label_5_": {
+          "type": "string"
+        },
+        "label_6_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "candidates_body": {
+                  "type": "string"
+                },
+                "candidates_image": {
+                  "properties": {
+                    "uid": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "candidates_title": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_id": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.settings-frontpage": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.news_item": {
+          "type": "string"
+        },
+        "document.title": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "label_3_": {
+          "type": "string"
+        },
+        "label_4_": {
+          "type": "string"
+        },
+        "label_5_": {
+          "type": "string"
+        },
+        "label_6_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "news_item": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_id": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.settings-misc": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.google_analytics_key": {
+          "type": "string"
+        },
+        "document.locale": {
+          "type": "string"
+        },
+        "document.title": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "label_3_": {
+          "type": "string"
+        },
+        "label_4_": {
+          "type": "string"
+        },
+        "label_5_": {
+          "type": "string"
+        },
+        "label_6_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "google_analytics_key": {
+                  "type": "string"
+                },
+                "locale": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_id": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.settings-priority-items": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.priority_item_body_five": {
+          "type": "string"
+        },
+        "document.priority_item_body_four": {
+          "type": "string"
+        },
+        "document.priority_item_body_one": {
+          "type": "string"
+        },
+        "document.priority_item_body_three": {
+          "type": "string"
+        },
+        "document.priority_item_body_two": {
+          "type": "string"
+        },
+        "document.priority_item_title_five": {
+          "type": "string"
+        },
+        "document.priority_item_title_four": {
+          "type": "string"
+        },
+        "document.priority_item_title_one": {
+          "type": "string"
+        },
+        "document.priority_item_title_three": {
+          "type": "string"
+        },
+        "document.priority_item_title_two": {
+          "type": "string"
+        },
+        "document.priority_item_url_five": {
+          "type": "string"
+        },
+        "document.priority_item_url_four": {
+          "type": "string"
+        },
+        "document.priority_item_url_one": {
+          "type": "string"
+        },
+        "document.priority_item_url_three": {
+          "type": "string"
+        },
+        "document.priority_item_url_two": {
+          "type": "string"
+        },
+        "document.title": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "label_3_": {
+          "type": "string"
+        },
+        "label_4_": {
+          "type": "string"
+        },
+        "label_5_": {
+          "type": "string"
+        },
+        "label_6_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "priority_item_body_five": {
+                  "type": "string"
+                },
+                "priority_item_body_four": {
+                  "type": "string"
+                },
+                "priority_item_body_one": {
+                  "type": "string"
+                },
+                "priority_item_body_three": {
+                  "type": "string"
+                },
+                "priority_item_body_two": {
+                  "type": "string"
+                },
+                "priority_item_title_five": {
+                  "type": "string"
+                },
+                "priority_item_title_four": {
+                  "type": "string"
+                },
+                "priority_item_title_one": {
+                  "type": "string"
+                },
+                "priority_item_title_three": {
+                  "type": "string"
+                },
+                "priority_item_title_two": {
+                  "type": "string"
+                },
+                "priority_item_url_five": {
+                  "type": "string"
+                },
+                "priority_item_url_four": {
+                  "type": "string"
+                },
+                "priority_item_url_one": {
+                  "type": "string"
+                },
+                "priority_item_url_three": {
+                  "type": "string"
+                },
+                "priority_item_url_two": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_id": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.settings-social": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.facebook": {
+          "type": "string"
+        },
+        "document.title": {
+          "type": "string"
+        },
+        "document.twitter": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "label_3_": {
+          "type": "string"
+        },
+        "label_4_": {
+          "type": "string"
+        },
+        "label_5_": {
+          "type": "string"
+        },
+        "label_6_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "facebook": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "twitter": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_id": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.site": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.external_id": {
+          "type": "string"
+        },
+        "document.label": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "document.org_depth": {
+          "type": "long"
+        },
+        "document.org_type": {
+          "type": "string"
+        },
+        "document.structure": {
+          "type": "string"
+        },
+        "document.subdomains": {
+          "type": "string"
+        },
+        "document.title": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_1_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_2_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_3_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_4_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_5_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_6_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_7_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_8_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "label_9_": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "external_id": {
+                  "type": "string"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "org_depth": {
+                  "type": "long"
+                },
+                "org_type": {
+                  "type": "string"
+                },
+                "structure": {
+                  "type": "string"
+                },
+                "subdomains": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_id": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.suggestion": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.author": {
+          "type": "string"
+        },
+        "document.body": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "label_3_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "author": {
+                  "type": "string"
+                },
+                "body": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "sensitive": {
+              "properties": {
+                "email": {
+                  "type": "string"
+                }
+              }
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "sensitive.email": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.talker": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.code": {
+          "type": "string"
+        },
+        "document.conversations": {
+          "type": "long"
+        },
+        "document.first_name": {
+          "type": "string"
+        },
+        "document.full_name": {
+          "type": "string"
+        },
+        "document.last_name": {
+          "type": "string"
+        },
+        "document.phone": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "label_3_": {
+          "type": "string"
+        },
+        "label_4_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "conversations": {
+                  "type": "long"
+                },
+                "first_name": {
+                  "type": "string"
+                },
+                "full_name": {
+                  "type": "string"
+                },
+                "last_name": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "sensitive": {
+              "properties": {
+                "full_name": {
+                  "type": "string"
+                },
+                "last_name": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                }
+              }
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "sensitive.full_name": {
+          "type": "string"
+        },
+        "sensitive.last_name": {
+          "type": "string"
+        },
+        "sensitive.phone": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "unit": {
+      "properties": {
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "data.address": {
+          "type": "string"
+        },
+        "data.address_line2": {
+          "type": "string"
+        },
+        "data.email": {
+          "type": "string"
+        },
+        "data.note": {
+          "type": "string"
+        },
+        "data.phone_number": {
+          "type": "string"
+        },
+        "data.postal_code": {
+          "type": "string"
+        },
+        "data.status": {
+          "type": "string"
+        },
+        "data.unit_level_1": {
+          "type": "string"
+        },
+        "data.unit_level_2": {
+          "type": "string"
+        },
+        "data.unit_level_3": {
+          "type": "string"
+        },
+        "data.unit_level_4": {
+          "type": "string"
+        },
+        "data.updated_at": {
+          "type": "string"
+        },
+        "groups": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "label_2_": {
+          "type": "string"
+        },
+        "label_3_": {
+          "type": "string"
+        },
+        "label_4_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "organization": {
+          "type": "string"
+        },
+        "parent": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "data": {
+              "properties": {
+                "address": {
+                  "type": "string"
+                },
+                "address_line2": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "phone_number": {
+                  "type": "string"
+                },
+                "postal_code": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "unit_level_1": {
+                  "type": "string"
+                },
+                "unit_level_2": {
+                  "type": "string"
+                },
+                "unit_level_3": {
+                  "type": "string"
+                },
+                "unit_level_4": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "type": "string"
+                }
+              }
+            },
+            "groups": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "label": {
+              "type": "string"
+            },
+            "organization": {
+              "type": "string"
+            },
+            "parent": {
+              "type": "string"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "title": {
+              "type": "string"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            }
+          }
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        }
+      }
+    }
+  }
+}

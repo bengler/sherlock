@@ -1,0 +1,122 @@
+{
+  "mappings": {
+    "post.subscriber": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "type": "object"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "sensitive": {
+              "properties": {
+                "email": {
+                  "type": "string"
+                }
+              }
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "sensitive.email": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        }
+      }
+    }
+  }
+}

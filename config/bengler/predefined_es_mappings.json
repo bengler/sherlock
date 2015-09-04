@@ -1,0 +1,1017 @@
+{
+  "mappings": {
+    "post.blogpost": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.author": {
+          "type": "string"
+        },
+        "document.body": {
+          "type": "string"
+        },
+        "document.link": {
+          "type": "string"
+        },
+        "document.photo.uid": {
+          "type": "string"
+        },
+        "document.photoset": {
+          "type": "string"
+        },
+        "document.short_title": {
+          "type": "string"
+        },
+        "document.tags": {
+          "type": "string"
+        },
+        "document.timestamp": {
+          "type": "string"
+        },
+        "document.title": {
+          "type": "string"
+        },
+        "document.type": {
+          "type": "string"
+        },
+        "document.video": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "author": {
+                  "type": "string"
+                },
+                "body": {
+                  "type": "string"
+                },
+                "link": {
+                  "type": "string"
+                },
+                "photo": {
+                  "properties": {
+                    "uid": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "photoset": {
+                  "type": "string"
+                },
+                "short_title": {
+                  "type": "string"
+                },
+                "tags": {
+                  "type": "string"
+                },
+                "timestamp": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "video": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.image": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.alt_text": {
+          "type": "string"
+        },
+        "document.attribution": {
+          "type": "string"
+        },
+        "document.crop.bottom": {
+          "type": "long"
+        },
+        "document.crop.left": {
+          "type": "long"
+        },
+        "document.crop.right": {
+          "type": "long"
+        },
+        "document.crop.top": {
+          "type": "long"
+        },
+        "document.hotspot.height": {
+          "type": "double"
+        },
+        "document.hotspot.width": {
+          "type": "double"
+        },
+        "document.hotspot.x": {
+          "type": "double"
+        },
+        "document.hotspot.y": {
+          "type": "double"
+        },
+        "document.image.aspect_ratio": {
+          "type": "long"
+        },
+        "document.image.baseurl": {
+          "type": "string"
+        },
+        "document.image.original": {
+          "type": "string"
+        },
+        "document.image.uid": {
+          "type": "string"
+        },
+        "document.image.versions": {
+          "properties": {
+            "square": {
+              "type": "boolean"
+            },
+            "url": {
+              "type": "string"
+            },
+            "width": {
+              "type": "long"
+            }
+          }
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "alt_text": {
+                  "type": "string"
+                },
+                "attribution": {
+                  "type": "string"
+                },
+                "crop": {
+                  "properties": {
+                    "bottom": {
+                      "type": "long"
+                    },
+                    "left": {
+                      "type": "long"
+                    },
+                    "right": {
+                      "type": "long"
+                    },
+                    "top": {
+                      "type": "long"
+                    }
+                  }
+                },
+                "hotspot": {
+                  "properties": {
+                    "height": {
+                      "type": "double"
+                    },
+                    "width": {
+                      "type": "double"
+                    },
+                    "x": {
+                      "type": "double"
+                    },
+                    "y": {
+                      "type": "double"
+                    }
+                  }
+                },
+                "image": {
+                  "properties": {
+                    "aspect_ratio": {
+                      "type": "long"
+                    },
+                    "baseurl": {
+                      "type": "string"
+                    },
+                    "original": {
+                      "type": "string"
+                    },
+                    "uid": {
+                      "type": "string"
+                    },
+                    "versions": {
+                      "properties": {
+                        "square": {
+                          "type": "boolean"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "width": {
+                          "type": "long"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.person": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.blurb": {
+          "type": "string"
+        },
+        "document.body": {
+          "type": "string"
+        },
+        "document.email": {
+          "type": "string"
+        },
+        "document.featured": {
+          "type": "boolean"
+        },
+        "document.github": {
+          "type": "string"
+        },
+        "document.name": {
+          "type": "string"
+        },
+        "document.phone": {
+          "type": "string"
+        },
+        "document.position": {
+          "type": "string"
+        },
+        "document.profile_photo.uid": {
+          "type": "string"
+        },
+        "document.short_name": {
+          "type": "string"
+        },
+        "document.twitter": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "blurb": {
+                  "type": "string"
+                },
+                "body": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "featured": {
+                  "type": "boolean"
+                },
+                "github": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                },
+                "profile_photo": {
+                  "properties": {
+                    "uid": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "short_name": {
+                  "type": "string"
+                },
+                "twitter": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.project": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "created_by": {
+          "type": "long"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.banner.uid": {
+          "type": "string"
+        },
+        "document.blurb": {
+          "type": "string"
+        },
+        "document.body": {
+          "type": "string"
+        },
+        "document.connected_projects": {
+          "type": "string"
+        },
+        "document.details": {
+          "type": "string"
+        },
+        "document.header_image.uid": {
+          "type": "string"
+        },
+        "document.icon.uid": {
+          "type": "string"
+        },
+        "document.persons": {
+          "type": "string"
+        },
+        "document.priority": {
+          "type": "string"
+        },
+        "document.short_title": {
+          "type": "string"
+        },
+        "document.title": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "created_by": {
+              "type": "long"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "banner": {
+                  "properties": {
+                    "uid": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "blurb": {
+                  "type": "string"
+                },
+                "body": {
+                  "type": "string"
+                },
+                "connected_projects": {
+                  "type": "string"
+                },
+                "details": {
+                  "type": "string"
+                },
+                "header_image": {
+                  "properties": {
+                    "uid": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "icon": {
+                  "properties": {
+                    "uid": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "persons": {
+                  "type": "string"
+                },
+                "priority": {
+                  "type": "string"
+                },
+                "short_title": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    },
+    "post.site": {
+      "properties": {
+        "canonical_path": {
+          "type": "string"
+        },
+        "conflicted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "document.label": {
+          "type": "string"
+        },
+        "document.structure": {
+          "type": "string"
+        },
+        "document.title": {
+          "type": "string"
+        },
+        "document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_document_updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "external_id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "klass": {
+          "type": "string"
+        },
+        "klass_0_": {
+          "type": "string"
+        },
+        "klass_1_": {
+          "type": "string"
+        },
+        "label_0_": {
+          "type": "string"
+        },
+        "label_1_": {
+          "type": "string"
+        },
+        "oid_": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "string"
+        },
+        "pristine": {
+          "properties": {
+            "canonical_path": {
+              "type": "string"
+            },
+            "conflicted": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "document": {
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "structure": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            },
+            "document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_document_updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "external_id": {
+              "type": "string"
+            },
+            "id": {
+              "type": "long"
+            },
+            "klass": {
+              "type": "string"
+            },
+            "paths": {
+              "type": "string"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "realm": {
+              "type": "string"
+            },
+            "restricted": {
+              "type": "boolean"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "dateOptionalTime",
+              "type": "date"
+            },
+            "version": {
+              "type": "long"
+            }
+          }
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "restricted": {
+          "type": "boolean"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "dateOptionalTime",
+          "type": "date"
+        },
+        "version": {
+          "type": "long"
+        }
+      }
+    }
+  }
+}
