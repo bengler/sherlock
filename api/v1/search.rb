@@ -145,6 +145,14 @@ class SherlockV1 < Sinatra::Base
   end
 
 
+  get '/mapping/:realm/?:klass?' do |realm, klass|
+    content_type 'application/json'
+    json_result = Sherlock::Elasticsearch.index_mapping(realm, klass)
+
+    [200, json_result]
+  end
+
+
   def is_integer?(string)
     begin
       Integer(string)
