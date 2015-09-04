@@ -26,9 +26,27 @@ describe Sherlock::UpdateListener do
       }
     }
 
+    let(:payload_with_long) {
+      { 'event' => 'create',
+        'uid' => 'post.card:hell.pitchfork$2',
+        'attributes' => {
+          'uid' => 'post.card:hell.pitchfork$2',
+          'document' => {'app' => 'hot', 'bucket' => {'expected_long' => 1234}},
+          'paths' => ['hell.pitchfork'],
+          'id' => 'post.card:hell.pitchfork$2'
+        }
+      }
+    }
+
     it "works" do
       Sherlock::Elasticsearch.should_receive(:index)
       subject.consider payload
+    end
+
+    it "works for attributes with long values" do
+      expected = {"uid"=>"post.card:hell.pitchfork$2", "document.app"=>"hot", "document.bucket.expected_long"=>1234, "paths"=>["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$2", "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"2", "realm"=>"hell", "pristine"=>{"uid"=>"post.card:hell.pitchfork$2", "document"=>{"app"=>"hot", "bucket"=>{"expected_long"=>1234}}, "paths"=>["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$2"}, "restricted"=>false}
+      Sherlock::Elasticsearch.should_receive(:index).with expected
+      subject.consider payload_with_long
     end
 
 
