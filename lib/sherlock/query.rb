@@ -228,7 +228,18 @@ module Sherlock
 
 
     def security_filter
-      return {:and => [{:term => {'restricted' => false}}, {:not => {:term => {'deleted' => true}}}]} if accessible_paths.empty?
+      if accessible_paths.empty?
+        return {
+          :and => [
+            {:term => {'restricted' => false}},
+            {:or => [
+              {:term => {'published' => true}},
+              {:missing => {:field => 'published', :existence => true, :null_value => true}}
+            ]},
+            {:not => {:term => {'deleted' => true}}}
+          ]
+        }
+      end
       access_requirements = []
       accessible_paths.each do |path|
         requirement_set = []
@@ -247,7 +258,13 @@ module Sherlock
         access_requirements << {:and => requirement_set}
       end
 
-      non_access_requirements = [{:term => {"restricted" => false}}]
+      non_access_requirements = [
+        {:term => {"restricted" => false}},
+        {:or => [
+          {:term => {'published' => true}},
+          {:missing => {:field => 'published', :existence => true, :null_value => true}}
+        ]}
+      ]
       if deleted == 'only'
         non_access_requirements << {:term =>{'deleted' => true}}
       else
