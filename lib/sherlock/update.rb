@@ -26,12 +26,7 @@ module Sherlock
       records_for_indexing.each do |record|
         case payload['event']
         when 'create', 'update', 'exists'
-          # unindex explicitly unpublished records
-          if unpublished?
-            result << {'action' => 'unindex', 'record' => {'uid' => record['uid']}}
-          else
-            result << {'action' => 'index', 'record' => record}
-          end
+          result << {'action' => 'index', 'record' => record}
         when 'delete'
           if soft_deleted?
             result << {'action' => 'index', 'record' => record}
