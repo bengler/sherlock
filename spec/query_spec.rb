@@ -90,7 +90,6 @@ describe Sherlock::Query do
   end
 
   describe "normalizing input" do
-
     specify "sort order" do
       Sherlock::Query.normalize_sort_order('asc').should eq ['asc']
       Sherlock::Query.normalize_sort_order('ASC').should eq ['asc']
@@ -99,7 +98,6 @@ describe Sherlock::Query do
       Sherlock::Query.normalize_sort_order('ASC,DESC').should eq ['asc', 'desc']
       Sherlock::Query.normalize_sort_order('anything').should eq ['desc']
     end
-
   end
 
   describe "range" do
@@ -121,18 +119,50 @@ describe Sherlock::Query do
         Sherlock::Query.new({:q => 'scorching', :fields => fields}).to_json
       end
     end
-
   end
 
   describe "tags" do
-    it "support simple tag queries" do
-      Sherlock::Query.new({:q => 'music', :tags => "rock"}).to_json.should == "{\"from\":0,\"size\":10,\"query\":{\"bool\":{\"must\":[{\"query_string\":{\"query\":\"music\",\"default_operator\":\"AND\"}}]}},\"filter\":{\"and\":[{\"term\":{\"tags_vector\":\"rock\"}},{\"and\":[{\"term\":{\"restricted\":false}},{\"not\":{\"term\":{\"deleted\":true}}}]}]}}"
-      Sherlock::Query.new({:q => 'music', :tags => "!rock"}).to_json.should == "{\"from\":0,\"size\":10,\"query\":{\"bool\":{\"must\":[{\"query_string\":{\"query\":\"music\",\"default_operator\":\"AND\"}}]}},\"filter\":{\"and\":[{\"not\":{\"term\":{\"tags_vector\":\"rock\"}}},{\"and\":[{\"term\":{\"restricted\":false}},{\"not\":{\"term\":{\"deleted\":true}}}]}]}}"
-      Sherlock::Query.new({:q => 'music', :tags => "!rock & pop"}).to_json.should == "{\"from\":0,\"size\":10,\"query\":{\"bool\":{\"must\":[{\"query_string\":{\"query\":\"music\",\"default_operator\":\"AND\"}}]}},\"filter\":{\"and\":[{\"not\":{\"term\":{\"tags_vector\":\"rock\"}}},{\"term\":{\"tags_vector\":\"pop\"}},{\"and\":[{\"term\":{\"restricted\":false}},{\"not\":{\"term\":{\"deleted\":true}}}]}]}}"
-      Sherlock::Query.new({:q => 'music', :tags => "!rock & (pop|techno)"}).to_json.should == "{\"from\":0,\"size\":10,\"query\":{\"bool\":{\"must\":[{\"query_string\":{\"query\":\"music\",\"default_operator\":\"AND\"}}]}},\"filter\":{\"and\":[{\"not\":{\"term\":{\"tags_vector\":\"rock\"}}},{\"and\":[{\"term\":{\"restricted\":false}},{\"not\":{\"term\":{\"deleted\":true}}}]}],\"or\":[{\"term\":{\"tags_vector\":\"pop\"}},{\"term\":{\"tags_vector\":\"techno\"}},{\"and\":[{\"term\":{\"restricted\":false}},{\"not\":{\"term\":{\"deleted\":true}}}]}]}}"
-      Sherlock::Query.new({:q => 'music', :tags => "rock & pop"}).to_json.should ==  "{\"from\":0,\"size\":10,\"query\":{\"bool\":{\"must\":[{\"query_string\":{\"query\":\"music\",\"default_operator\":\"AND\"}}]}},\"filter\":{\"and\":[{\"term\":{\"tags_vector\":\"rock\"}},{\"term\":{\"tags_vector\":\"pop\"}},{\"and\":[{\"term\":{\"restricted\":false}},{\"not\":{\"term\":{\"deleted\":true}}}]}]}}"
-      Sherlock::Query.new({:q => 'music', :tags => "rock & !pop"}).to_json.should == "{\"from\":0,\"size\":10,\"query\":{\"bool\":{\"must\":[{\"query_string\":{\"query\":\"music\",\"default_operator\":\"AND\"}}]}},\"filter\":{\"and\":[{\"term\":{\"tags_vector\":\"rock\"}},{\"not\":{\"term\":{\"tags_vector\":\"pop\"}}},{\"and\":[{\"term\":{\"restricted\":false}},{\"not\":{\"term\":{\"deleted\":true}}}]}]}}"
-      Sherlock::Query.new({:q => 'music', :tags => "rock,pop,blues"}).to_json.should == "{\"from\":0,\"size\":10,\"query\":{\"bool\":{\"must\":[{\"query_string\":{\"query\":\"music\",\"default_operator\":\"AND\"}}]}},\"filter\":{\"and\":[{\"term\":{\"tags_vector\":\"rock\"}},{\"term\":{\"tags_vector\":\"pop\"}},{\"term\":{\"tags_vector\":\"blues\"}},{\"and\":[{\"term\":{\"restricted\":false}},{\"not\":{\"term\":{\"deleted\":true}}}]}]}}"
+
+    it "works with a tag" do
+      verify :format => :json do
+        Sherlock::Query.new({:q => 'music', :tags => "rock"}).to_json
+      end
+    end
+
+    it "works with not" do
+      verify :format => :json do
+        Sherlock::Query.new({:q => 'music', :tags => "!rock"}).to_json
+      end
+    end
+
+    it "works with not and and" do
+      verify :format => :json do
+        Sherlock::Query.new({:q => 'music', :tags => "!rock & pop"}).to_json
+      end
+    end
+
+    it "works with not and or" do
+      verify :format => :json do
+        Sherlock::Query.new({:q => 'music', :tags => "!rock & (pop|techno)"}).to_json
+      end
+    end
+
+    it "works with and" do
+      verify :format => :json do
+        Sherlock::Query.new({:q => 'music', :tags => "rock & pop"}).to_json
+      end
+    end
+
+    it "works with and and not" do
+      verify :format => :json do
+        Sherlock::Query.new({:q => 'music', :tags => "rock & !pop"}).to_json
+      end
+    end
+
+    it "works with comma separacted" do
+      verify :format => :json do
+        Sherlock::Query.new({:q => 'music', :tags => "rock,pop,blues"})
+      end
     end
 
   end
@@ -169,9 +199,17 @@ describe Sherlock::Query do
 
 
     context "deleted content" do
-
-      xit "grants access to a specifc path" do
+      it "grants access to a specifc path" do
         accessible_paths = ['dna.org.vaffel']
+        verify :format => :json do
+          Sherlock::Query.new({:q => 'scorching', :deleted => 'include'}, accessible_paths).to_json
+        end
+      end
+    end
+
+    context "unpublished content" do
+      it "denies access to unpublished content not in path" do
+        accessible_paths = []
         verify :format => :json do
           Sherlock::Query.new({:q => 'scorching'}, accessible_paths).to_json
         end

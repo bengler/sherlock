@@ -49,6 +49,22 @@
             }
           },
           {
+            "or": [
+              {
+                "term": {
+                  "published": true
+                }
+              },
+              {
+                "missing": {
+                  "field": "published",
+                  "existence": true,
+                  "null_value": true
+                }
+              }
+            ]
+          },
+          {
             "not": {
               "term": {
                 "deleted": true

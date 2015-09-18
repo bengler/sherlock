@@ -5,13 +5,9 @@
     "bool": {
       "must": [
         {
-          "term": {
-            "klass_0_": "post"
-          }
-        },
-        {
-          "term": {
-            "label_0_": "hell"
+          "query_string": {
+            "query": "music",
+            "default_operator": "AND"
           }
         }
       ]
@@ -20,33 +16,55 @@
   "filter": {
     "and": [
       {
-        "or": [
+        "not": {
+          "term": {
+            "tags_vector": "rock"
+          }
+        }
+      },
+      {
+        "and": [
           {
             "term": {
-              "klass_1_": "fork"
+              "restricted": false
             }
           },
           {
-            "term": {
-              "klass_1_": "horn"
-            }
+            "or": [
+              {
+                "term": {
+                  "published": true
+                }
+              },
+              {
+                "missing": {
+                  "field": "published",
+                  "existence": true,
+                  "null_value": true
+                }
+              }
+            ]
           },
           {
-            "term": {
-              "label_1_": "flames"
-            }
-          },
-          {
-            "term": {
-              "label_1_": "fire"
-            }
-          },
-          {
-            "term": {
-              "label_1_": "torment"
+            "not": {
+              "term": {
+                "deleted": true
+              }
             }
           }
         ]
+      }
+    ],
+    "or": [
+      {
+        "term": {
+          "tags_vector": "pop"
+        }
+      },
+      {
+        "term": {
+          "tags_vector": "techno"
+        }
       },
       {
         "and": [

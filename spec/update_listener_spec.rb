@@ -77,7 +77,7 @@ describe Sherlock::UpdateListener do
 
   end
 
-  context 'unindexing' do
+  context 'unpublished' do
 
     let(:payload) {
       { 'event' => 'update',
@@ -92,8 +92,9 @@ describe Sherlock::UpdateListener do
       }
     }
 
-    it 'works' do
-      Sherlock::Elasticsearch.should_receive(:unindex).with('post.card:hell.pitchfork$1')
+    it 'indexes an unpublished record' do
+      expected = {"uid"=>"post.card:hell.pitchfork$1", "document.app"=>"hot", "paths"=>["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$1", "published"=>false, "klass_0_"=>"post", "klass_1_"=>"card", "label_0_"=>"hell", "label_1_"=>"pitchfork", "oid_"=>"1", "realm"=>"hell", "pristine"=>{"uid"=>"post.card:hell.pitchfork$1", "document"=>{"app"=>"hot"}, "paths"=>["hell.pitchfork"], "id"=>"post.card:hell.pitchfork$1", "published"=>false}, "restricted"=>false}
+      Sherlock::Elasticsearch.should_receive(:index).with(expected)
       subject.consider payload
     end
 

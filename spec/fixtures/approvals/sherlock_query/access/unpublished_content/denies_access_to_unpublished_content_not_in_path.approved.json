@@ -14,29 +14,33 @@
     }
   },
   "filter": {
-    "or": [
+    "and": [
       {
-        "and": [
+        "term": {
+          "restricted": false
+        }
+      },
+      {
+        "or": [
           {
             "term": {
-              "label_0_": "dna"
+              "published": true
             }
           },
           {
-            "term": {
-              "label_1_": "org"
-            }
-          },
-          {
-            "term": {
-              "label_2_": "vaffel"
+            "missing": {
+              "field": "published",
+              "existence": true,
+              "null_value": true
             }
           }
         ]
       },
       {
-        "term": {
-          "restricted": false
+        "not": {
+          "term": {
+            "deleted": true
+          }
         }
       }
     ]
