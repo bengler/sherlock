@@ -151,6 +151,3 @@ DEPENDENCIES
   sinatra-contrib!
   thor (~> 0.18.0)
   unicorn (~> 4.8.3)
-
-BUNDLED WITH
-   1.10.3
