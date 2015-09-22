@@ -43,11 +43,36 @@
             }
           },
           {
-            "not": {
-              "term": {
-                "deleted": true
+            "or": [
+              {
+                "term": {
+                  "published": true
+                }
+              },
+              {
+                "missing": {
+                  "field": "published",
+                  "existence": true,
+                  "null_value": true
+                }
               }
-            }
+            ]
+          },
+          {
+            "or": [
+              {
+                "term": {
+                  "deleted": false
+                }
+              },
+              {
+                "missing": {
+                  "field": "deleted",
+                  "existence": true,
+                  "null_value": true
+                }
+              }
+            ]
           }
         ]
       },
@@ -75,11 +100,20 @@
             ]
           },
           {
-            "not": {
-              "term": {
-                "deleted": true
+            "or": [
+              {
+                "term": {
+                  "deleted": false
+                }
+              },
+              {
+                "missing": {
+                  "field": "deleted",
+                  "existence": true,
+                  "null_value": true
+                }
               }
-            }
+            ]
           }
         ]
       }

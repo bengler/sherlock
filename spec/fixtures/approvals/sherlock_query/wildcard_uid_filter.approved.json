@@ -51,11 +51,20 @@
         ]
       },
       {
-        "not": {
-          "term": {
-            "deleted": true
+        "or": [
+          {
+            "term": {
+              "deleted": false
+            }
+          },
+          {
+            "missing": {
+              "field": "deleted",
+              "existence": true,
+              "null_value": true
+            }
           }
-        }
+        ]
       }
     ]
   }
