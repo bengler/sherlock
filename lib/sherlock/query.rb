@@ -231,14 +231,8 @@ module Sherlock
     def security_filter
       default_filters = [
         {:term => {'restricted' => false}},
-        {:or => [
-            {:term => {'published' => true}},
-            {:missing => {:field => 'published', :existence => true, :null_value => true}}
-        ]},
-        {:or => [
-            {:term => {'deleted' => false}},
-            {:missing => {:field => 'deleted', :existence => true, :null_value => true}}
-        ]}
+        published_true_or_blank,
+        deleted_false_or_blank
       ]
 
       # Non-privileged filter
@@ -272,29 +266,41 @@ module Sherlock
       elsif unpublished == 'include'
         # No extra filter -> include both published and unpublished
       else
-        # Exclude unpublished records, but include them if we dont know
-        filters << {
-          :or => [
-            {:term => {'published' => true}},
-            {:missing => {:field => 'published', :existence => true, :null_value => true}}
-          ]
-        }
+        # Include published records, and those where we have no published field
+        filters << published_true_or_blank
       end
 
       # Handle deleted flag
       if deleted == 'only'
-        # Explicitly only include deleted records
+        # Explicitly include only deleted records
         filters << {:term => {'deleted' => true}}
       elsif deleted == 'include'
         # No extra filter -> include both deleted and non-deleted
       else
-        # Exclude deleted records
-        filters << {:or => [
-            {:term => {'deleted' => false}},
-            {:missing => {:field => 'deleted', :existence => true, :null_value => true}}
-        ]}
+        # Exclude deleted records, but include them if we dont know
+        filters << deleted_false_or_blank
       end
       filters
+    end
+
+
+    def published_true_or_blank
+      {
+        :or => [
+          {:term => {'published' => true}},
+          {:missing => {:field => 'published', :existence => true, :null_value => true}}
+        ]
+      }
+    end
+
+
+    def deleted_false_or_blank
+      {
+        :or => [
+          {:term => {'deleted' => false}},
+          {:missing => {:field => 'deleted', :existence => true, :null_value => true}}
+        ]
+      }
     end
 
 
