@@ -1,0 +1,96 @@
+{
+  "from": 0,
+  "size": 10,
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "query": "scorching",
+            "default_operator": "AND"
+          }
+        }
+      ]
+    }
+  },
+  "filter": {
+    "or": [
+      {
+        "and": [
+          {
+            "term": {
+              "label_0_": "dna"
+            }
+          },
+          {
+            "term": {
+              "label_1_": "org"
+            }
+          },
+          {
+            "term": {
+              "label_2_": "vaffel"
+            }
+          },
+          {
+            "or": [
+              {
+                "term": {
+                  "deleted": false
+                }
+              },
+              {
+                "missing": {
+                  "field": "deleted",
+                  "existence": true,
+                  "null_value": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "and": [
+          {
+            "term": {
+              "restricted": false
+            }
+          },
+          {
+            "or": [
+              {
+                "term": {
+                  "published": true
+                }
+              },
+              {
+                "missing": {
+                  "field": "published",
+                  "existence": true,
+                  "null_value": true
+                }
+              }
+            ]
+          },
+          {
+            "or": [
+              {
+                "term": {
+                  "deleted": false
+                }
+              },
+              {
+                "missing": {
+                  "field": "deleted",
+                  "existence": true,
+                  "null_value": true
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
