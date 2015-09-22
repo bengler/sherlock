@@ -6,7 +6,7 @@ module Sherlock
 
     REQUIRED_RETURN_FIELDS = ['uid']
 
-    attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :min, :max, :deprecated_range, :fields, :accessible_paths, :uid_query, :tags_query, :deleted, :return_fields
+    attr_reader :search_term, :uid, :limit, :offset, :sort_attribute, :order, :min, :max, :deprecated_range, :fields, :accessible_paths, :uid_query, :tags_query, :deleted, :unpublished, :return_fields
     def initialize(options, accessible_paths = [])
       @search_term = options[:q]
       @limit = options.fetch(:limit) { 10 }
@@ -22,6 +22,7 @@ module Sherlock
       @uid_query = Pebbles::Uid.query(uid, :species => 'klass', :path => 'label', :suffix => '')
       @tags_query = options[:tags]
       @deleted = options[:deleted]
+      @unpublished = options[:unpublished]
       @return_fields = options[:return_fields]
     end
 
@@ -228,51 +229,74 @@ module Sherlock
 
 
     def security_filter
-      if accessible_paths.empty?
-        return {
-          :and => [
-            {:term => {'restricted' => false}},
-            {:or => [
-              {:term => {'published' => true}},
-              {:missing => {:field => 'published', :existence => true, :null_value => true}}
-            ]},
-            {:not => {:term => {'deleted' => true}}}
-          ]
-        }
-      end
-      access_requirements = []
+      default_filters = [
+        {:term => {'restricted' => false}},
+        {:or => [
+            {:term => {'published' => true}},
+            {:missing => {:field => 'published', :existence => true, :null_value => true}}
+        ]},
+        {:or => [
+            {:term => {'deleted' => false}},
+            {:missing => {:field => 'deleted', :existence => true, :null_value => true}}
+        ]}
+      ]
+
+      # Non-privileged filter
+      non_privileged_access_filters = {:and => (default_filters + deleted_and_unpublished_filters).uniq}
+
+      # Early return in case user has no privileged paths
+      return non_privileged_access_filters if accessible_paths.empty?
+
+      # Build filter for the privileged paths
+      # Extract labels from each privileged path and apply deleted/unpublished filters to them
+      privileged_access_filters = []
       accessible_paths.each do |path|
         requirement_set = []
         Pebbles::Uid::Labels.new(path, :name => 'label', :suffix => '').to_hash.each do |key, value|
           requirement_set << {:term => {key.to_s => value}}
         end
-        if deleted == 'only'
-          # explicitly only include deleted records
-          requirement_set << {:term => {'deleted' => true}}
-        elsif deleted == 'include'
-          # no extra filter -> include all
-        else
-          # explicitly exclude deleted records
-          requirement_set << {:not => {:term => {'deleted' => true}}}
-        end
-        access_requirements << {:and => requirement_set}
+        privileged_access_filters << {:and => (requirement_set + deleted_and_unpublished_filters)}
       end
 
-      non_access_requirements = [
-        {:term => {"restricted" => false}},
-        {:or => [
-          {:term => {'published' => true}},
-          {:missing => {:field => 'published', :existence => true, :null_value => true}}
-        ]}
-      ]
-      if deleted == 'only'
-        non_access_requirements << {:term =>{'deleted' => true}}
-      else
-        non_access_requirements << {:not => {:term => {'deleted' => true}}}
-      end
-      access_requirements << { :and => non_access_requirements}
-      {:or => access_requirements}
+      {:or => privileged_access_filters + [non_privileged_access_filters]}
     end
+
+
+
+    def deleted_and_unpublished_filters
+      filters = []
+      # Handle unpublished flag
+      if unpublished == 'only'
+        # Explicitly include only unpublished records
+        filters << {:term => {'published' => false}}
+      elsif unpublished == 'include'
+        # No extra filter -> include both published and unpublished
+      else
+        # Exclude unpublished records, but include them if we dont know
+        filters << {
+          :or => [
+            {:term => {'published' => true}},
+            {:missing => {:field => 'published', :existence => true, :null_value => true}}
+          ]
+        }
+      end
+
+      # Handle deleted flag
+      if deleted == 'only'
+        # Explicitly only include deleted records
+        filters << {:term => {'deleted' => true}}
+      elsif deleted == 'include'
+        # No extra filter -> include both deleted and non-deleted
+      else
+        # Exclude deleted records
+        filters << {:or => [
+            {:term => {'deleted' => false}},
+            {:missing => {:field => 'deleted', :existence => true, :null_value => true}}
+        ]}
+      end
+      filters
+    end
+
 
     def sort
       return {} unless sort_attribute
