@@ -121,6 +121,7 @@ class SherlockV1 < Sinatra::Base
   # @optional [String] max[name_of_attribute] Maximum accepted value for a ranged query.
   # @optional [String] fields[name_of_attribute] Require a named attribute to have a specific value. Use "null" to indicate a missing value. Use 'value1|value2' to indicate 'or'.
   # @optional [String] deleted How to treat the deleted attribute. Accepts 'include' or 'only'. Default is to not include these records. Getting a deleted record requires access to its path.
+  # @optional [String] unpublished How to treat unpublished records in the result. Accepts 'include' or 'only'. Default is to not include these records. Getting an unpublished record requires access to its path.
   # @optional [Boolean] nocache Bypass cache for guest users. Default is false.
   # @optional [String] return_fields Return only these named fields, separated by comma. E.g. "realm,document.author,updated_at"
   # @status 200 JSON
