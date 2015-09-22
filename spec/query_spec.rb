@@ -214,6 +214,13 @@ describe Sherlock::Query do
           Sherlock::Query.new({:q => 'scorching'}, accessible_paths).to_json
         end
       end
+
+      it "it grants access to unpublished content in path" do
+        accessible_paths = ['dna.org.vaffel']
+        verify :format => :json do
+          Sherlock::Query.new({:q => 'scorching', :unpublished => 'include'}, accessible_paths).to_json
+        end
+      end
     end
 
   end

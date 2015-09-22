@@ -508,7 +508,7 @@ describe 'API v1 search' do
     let(:inaccessible_deleted_uid) {'post.card:hell.climate.weird$4'}
 
     let(:record) {
-      Sherlock::Parsers::Generic.new(uid, {'document' => 'secret', 'uid' => uid, 'deleted' => false}).to_hash
+      Sherlock::Parsers::Generic.new(uid, {'document' => 'secret', 'uid' => uid, 'deleted' => false, 'published' => true}).to_hash
     }
     let(:restricted_record) {
       Sherlock::Parsers::Generic.new(restricted_uid, {'document' => 'secret', 'uid' => restricted_uid, 'deleted' => false, 'restricted' => true}).to_hash
@@ -534,7 +534,7 @@ describe 'API v1 search' do
         sleep 2.0
         get "/search/#{realm}", :q => 'secret', :deleted => 'include'
         result = JSON.parse(last_response.body)
-        #result['hits'].count.should eq 3
+        result['hits'].count.should eq 3
         result['hits'].map do |hit|
           hit['hit']['uid']
         end.sort.should eq([record['uid'], restricted_record['uid'], deleted_record['uid']])
@@ -915,5 +915,98 @@ describe 'API v1 search' do
 
   end
 
+  describe "content marked as unpublished" do
+
+    let(:uid) {'post.card:hell.tools.weird$1'}
+    let(:unpublished_uid) {'post.card:hell.tools.weird$2'}
+
+    let(:record) {
+      Sherlock::Parsers::Generic.new(uid, {'document' => 'secret', 'uid' => uid, 'published' => true, 'restricted' => false}).to_hash
+    }
+    let(:unpublished_record) {
+      Sherlock::Parsers::Generic.new(unpublished_uid, {'document' => 'secret', 'uid' => unpublished_uid, 'published' => false, 'restricted' => false}).to_hash
+    }
+
+    context "when somewhat entrusted" do
+
+      before :each do
+        Sherlock::Access.stub(:accessible_paths).and_return ['hell.tools']
+      end
+
+      it "finds unpublished stuff when requested" do
+        Sherlock::Elasticsearch.index record
+        Sherlock::Elasticsearch.index unpublished_record
+        sleep 2.0
+        get "/search/#{realm}", :q => 'secret', :unpublished => 'include'
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 2
+        result['hits'].map do |hit|
+          hit['hit']['uid']
+        end.sort.should eq([record['uid'], unpublished_record['uid']])
+      end
+
+      it "finds only unpublished stuff when requested" do
+        Sherlock::Elasticsearch.index record
+        Sherlock::Elasticsearch.index unpublished_record
+        sleep 2.0
+        get "/search/#{realm}", :q => 'secret', :unpublished => 'only'
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 1
+        result['hits'].map do |hit|
+          hit['hit']['uid']
+        end.sort.should eq([unpublished_record['uid']])
+      end
+
+      it "does not find unpublished stuff unless explicitly told to do so" do
+        Sherlock::Elasticsearch.index record
+        Sherlock::Elasticsearch.index unpublished_record
+        sleep 2.0
+        get "/search/#{realm}", :q => 'secret'
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 1
+        result['hits'].map do |hit|
+          hit['hit']['uid']
+        end.sort.should eq([record['uid']])
+      end
+
+    end
+
+
+    context "not trusted" do
+
+      before :each do
+        Sherlock::Access.stub(:accessible_paths).and_return []
+      end
+
+      it "never finds unpublished stuff when requested" do
+        Sherlock::Elasticsearch.index record
+        Sherlock::Elasticsearch.index unpublished_record
+        sleep 2.0
+
+        get "/search/#{realm}", :q => 'secret'
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 1
+        result['hits'].map do |hit|
+          hit['hit']['uid']
+        end.sort.should eq([record['uid']])
+
+        get "/search/#{realm}", :q => 'secret', :unpublished => 'include'
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 1
+        result['hits'].map do |hit|
+          hit['hit']['uid']
+        end.sort.should eq([record['uid']])
+
+        get "/search/#{realm}", :q => 'secret', :unpublished => 'only'
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 0
+      end
+
+    end
+
+
+
+
+  end
 
 end
