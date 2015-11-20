@@ -1,4 +1,9 @@
 # Sherlock
+  ____  _               _            _    
+ / ___|| |__   ___ _ __| | ___   ___| | __
+ \___ \| '_ \ / _ \ '__| |/ _ \ / __| |/ /
+  ___) | | | |  __/ |  | | (_) | (__|   <
+ |____/|_| |_|\___|_|  |_|\___/ \___|_|\_\
 
 [![Build Status](https://semaphoreapp.com/api/v1/projects/ef5dcc4d6e420430033d8928194536f7784316e1/28278/badge.png)](https://semaphoreapp.com/projects/1579/branches/28278)
 
