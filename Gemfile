@@ -1,7 +1,7 @@
 source 'https://rubygems.org/'
 
 gem 'sinatra', '~> 1.4.6'
-gem 'rack-contrib', :git => 'https://github.com/rack/rack-contrib'
+gem 'rack-contrib', '~> 1.4.0'
 gem 'pebblebed', '~> 0.3.3'
 gem 'pebbles-uid', '~> 0.0.22'
 gem 'pebbles-river', '~> 0.2.4'
@@ -13,7 +13,7 @@ gem 'servolux', '~> 0.10.0'
 gem 'thor', '~> 0.18.0'
 gem 'curb', '~> 0.8.8'
 gem 'backports', '~> 3.6.4'
-gem 'sinatra-contrib', :git => 'https://github.com/sinatra/sinatra-contrib'
+gem 'sinatra-contrib', '~> 1.4.6'
 
 group :development, :test do
   gem 'rspec', '~> 2.14.1'
