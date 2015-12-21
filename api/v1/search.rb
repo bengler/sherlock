@@ -6,6 +6,7 @@ class SherlockV1 < Sinatra::Base
   configure :development do
     register Sinatra::Reloader
   end
+  register Sinatra::MultiRoute
 
   helpers do
 
@@ -105,7 +106,7 @@ class SherlockV1 < Sinatra::Base
   # @note Documents with restricted=true is only accessible by god sessions or users with checkpoint-specified access to that path.
   # @category Sherlock/Search
   # @path /api/sherlock/v1/search/:realm/:uid
-  # @http GET
+  # @http GET or POST
   # @example /api/sherlock/v1/search/apdm/post.greeting:apdm.lifeloop.oa.*
   # @required [String] realm Name of realm containing the searchable data.
   # @optional [String] uid uid denoting a resource, or a wildcard uid indicating a collection of resources.
@@ -125,7 +126,7 @@ class SherlockV1 < Sinatra::Base
   # @optional [Boolean] nocache Bypass cache for guest users. Default is false.
   # @optional [String] return_fields Return only these named fields, separated by comma. E.g. "realm,document.author,updated_at"
   # @status 200 JSON
-  get '/search/:realm/?:uid?' do |realm, uid|
+  route :get, :post, '/search/:realm/?:uid?' do |realm, uid|
     content_type 'application/json'
 
     halt 403, {:error => 'invalid_uid', :message => "Sherlock couldn't parse the UID \"#{uid}\"."} unless valid_uid_query? uid

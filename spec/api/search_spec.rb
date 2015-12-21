@@ -1004,8 +1004,46 @@ describe 'API v1 search' do
 
     end
 
+  end
 
+  describe "POST /search/:realm/?:uid?" do
 
+    it 'finds existing record' do
+      Sherlock::Elasticsearch.index record
+      Sherlock::Elasticsearch.index another_record
+      Sherlock::Elasticsearch.index excluded_record
+      sleep 2.0
+      post "/search/#{realm}", {:q => 'hot', :uid => 'hoppla'}
+      result = JSON.parse(last_response.body)
+      result['hits'].map do |hit|
+        hit['hit']['document']
+      end.should eq ["hot", "hot stuff"]
+      result['hits'].first['hit']['uid'].should eq record['uid']
+    end
+
+    it 'finds records by uid in request body' do
+      Sherlock::Elasticsearch.index record
+      Sherlock::Elasticsearch.index another_record
+      Sherlock::Elasticsearch.index excluded_record
+      sleep 2.0
+      post "/search/#{realm}", {:q => 'hot', :uid => 'post.card:hell.*$1|2'}
+      result = JSON.parse(last_response.body)
+      result['hits'].map do |hit|
+        hit['hit']['uid']
+      end.should eq [record['uid'], another_record['uid']]
+    end
+
+    it 'finds records by uid in request body' do
+      Sherlock::Elasticsearch.index record
+      Sherlock::Elasticsearch.index another_record
+      Sherlock::Elasticsearch.index excluded_record
+      sleep 2.0
+      post "/search/#{realm}/post.card:hell.*$1|2", {:q => 'hot', :uid => 'post.card:hell.*$1|44'}
+      result = JSON.parse(last_response.body)
+      result['hits'].map do |hit|
+        hit['hit']['uid']
+      end.should eq [record['uid'], another_record['uid']]
+    end
 
   end
 
