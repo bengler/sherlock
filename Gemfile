@@ -13,12 +13,12 @@ gem 'servolux', '~> 0.10.0'
 gem 'thor', '~> 0.18.0'
 gem 'curb', '~> 0.8.8'
 gem 'backports', '~> 3.6.4'
+gem 'sinatra-contrib', :git => 'https://github.com/sinatra/sinatra-contrib'
 
 group :development, :test do
   gem 'rspec', '~> 2.14.1'
   gem 'approvals', '~> 0.0.16'
   gem 'simplecov', '~> 0.6.4'
-  gem 'sinatra-contrib', :git => 'https://github.com/sinatra/sinatra-contrib'
   gem 'memcache_mock', '~> 0.0.14'
 end
 

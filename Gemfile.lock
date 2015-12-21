@@ -1,24 +1,25 @@
 GIT
   remote: https://github.com/bengler/pebbles-cors
-  revision: 4653b7cbc35bd3bfdd3e73dcabb040586c746e74
+  revision: 91f57a06671c1c3a15e50a5c8332f9699dc9bdba
   specs:
-    pebbles-cors (0.2.2)
+    pebbles-cors (0.2.3)
       dalli
       pebblebed
       rack
 
 GIT
   remote: https://github.com/rack/rack-contrib
-  revision: 34062096a468b5d9adac87692599d4974ea69f15
+  revision: ea0c82dc3a6353542b7fe0cbd262c43378e28b31
   specs:
-    rack-contrib (1.2.0)
-      rack (>= 0.9.1)
+    rack-contrib (1.4.0)
+      git-version-bump (~> 0.15)
+      rack (~> 1.4)
 
 GIT
   remote: https://github.com/sinatra/sinatra-contrib
-  revision: d856355561dd5b1e1e80f493d6df6806afac1b63
+  revision: 66892d3789ba23f157b17d67570479e97d7eaa95
   specs:
-    sinatra-contrib (1.4.4)
+    sinatra-contrib (1.4.6)
       backports (>= 2.0)
       multi_json
       rack-protection
@@ -29,7 +30,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.2.1)
+    activesupport (4.2.5)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -39,24 +40,25 @@ GEM
       builder
       multi_json
     amq-protocol (1.9.2)
-    approvals (0.0.20)
+    approvals (0.0.22)
       nokogiri (~> 1.6)
       thor (~> 0.18)
     arrayfields (4.9.2)
-    backports (3.6.4)
+    backports (3.6.7)
     builder (3.2.2)
-    bunny (1.7.0)
-      amq-protocol (>= 1.9.2)
+    bunny (1.7.1)
+      amq-protocol (~> 1.9.2)
     chronic (0.10.2)
     curb (0.8.8)
-    dalli (2.7.4)
+    dalli (2.7.5)
     deepstruct (0.0.7)
     diff-lcs (1.2.5)
     fattr (2.2.2)
     futurevalue (0.0.2)
+    git-version-bump (0.15.1)
     i18n (0.7.0)
     json (1.8.3)
-    kgio (2.9.3)
+    kgio (2.10.0)
     main (5.0.1)
       arrayfields (>= 4.7.4)
       chronic (>= 0.6.2)
@@ -65,13 +67,13 @@ GEM
     map (6.5.5)
     memcache_mock (0.0.14)
     mercenary (0.3.5)
-    mini_portile (0.6.2)
-    minitest (5.7.0)
-    multi_json (1.11.0)
-    nokogiri (1.6.6.2)
-      mini_portile (~> 0.6.0)
+    mini_portile2 (2.0.0)
+    minitest (5.8.3)
+    multi_json (1.11.2)
+    nokogiri (1.6.7.1)
+      mini_portile2 (~> 2.0.0.rc2)
     pathbuilder (0.0.2)
-    pebblebed (0.3.3)
+    pebblebed (0.3.4)
       activesupport
       bunny
       curb (>= 0.8.4)
@@ -83,7 +85,7 @@ GEM
       yajl-ruby
     pebbles-path (0.0.3)
       pebbles-uid (>= 0.0.6)
-    pebbles-river (0.2.4)
+    pebbles-river (0.2.6)
       activesupport (>= 3.0)
       bunny (~> 1.7.0)
       mercenary (~> 0.3.3)
@@ -93,12 +95,12 @@ GEM
     petroglyph (0.0.7)
       tilt
     queryparams (0.0.3)
-    rack (1.6.1)
+    rack (1.6.4)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
-    raindrops (0.13.0)
+    raindrops (0.15.0)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
