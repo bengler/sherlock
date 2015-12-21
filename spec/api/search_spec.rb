@@ -1013,7 +1013,7 @@ describe 'API v1 search' do
       Sherlock::Elasticsearch.index another_record
       Sherlock::Elasticsearch.index excluded_record
       sleep 2.0
-      post "/search/#{realm}", {:q => 'hot', :uid => 'hoppla'}
+      post "/search/#{realm}", {:q => 'hot'}
       result = JSON.parse(last_response.body)
       result['hits'].map do |hit|
         hit['hit']['document']
@@ -1025,24 +1025,13 @@ describe 'API v1 search' do
       Sherlock::Elasticsearch.index record
       Sherlock::Elasticsearch.index another_record
       Sherlock::Elasticsearch.index excluded_record
+      Sherlock::Elasticsearch.index yet_another_record
       sleep 2.0
-      post "/search/#{realm}", {:q => 'hot', :uid => 'post.card:hell.*$1|2'}
+      post "/search/#{realm}", {:uid => 'post.card:hell.*$1|4'}
       result = JSON.parse(last_response.body)
       result['hits'].map do |hit|
         hit['hit']['uid']
-      end.should eq [record['uid'], another_record['uid']]
-    end
-
-    it 'finds records by uid in request body' do
-      Sherlock::Elasticsearch.index record
-      Sherlock::Elasticsearch.index another_record
-      Sherlock::Elasticsearch.index excluded_record
-      sleep 2.0
-      post "/search/#{realm}/post.card:hell.*$1|2", {:q => 'hot', :uid => 'post.card:hell.*$1|44'}
-      result = JSON.parse(last_response.body)
-      result['hits'].map do |hit|
-        hit['hit']['uid']
-      end.should eq [record['uid'], another_record['uid']]
+      end.should eq [record['uid'], yet_another_record['uid']]
     end
 
   end
