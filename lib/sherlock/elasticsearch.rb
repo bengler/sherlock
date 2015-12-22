@@ -195,13 +195,13 @@ module Sherlock
       end
 
 
-      def query(realm, query_obj) # TODO: I want to do query_obj.to_json berfore passing it in
-        options = Hash[:source => query_obj.to_json]
+      def query(realm, query_obj)
+        options = query_obj.to_hash
         index = index_name(realm)
         url = "#{root_url}/#{index}/_search"
         result = nil
         begin
-          response = Pebblebed::Http.get(url, options)
+          response = Pebblebed::Http.post(url, options)
           result = JSON.parse(response.body)
         rescue Pebblebed::HttpError => e
           if e.message =~ /IndexMissingException/
