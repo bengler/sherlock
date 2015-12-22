@@ -128,6 +128,7 @@ class SherlockV1 < Sinatra::Base
   # @status 200 JSON
   route :get, :post, '/search/:realm/?:uid?' do |realm, uid|
     content_type 'application/json'
+    uid ||= params['uid']
 
     halt 403, {:error => 'invalid_uid', :message => "Sherlock couldn't parse the UID \"#{uid}\"."} unless valid_uid_query? uid
 
