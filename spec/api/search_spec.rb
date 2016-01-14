@@ -101,9 +101,7 @@ describe 'API v1 search' do
   describe "GET /search/:realm/?:uid?" do
 
     it 'has correct content-type headers' do
-      Sherlock::Elasticsearch.index record
-      sleep 2.0
-      get "/search/#{realm}", :q => "hot"
+      get "/search/#{realm}"
       last_response['Content-Type'].should eq 'application/json;charset=utf-8'
     end
 
