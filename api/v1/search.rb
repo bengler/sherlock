@@ -127,7 +127,7 @@ class SherlockV1 < Sinatra::Base
   # @optional [String] return_fields Return only these named fields, separated by comma. E.g. "realm,document.author,updated_at"
   # @status 200 JSON
   route :get, :post, '/search/:realm/?:uid?' do |realm, uid|
-    content_type 'application/json'
+    content_type 'application/json', :charset => 'utf-8'
     uid ||= params['uid']
 
     halt 403, {:error => 'invalid_uid', :message => "Sherlock couldn't parse the UID \"#{uid}\"."} unless valid_uid_query? uid
