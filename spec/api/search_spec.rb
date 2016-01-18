@@ -1027,13 +1027,22 @@ describe 'API v1 search' do
     end
 
     it 'finds records by uid in request body' do
-      Sherlock::Elasticsearch.index record
+      Sherlock::Elasticsearch.index record # id 1
       Sherlock::Elasticsearch.index another_record
       Sherlock::Elasticsearch.index excluded_record
-      Sherlock::Elasticsearch.index yet_another_record
+      Sherlock::Elasticsearch.index yet_another_record # id 4
+      for i in 100..200 do
+        uid = "post.card:hell.flames.devil$#{i}"
+        rec = Sherlock::Parsers::Generic.new(
+          uid, {'document' => 'hot', 'uid' => uid,
+          :restricted => false}
+        ).to_hash
+        Sherlock::Elasticsearch.index rec
+      end
       sleep 2.0
       post "/search/#{realm}", {:uid => 'post.card:hell.*$1|4'}
       result = JSON.parse(last_response.body)
+      result['hits'].count.should eq 2
       result['hits'].map do |hit|
         hit['hit']['uid']
       end.should eq [record['uid'], yet_another_record['uid']]
