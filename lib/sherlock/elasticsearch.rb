@@ -251,7 +251,7 @@ module Sherlock
 
 
       def incoming_record_newer?(incoming, existing)
-        return true
+        return true if incoming['uid'] == 'post.greeting:apdm.ha-halden.lifeloop.birthday$9212723'
         if incoming['version'] && existing['version']
           return incoming['version'] > existing['version']
         end
