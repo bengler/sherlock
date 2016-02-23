@@ -251,6 +251,7 @@ module Sherlock
 
 
       def incoming_record_newer?(incoming, existing)
+        return true
         if incoming['version'] && existing['version']
           return incoming['version'] > existing['version']
         end
