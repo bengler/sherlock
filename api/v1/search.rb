@@ -148,6 +148,17 @@ class SherlockV1 < Sinatra::Base
   end
 
 
+  # @apidoc
+  # Get Elasticsearch mappings.
+  #
+  # @description Take a look at how Elasticsearch has chosen to index data
+  # @category Sherlock/Mapping
+  # @path /api/sherlock/v1/mapping/:realm/?:klass?
+  # @http GET
+  # @example /api/sherlock/v1/mapping/apdm/post.greeting
+  # @required [String] realm Name of realm containing the searchable data.
+  # @optional [String] klass Name of a specific indexed datatype.
+  # @status 200 JSON
   get '/mapping/:realm/?:klass?' do |realm, klass|
     content_type 'application/json'
     json_result = Sherlock::Elasticsearch.index_mapping(realm, klass)
