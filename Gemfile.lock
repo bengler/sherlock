@@ -10,7 +10,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.2.5)
+    activesupport (4.2.6)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -48,12 +48,12 @@ GEM
     memcache_mock (0.0.14)
     mercenary (0.3.5)
     mini_portile2 (2.0.0)
-    minitest (5.8.3)
+    minitest (5.8.4)
     multi_json (1.11.2)
-    nokogiri (1.6.7.1)
+    nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     pathbuilder (0.0.2)
-    pebblebed (0.3.4)
+    pebblebed (0.3.6)
       activesupport
       bunny
       curb (>= 0.8.4)
@@ -129,7 +129,7 @@ DEPENDENCIES
   curb (~> 0.8.8)
   main (~> 5.0.1)
   memcache_mock (~> 0.0.14)
-  pebblebed (~> 0.3.3)
+  pebblebed (~> 0.3.6)
   pebbles-cors!
   pebbles-path (~> 0.0.3)
   pebbles-river (~> 0.2.4)
