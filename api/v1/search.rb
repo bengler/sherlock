@@ -35,6 +35,28 @@ class SherlockV1 < Sinatra::Base
     end
 
 
+    def handle_search_request(realm, uid)
+      content_type 'application/json', :charset => 'utf-8'
+      uid ||= params['uid']
+
+      halt 403, {:error => 'invalid_uid', :message => "Sherlock couldn't parse the UID \"#{uid}\"."} unless valid_uid_query? uid
+
+      ['offset', 'limit'].each do |param|
+        halt 400, {:error => 'require_integer', :message => "#{param} must be an integer"} if params[param] && !is_integer?(params[param])
+      end
+
+      cache_key = request.url
+      if current_identity_id || (params['nocache'] == 'true')
+        json_result = perform_query(realm, uid)
+      else
+        json_result = $memcached.fetch(request.url, ANON_QUERY_TTL) do
+          perform_query(realm, uid)
+        end
+      end
+      [200, json_result]
+    end
+
+
     def perform_query(realm, uid)
       params.symbolize_keys!
       uid = clean_up_uid!
@@ -99,6 +121,7 @@ class SherlockV1 < Sinatra::Base
 
   end
 
+
   # @apidoc
   # Search indexed data.
   #
@@ -106,7 +129,7 @@ class SherlockV1 < Sinatra::Base
   # @note Documents with restricted=true is only accessible by god sessions or users with checkpoint-specified access to that path.
   # @category Sherlock/Search
   # @path /api/sherlock/v1/search/:realm/:uid
-  # @http GET or POST
+  # @http GET
   # @example /api/sherlock/v1/search/apdm/post.greeting:apdm.lifeloop.oa.*
   # @required [String] realm Name of realm containing the searchable data.
   # @optional [String] uid uid denoting a resource, or a wildcard uid indicating a collection of resources.
@@ -126,25 +149,20 @@ class SherlockV1 < Sinatra::Base
   # @optional [Boolean] nocache Bypass cache for guest users. Default is false.
   # @optional [String] return_fields Return only these named fields, separated by comma. E.g. "realm,document.author,updated_at"
   # @status 200 JSON
-  route :get, :post, '/search/:realm/?:uid?' do |realm, uid|
-    content_type 'application/json', :charset => 'utf-8'
-    uid ||= params['uid']
+  get '/search/:realm/?:uid?' do |realm, uid|
+    handle_search_request(realm, uid)
+  end
 
-    halt 403, {:error => 'invalid_uid', :message => "Sherlock couldn't parse the UID \"#{uid}\"."} unless valid_uid_query? uid
-
-    ['offset', 'limit'].each do |param|
-      halt 400, {:error => 'require_integer', :message => "#{param} must be an integer"} if params[param] && !is_integer?(params[param])
-    end
-
-    cache_key = request.url
-    if current_identity_id || (params['nocache'] == 'true')
-      json_result = perform_query(realm, uid)
-    else
-      json_result = $memcached.fetch(request.url, ANON_QUERY_TTL) do
-        perform_query(realm, uid)
-      end
-    end
-    [200, json_result]
+  # @apidoc
+  # Search indexed data. Same params as the GET endpoint
+  #
+  # @category Sherlock/Search
+  # @path /api/sherlock/v1/search/:realm/:uid
+  # @http POST
+  # @example /api/sherlock/v1/search/apdm/post.greeting:apdm.lifeloop.oa.*
+  # @status 200 JSON
+  post '/search/:realm/?:uid?' do |realm, uid|
+    handle_search_request(realm, uid)
   end
 
 
