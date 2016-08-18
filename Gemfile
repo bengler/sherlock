@@ -15,6 +15,8 @@ gem 'curb', '~> 0.8.8'
 gem 'backports', '~> 3.6.4'
 gem 'sinatra-contrib', '~> 1.4.6'
 
+gem 'activesupport', '~> 4.2.6'
+
 group :development, :test do
   gem 'rspec', '~> 2.14.1'
   gem 'approvals', '~> 0.0.16'
