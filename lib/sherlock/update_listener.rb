@@ -11,6 +11,7 @@ module Sherlock
     end
 
     def consider(payload)
+      LOGGER.info("consider message [#{payload['event']}] #{payload['uid']}")
       matching_uids = begin
         Sherlock::Elasticsearch.matching_records({'uid' => payload['uid']}.merge(payload['attributes']))
       rescue Sherlock::Elasticsearch::OldRecordError
@@ -20,6 +21,7 @@ module Sherlock
 
       tasks = Sherlock::Update.new(payload).tasks(matching_uids)
       tasks.each do |task|
+        LOGGER.info("handle task [#{task['action']}] #{task['record']['uid']}")
         case task['action']
         when 'index'
           Sherlock::Elasticsearch.index task['record']
