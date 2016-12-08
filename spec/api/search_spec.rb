@@ -420,6 +420,41 @@ describe 'API v1 search' do
     end
 
 
+    context 'not some value' do
+      let(:record_undef) {
+        uid = 'post.card:hell.flames.pitchfork$1'
+        Sherlock::Parsers::Generic.new(uid, {'document' => {}, 'uid' => uid}).to_hash
+      }
+      let(:record_nil) {
+        uid = 'post.card:hell.flames.pitchfork$2'
+        Sherlock::Parsers::Generic.new(uid, {'document' => {'hot_or_not' => nil}, 'uid' => uid}).to_hash
+      }
+      let(:record_false) {
+        uid = 'post.card:hell.flames.pitchfork$3'
+        Sherlock::Parsers::Generic.new(uid, {'document' => {'hot_or_not' => false}, 'uid' => uid}).to_hash
+      }
+      let(:record_true) {
+        uid = 'post.card:hell.flames.pitchfork$4'
+        Sherlock::Parsers::Generic.new(uid, {'document' => {'hot_or_not' => true}, 'uid' => uid}).to_hash
+      }
+
+      it 'works' do
+        Sherlock::Elasticsearch.index record_undef
+        Sherlock::Elasticsearch.index record_nil
+        Sherlock::Elasticsearch.index record_false
+        Sherlock::Elasticsearch.index record_true
+        sleep 2.0
+
+        get "/search/#{realm}/post.card:hell.*", {:"fields[document.hot_or_not]" => '!true'}
+        result = JSON.parse(last_response.body)
+        result['hits'].count.should eq 3
+        result['hits'].map do |item|
+          item['hit']['uid'].split('$').last
+        end.sort!.should eq ['1', '2', '3']
+      end
+    end
+
+
     context "sorting results" do
 
       let(:first_record) {

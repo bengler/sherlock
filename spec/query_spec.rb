@@ -116,6 +116,7 @@ describe Sherlock::Query do
         fields['membership_expires_on'] = '2012-12-24'
         fields['status'] = 'null'
         fields['provider'] = 'origo|facebook'
+        fields['published'] = '!true'
         Sherlock::Query.new({:q => 'scorching', :fields => fields}).to_json
       end
     end

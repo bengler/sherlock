@@ -23,6 +23,13 @@
             ]
           }
         }
+      ],
+      "must_not": [
+        {
+          "term": {
+            "published": "true"
+          }
+        }
       ]
     }
   },

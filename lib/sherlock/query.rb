@@ -83,7 +83,10 @@ module Sherlock
       queries = queries + field_queries
       queries = queries << deprecated_range_query if deprecated_range
       queries = queries + range_query if (min || max)
-      {:must => queries}
+      must_nots = negative_field_queries
+      result = {:must => queries}
+      result[:must_not] = must_nots unless must_nots.empty?
+      result
     end
 
     # typically *:apdm.oa|rb.* returns
@@ -165,11 +168,33 @@ module Sherlock
     def field_queries
       result = []
       fields.each do |key, value|
-        if value != 'null' && value != '!null'
+        is_negative_query = value.start_with? '!'
+        is_null_query = (value == 'null' || value == '!null')
+
+        if !is_negative_query && !is_null_query
           if value.match(/\|/) # A value containing a pipe will be parsed as an OR statement
             result << {:terms => {key => value.downcase.split('|')}}
           else
             result << {:term => {key => value.downcase}}
+          end
+        end
+      end
+      result
+    end
+
+    # query on specific NOT field value
+    def negative_field_queries
+      result = []
+      fields.each do |key, value|
+        is_negative_query = value.start_with? '!'
+        is_null_query = (value == 'null' || value == '!null')
+
+        if is_negative_query && !is_null_query
+          not_value = "#{value[1..-1]}" # remove exclamation mark from position 0
+          if not_value.match(/\|/) # A value containing a pipe will be parsed as an OR statement
+            result << {:terms => {key => not_value.downcase.split('|')}}
+          else
+            result << {:term => {key => not_value.downcase}}
           end
         end
       end
