@@ -77,5 +77,18 @@ module Sherlock
       drop_all_indices
     end
 
+    # Hack: Thor strips '$*' from a uid so we need to pass two params
+    desc "unindex", "Remove index for a single document by path and oid"
+    def unindex(path, oid)
+      require_relative '../config/environment'
+      uid = "#{path}$#{oid}"
+      puts "Will delete #{uid}"
+      if Sherlock::Elasticsearch.unindex uid
+        puts '...poof!'
+      else
+        puts "...not found"
+      end
+    end
+
   end
 end
