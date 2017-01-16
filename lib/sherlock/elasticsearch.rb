@@ -101,9 +101,11 @@ module Sherlock
           Pebblebed::Http.delete(url(uid), nil)
         rescue Pebblebed::HttpNotFoundError => e
           # no unindex-able resource found
+          return false
         rescue Pebblebed::HttpError => e
           LOGGER.exception e
         end
+        true
       end
 
       def delete_index(realm, should_prefix_realm = true)
