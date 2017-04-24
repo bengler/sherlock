@@ -38,8 +38,9 @@ module Sherlock
       )
       result['_source'] = compile_return_fields if return_fields
 
-      if tags_queries
-        tags_queries.each do |rk,rv|
+      tags_query_result = tags_queries
+      if tags_query_result
+        tags_query_result.each do |rk,rv|
           unless rv.empty?
             result[:filter] ||= {}
             result[:filter][rk] ||= []
@@ -140,7 +141,11 @@ module Sherlock
       else
         ands = @tags_query.split('&')
         ands.each do |a|
-          if a.strip[0] != "!"
+          if a.strip[0] == "!"
+            results[:and] << {
+              "not" => { "term" => { "tags_vector" => a.gsub("!", "").strip} }
+            }
+          else
             if a.index("|")
               a.split("|").each do |o|
                 o = o.gsub("(", "").strip
@@ -154,10 +159,6 @@ module Sherlock
                 "term" => { "tags_vector" => a.strip}
               }
             end
-          else
-            results[:and] << {
-              "not" => { "term" => { "tags_vector" => a.gsub("!", "").strip} }
-            }
           end
         end
       end
