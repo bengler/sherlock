@@ -2,7 +2,7 @@ source 'https://rubygems.org/'
 
 gem 'sinatra', '~> 1.4.6'
 gem 'rack-contrib', '~> 1.4.0'
-gem 'pebblebed', '~> 0.3.6'
+gem 'pebblebed', '~> 0.3.26'
 gem 'pebbles-uid', '~> 0.0.22'
 gem 'pebbles-river', '~> 0.2.4'
 gem 'pebbles-cors', :git => 'https://github.com/bengler/pebbles-cors'

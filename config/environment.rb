@@ -15,5 +15,6 @@ $memcached = Dalli::Client.new
 Pebblebed.memcached = $memcached
 
 Pebblebed.config do
+  scheme 'http'
   service :checkpoint
 end
