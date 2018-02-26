@@ -1,4 +1,21 @@
 GIT
+  remote: https://github.com/bengler/pebblebed
+  revision: 622320f9cb889ec8235af17eb7eb43a9a066ae80
+  branch: http-use-excon
+  specs:
+    pebblebed (0.4.0)
+      absolute_time
+      activesupport
+      bunny
+      deepstruct (>= 0.0.4)
+      excon (>= 0.52.0)
+      futurevalue
+      nokogiri
+      pathbuilder
+      queryparams
+      yajl-ruby
+
+GIT
   remote: https://github.com/bengler/pebbles-cors
   revision: 91f57a06671c1c3a15e50a5c8332f9699dc9bdba
   specs:
@@ -19,25 +36,26 @@ GEM
     airbrake (3.1.17)
       builder
       multi_json
-    amq-protocol (2.3.0)
+    amq-protocol (1.9.2)
     approvals (0.0.22)
       nokogiri (~> 1.6)
       thor (~> 0.18)
     arrayfields (4.9.2)
     backports (3.6.7)
     builder (3.2.2)
-    bunny (1.7.0)
-      amq-protocol (>= 1.9.2)
+    bunny (1.7.1)
+      amq-protocol (~> 1.9.2)
     chronic (0.10.2)
     concurrent-ruby (1.0.5)
     curb (0.8.8)
     dalli (2.7.5)
     deepstruct (0.0.7)
     diff-lcs (1.2.5)
+    excon (0.60.0)
     fattr (2.2.2)
     futurevalue (0.0.2)
     git-version-bump (0.15.1)
-    i18n (0.9.3)
+    i18n (0.9.4)
       concurrent-ruby (~> 1.0)
     kgio (2.10.0)
     main (5.0.1)
@@ -49,22 +67,11 @@ GEM
     memcache_mock (0.0.14)
     mercenary (0.3.5)
     mini_portile2 (2.3.0)
-    minitest (5.11.1)
+    minitest (5.11.3)
     multi_json (1.11.2)
-    nokogiri (1.8.1)
+    nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     pathbuilder (0.0.2)
-    pebblebed (0.3.26)
-      absolute_time
-      activesupport
-      bunny
-      curb (>= 0.8.8)
-      deepstruct (>= 0.0.4)
-      futurevalue
-      nokogiri
-      pathbuilder
-      queryparams
-      yajl-ruby
     pebbles-path (0.0.3)
       pebbles-uid (>= 0.0.6)
     pebbles-river (0.2.6)
@@ -113,7 +120,7 @@ GEM
     thor (0.18.1)
     thread_safe (0.3.6)
     tilt (2.0.1)
-    tzinfo (1.2.4)
+    tzinfo (1.2.5)
       thread_safe (~> 0.1)
     unicorn (4.8.3)
       kgio (~> 2.6)
@@ -132,7 +139,7 @@ DEPENDENCIES
   curb (~> 0.8.8)
   main (~> 5.0.1)
   memcache_mock (~> 0.0.14)
-  pebblebed (~> 0.3.26)
+  pebblebed!
   pebbles-cors!
   pebbles-path (~> 0.0.3)
   pebbles-river (~> 0.2.4)
