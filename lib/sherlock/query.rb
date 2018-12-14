@@ -188,6 +188,7 @@ module Sherlock
     def negative_field_queries
       result = []
       fields.each do |key, value|
+        next unless value
         is_negative_query = value.start_with? '!'
         is_null_query = (value == 'null' || value == '!null')
 
